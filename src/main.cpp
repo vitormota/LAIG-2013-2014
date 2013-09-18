@@ -17,6 +17,8 @@ using namespace std;
 
 //------- END DEC'S
 
+
+
 int main (){
 
 	cout << "Loading .yaf file\n";
@@ -25,4 +27,6 @@ int main (){
 	cin.get();
 	return 0;
 }
+
+
 
