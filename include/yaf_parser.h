@@ -11,6 +11,9 @@ namespace yaf_parser{
 	using namespace tinyxml2;
 
 	enum ERRORS { globals_error = 1, cameras_error, file_nf};
+	enum node_i {
+		GLOBALS,CAMERAS,LIGHTNING,PERSPECTIVE,ORTHO
+	};
 
 	class Parser{
 	public:
@@ -23,6 +26,11 @@ namespace yaf_parser{
 
 	private:
 		bool globals(XMLElement *elem);
+		bool cameras(XMLElement *elem);
+		bool lightning(XMLElement *elem);
+		bool textures(XMLElement *elem);
+		bool appearances(XMLElement *elem);
+		bool graph(XMLElement *elem);
 	};
 
 

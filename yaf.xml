@@ -11,15 +11,15 @@
     <!-- Valores para draw mode: "fill" , "line", "point" --> 
     <!-- Valores para shading: "flat", "gouraud" ) --> 
     <!-- Valores para cullface: "none", "back" , "front" ou "both" --> 
-    <!-- Valores para cullorder : "CCW" ou "CW" --> 
-    <globals background="2.0 1.0 3.4 5.5" drawmode="fill" shading="flat" cullface="none" cullorder="CW" /> 
-     
-    <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial --> 
-    <cameras initial="ss" > 
+    <!-- Valores para cullorder : "CCW" ou "CW" -->
+  <globals background="2.0 1.0 3.4 5.5" drawmode="fill" shading="flat" cullface="none" cullorder="CW" />
+
+  <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial --> 
+    <cameras initial="one" > 
         <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) --> 
 
-        <perspective id="ss" near="ff" far="ff" angle="ff" pos="ff ff ff" target="ff ff ff" /> 
-        <ortho id="ss" near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" /> 
+        <perspective id="one" near="fde" far="2" angle="de4" pos="4 2 1" target="3 3 2" /> 
+        <ortho id="two" near="2" far="5" left="4" right="2" top="3" bottom="4" /> 
 
     </cameras> 
    

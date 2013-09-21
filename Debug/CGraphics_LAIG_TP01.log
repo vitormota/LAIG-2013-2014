@@ -1,17 +1,9 @@
-﻿Build started 18/09/2013 18:17:50.
+﻿Build started 21/09/2013 18:45:19.
      1>Project "E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\include" /IC:\Windows\System\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\main.cpp src\yaf_parser.cpp
-         yaf_parser.cpp
-         main.cpp
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Windows\System\lib glew32.lib CGFlibd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.lib" /MACHINE:X86 Debug\main.obj
-         Debug\tinyxml2.obj
-         Debug\yaf_parser.obj
+     1>Link:
          CGraphics_LAIG_TP01.vcxproj -> E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.exe
      1>Done Building Project "E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\CGraphics_LAIG_TP01.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.84
+Time Elapsed 00:00:00.06

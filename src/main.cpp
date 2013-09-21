@@ -23,7 +23,11 @@ int main (){
 
 	cout << "Loading .yaf file\n";
 	yaf_parser::Parser f;
-	f.start();
+	switch(f.start()){
+	case 3:
+		cout << "File not found ir ill formed xml.";
+		break;
+	}
 	cin.get();
 	return 0;
 }

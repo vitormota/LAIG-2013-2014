@@ -1,11 +1,15 @@
 #include "yaf_parser.h"
 
 namespace string_parsing{
+	const int NO_ERROR=0,ERROR=1;
 	int float_reader(const char *,float *);
 } //string_parsing
 
 
 namespace yaf_parser{
+
+	const char node_NF[] = "No such node ";
+	const char *node_names[10] = {"globals","cameras","lightning","perspective","ortho"};
 
 	int Parser::start(){
 		tinyxml2::XMLDocument *doc = new tinyxml2::XMLDocument;
@@ -17,12 +21,19 @@ namespace yaf_parser{
 		cout << e->Name() << endl;
 		if(!globals(e)) return globals_error;
 		cout << "Globals processed.\n";
+		if(!cameras(e)) return cameras_error;
+		cout << "Cameras processed.\n";
 		return 0;
 	}
 
 	bool Parser::globals(XMLElement *elem){
-		XMLNode *node = elem->FirstChildElement("globals");
-		if(node==NULL) return false;
+		XMLNode *node = elem->FirstChildElement(node_names[GLOBALS]);
+		if(node==NULL){
+			cout << node_NF
+				<< node_names[GLOBALS]
+			<< endl;
+			return false;
+		}
 		float bkgd[4];
 		bool error = false;
 		char *s = (char*) node->ToElement()->Attribute("background");
@@ -52,6 +63,91 @@ namespace yaf_parser{
 		if(error)return false;
 		return true;
 	}
+
+	bool Parser::cameras(XMLElement *elem){
+		XMLNode *node = elem->FirstChildElement(node_names[CAMERAS]);
+		if(node==NULL){
+			cout << 
+				node_NF <<
+				node_names[CAMERAS] <<
+				endl;
+			return false;
+		}
+		XMLNode *child = node->FirstChildElement();
+		if(child==NULL){
+			cout << node_NF << 
+				node_names[PERSPECTIVE] << 
+				"," << 
+				node_names[ORTHO] << 
+				endl;
+			return false;
+		}
+		bool error = true;
+		char *initial = (char*) node->ToElement()->Attribute("initial");
+		if(initial==NULL){
+			cout << "Initial camera not found, using first read."
+				<< endl;
+		}
+		char *id;
+		float near=0,far=0,angle=0,pos[3],target[3],
+			left=0,right=0,top=0,bottom=0;
+		while(child){
+			id = (char*) child->ToElement()->Attribute("id");
+			if(strcmp(child->ToElement()->Name(),node_names[PERSPECTIVE])==0){
+				//perspective found
+				if(!id ||
+					child->ToElement()->QueryFloatAttribute("near",&near) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("far",&far) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("angle",&angle) != XML_NO_ERROR ||
+					string_parsing::float_reader(child->ToElement()->Attribute("pos"),pos) != string_parsing::NO_ERROR ||
+					string_parsing::float_reader(child->ToElement()->Attribute("target"),target) != string_parsing::NO_ERROR)
+				{
+					//bad perspective found
+					cout <<  node_names[PERSPECTIVE] <<
+						" id: " <<
+						id <<
+						" has invalid field(s), ignoring.\n";
+				}else{
+					cout << node_names[PERSPECTIVE] <<
+						" id: " <<
+						id <<
+						", processed." <<
+						endl;
+					//pre-requesite, at least one so, flag off
+					if(error) error = false;
+				}
+			}else if(strcmp(child->ToElement()->Name(),node_names[ORTHO])==0){
+				//ortho found
+				if(!id ||
+					child->ToElement()->QueryFloatAttribute("near",&near) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("far",&far) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("left",&left) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("right",&right) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("top",&top) != XML_NO_ERROR ||
+					child->ToElement()->QueryFloatAttribute("bottom",&bottom) != XML_NO_ERROR)
+				{
+					//bad ortho found
+					cout <<  node_names[ORTHO] <<
+						" id: " <<
+						id <<
+						" has invalid field(s), ignoring.\n";
+				}else{
+					cout << node_names[ORTHO] <<
+						" id: " <<
+						id <<
+						", processed." <<
+						endl;
+					//pre-requesite, at least one so, flag off
+					if(error) error = false;
+				}
+			}
+			//next sibling camera
+			child = child->NextSiblingElement();
+		}
+		if(error)return false;
+		return true;
+	}
+
 }
 
 /// <summary>
