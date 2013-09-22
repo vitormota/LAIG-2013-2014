@@ -1,4 +1,4 @@
-﻿Build started 22/09/2013 21:52:42.
+﻿Build started 22/09/2013 22:26:30.
      1>Project "E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\include" /IC:\Windows\System\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\YafParser.cpp
@@ -11,4 +11,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.12
+Time Elapsed 00:00:01.14

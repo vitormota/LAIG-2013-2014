@@ -32,7 +32,7 @@ using namespace std;
 
 int main(void){
 
-	cout << "Loading .yaf file\n";
+	cout << "\n--> Loading .yaf file <--\n\n";
     
 	Parser::YafParser f = Parser::YafParser();
 	switch(f.loadYaf()){
