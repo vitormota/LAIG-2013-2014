@@ -18,11 +18,13 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\tinyxml2.cpp" />
-    <ClCompile Include="src\yaf_parser.cpp" />
+    <ClCompile Include="src\YafParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\tinystr.h" />
+    <ClInclude Include="include\tinyxml.h" />
     <ClInclude Include="include\tinyxml2.h" />
-    <ClInclude Include="include\yaf_parser.h" />
+    <ClInclude Include="include\YafParser.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A18068-B93D-4EFD-88DB-4F6DD7DA6636}</ProjectGuid>

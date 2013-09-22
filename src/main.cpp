@@ -8,8 +8,20 @@
 */
 
 #include <string>
+#ifdef __APPLE__
+#include <GLUT/GLUT.h>
+#else
+#include <gl/glut.h>
+#endif
+#ifdef __APPLE__
+#include <gl/glui.h>
+#else
+#include <gl/glui.h>
+#endif
+
+#include <string>
 #include <iostream>
-#include "yaf_parser.h"
+#include "YafParser.h"
 
 using namespace std;
 
@@ -18,19 +30,16 @@ using namespace std;
 //------- END DEC'S
 
 
-
-int main (){
+int main(void){
 
 	cout << "Loading .yaf file\n";
-	yaf_parser::Parser f;
-	switch(f.start()){
+    
+	Parser::YafParser f = Parser::YafParser();
+	switch(f.loadYaf()){
 	case 3:
-		cout << "File not found ir ill formed xml.";
+		cout << "File not found or ill formed xml.";
 		break;
 	}
 	cin.get();
 	return 0;
 }
-
-
-

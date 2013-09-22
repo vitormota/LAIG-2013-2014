@@ -26,7 +26,7 @@
     <ClCompile Include="src\tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\yaf_parser.cpp">
+    <ClCompile Include="src\YafParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,7 +34,13 @@
     <ClInclude Include="include\tinyxml2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\yaf_parser.h">
+    <ClInclude Include="include\tinystr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tinyxml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\YafParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
