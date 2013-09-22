@@ -173,7 +173,8 @@ namespace Parser {
 			
             id = (char*) perspectiveElement->Attribute("id");
 			
-            if((char*) perspectiveElement->ToText() == node_names[PERSPECTIVE]){
+			//BUG ---->   if((char*) perspectiveElement->ToText() == node_names[PERSPECTIVE]){ ??
+            if(strcmp(perspectiveElement->Value(),node_names[PERSPECTIVE])==0){
 				
                 //perspective found
 				if(!id ||
@@ -193,7 +194,7 @@ namespace Parser {
 					//pre-requesite, at least one so, flag off
 					if(error) error = false;
 				}
-			}else if((char*) perspectiveElement->ToText() == node_names[ORTHO]){
+			}else if(strcmp(perspectiveElement->Value(),node_names[ORTHO])==0){
 				//ortho found
 				if(!id ||
                    perspectiveElement->QueryFloatAttribute("near",&near) != TIXML_SUCCESS ||

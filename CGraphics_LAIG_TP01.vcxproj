@@ -17,13 +17,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\tinyxml2.cpp" />
     <ClCompile Include="src\YafParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\tinystr.h" />
     <ClInclude Include="include\tinyxml.h" />
-    <ClInclude Include="include\tinyxml2.h" />
     <ClInclude Include="include\YafParser.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -74,8 +72,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(GL_CONFIG)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;CGFlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\lib;$(GL_CONFIG)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;CGFlibd.lib;TinyXML.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
