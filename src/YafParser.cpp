@@ -362,17 +362,19 @@ namespace Parser {
 		return true;
 	}
 
-	bool YafParser::loadAppearances(TiXmlElement *appearancesElement){
-
+    
+    // TODO textureref, texlength_s e textlength_t sao atributos opcionais se for usada uma textura
+    bool YafParser::loadAppearances(TiXmlElement *appearancesElement){
+        
 		if(appearancesElement == NULL){
 			cout <<
-				element_not_found <<
-				node_names[TEXTURE] <<
-				endl;
+            element_not_found <<
+            node_names[TEXTURE] <<
+            endl;
 			return false;
 		}
-
-		int count = 0;
+        
+		int count = 0; // number of appearance elements
 		char *id, *textureref;
 		float emissiveFloatValues[4];
 		float ambientFloatValues[4];
@@ -383,13 +385,25 @@ namespace Parser {
 		char *diffuseStr;
 		char *specularStr;
 		char *shininessStr;
-
+        char *texlength_sStr;
+        char *texlength_tStr;
+        
 		/* Texturas: de forma a manter as texturas numa escala adequada, o mapeamento de coordenadas de vértices de polígonos (retângulo, triângulo ou outros, mas não em quádricas) sobre o sistema referencial das texturas deve respeitar a escala definida na textura. Por exemplo, se texlength_s=3 , significa que uma ocorrência da textura, em comprimento, deve cobrir com exatidão um polígono de comprimento 3 unidades; mas se texlength_t=0.4 , então deve cobrir um comprimento de 0.4 unidades. Aceita-se que posteriores utilizações de escalamentos sobre os objetos respetivos venham a invalidar esta regra. */
-
-		float shininess, texlength_s, texlength_t;
-
+        
+		float shininess[1], texlength_s[1], texlength_t[1];
+        
 		TiXmlElement* appearanceElement = appearancesElement->FirstChildElement();
-
+        
+        // check if there is at least one appearance element
+        if(appearanceElement == NULL){
+			cout << element_not_found <<
+            node_names[PERSPECTIVE] <<
+            "," <<
+            node_names[ORTHO] <<
+            endl;
+			return false;
+		}
+        
 		while(appearanceElement){
 			id = (char*) appearanceElement->Attribute("id");
 			emissiveStr = (char*) appearanceElement->Attribute("emissive");
@@ -398,102 +412,163 @@ namespace Parser {
 			specularStr = (char*) appearanceElement->Attribute("specular");
 			shininessStr = (char*) appearanceElement->Attribute("shininess");
 			textureref = (char*) appearanceElement->Attribute("textureref");
-
+            texlength_sStr = (char*) appearanceElement->Attribute("texlength_s");
+            texlength_tStr = (char*) appearanceElement->Attribute("texlength_t");
+            
+            
 			// id attribute
-
+            
 			if(!id){
-
+                
 				// invalid id
 				cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), ignoring.\n";
 			}
 			else{
 				// valid id
 				cout << node_names[APPEARANCE] << " id: " << id << ", processed." << endl;
-
+                
 			}
-
-
+            
+            
 			// emissive attribute
-
-			if(!emissiveStr)
+            
+			if(!emissiveStr || (StringParsing::FloatReader(emissiveStr, emissiveFloatValues) != 4))
 			{
-
+                
 				// invalid emission
-				cout << node_names[APPEARANCE] << " emission: " << " has invalid field(s), ignoring.\n";
-
+				cout << node_names[APPEARANCE] << " emissive: " << " has invalid field(s), ignoring.\n";
+                
 			}
 			else{
-
+                
 				// valid emission
-				StringParsing::FloatReader(emissiveStr, emissiveFloatValues);
-				cout << node_names[APPEARANCE] << " emission: " << emissiveStr << ", processed." << endl;
-
+				cout << node_names[APPEARANCE] << " emissive: " << emissiveStr << ", processed." << endl;
+                
 			}
-
+            
 			// ambient attribute
-
-			if(!ambientStr)
+            
+			if(!ambientStr || (StringParsing::FloatReader(ambientStr, ambientFloatValues)) != 4)
 			{
-
+                
 				// invalid ambient
 				cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), ignoring.\n";
-
+                
 			}
 			else{
-
+                
 				// valid ambient
-				StringParsing::FloatReader(ambientStr, ambientFloatValues);
 				cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", processed." << endl;
-
+                
 			}
-
+            
 			// diffuse attribute
-
-			if(!diffuseStr)
+            
+			if(!diffuseStr || (StringParsing::FloatReader(diffuseStr, diffuseFloatValues)) != 4)
 			{
-
+                
 				// invalid diffuse
 				cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), ignoring.\n";
-
+                
 			}
 			else{
-
+                
 				// valid diffuse
-				StringParsing::FloatReader(diffuseStr, diffuseFloatValues);
 				cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", processed." << endl;
-
+                
 			}
-
+            
 			// specular attribute
-
-			if(!specularStr)
+            
+			if(!specularStr || (StringParsing::FloatReader(specularStr, specularFloatValues)) != 4)
 			{
-
+                
 				// invalid specular
 				cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), ignoring.\n";
-
+                
 			}
 			else{
-
+                
 				// valid specular
-				StringParsing::FloatReader(specularStr, specularFloatValues);
 				cout << node_names[APPEARANCE] << " specular: " << specularStr << ", processed." << endl;
-
+                
 			}
-
-			// WORK IN PROGRESS
-
+            
+            // shininess attribute
+            
+            if(!shininessStr || (StringParsing::FloatReader(shininessStr, shininess)) != 1)
+			{
+                
+				// invalid shininess
+				cout << node_names[APPEARANCE] << " shininess: " << " has invalid field(s), ignoring.\n";
+                
+			}
+			else{
+                
+				// valid shininess
+				cout << node_names[APPEARANCE] << " shininess: " << shininessStr << ", processed." << endl;
+                
+			}
+            
+            // textureref attribute
+            
+            if(!textureref){
+                
+				// invalid textureref
+				cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), ignoring.\n";
+                
+			}
+			else{
+                
+				// valid textureref
+				cout << node_names[APPEARANCE] << " textureref: " << textureref << ", processed." << endl;
+                
+			}
+            
+            
+            // texlength_s attribute
+            
+            if(!texlength_sStr || (StringParsing::FloatReader(texlength_sStr, texlength_s)) != 1)
+			{
+                
+				// invalid texlength_s
+				cout << node_names[APPEARANCE] << " texlength_s: " << " has invalid field(s), ignoring.\n";
+                
+			}
+			else{
+                
+				// valid texlength_s
+				cout << node_names[APPEARANCE] << " texlength_s: " << texlength_sStr << ", processed." << endl;
+                
+			}
+            
+            // texlength_t attribute
+            
+            if(!texlength_tStr || (StringParsing::FloatReader(texlength_tStr, texlength_t)) != 1)
+			{
+                
+				// invalid texlength_t
+				cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), ignoring.\n";
+                
+			}
+			else{
+                
+				// valid texlength_t
+				cout << node_names[APPEARANCE] << " texlength_t: " << texlength_tStr << ", processed." << endl;
+                
+			}
+            
 			// next appearance
 			appearanceElement = appearanceElement->NextSiblingElement();
 			count ++;
 		}
-
+        
 		// print how many where read
 		cout << "Found " << count << " appearance(s).\n\n";
-
-
+        
 		return true;
 	}
+
 }
 
 /// <summary>
