@@ -18,7 +18,7 @@ namespace Parser {
 
 	const char attribute_not_found[] = "No such attribute";
 	const char element_not_found[] = "No such element";
-	const char *node_names[10] = {"globals","cameras","lightning","perspective","ortho","texture"};
+	const char *node_names[10] = {"globals","cameras","lightning","perspective","ortho","texture", "appearance"};
 
 	YafParser::YafParser()
 	{
@@ -56,9 +56,6 @@ namespace Parser {
 			exit(1);
 		}
 
-		//tinyxml2::XMLElement *r = doc->RootElement();
-		//cout << e->Name() << endl;
-
 		globalsElement = yafElement->FirstChildElement("globals");
 		camerasElement = yafElement->FirstChildElement("cameras");
 		lightingElement = yafElement->FirstChildElement("lighting");
@@ -79,13 +76,15 @@ namespace Parser {
 		cout << "-----------------------\n";
 		cout << "- textures processed. -\n";
 		cout << "-----------------------\n\n";
+        if(!loadAppearances(appearancesElement)) return appearances_error;
+		cout << "-----------------------\n";
+		cout << "- appearances processed. -\n";
+		cout << "-----------------------\n\n";
 
 		return 0;
 	}
 
 	bool YafParser::loadGlobals(TiXmlElement* globalsElement){
-
-		//XMLNode *node = elem->FirstChildElement(node_names[GLOBALS]);
 
 		if(globalsElement == NULL){
 			cout << element_not_found
@@ -143,8 +142,6 @@ namespace Parser {
 	}
 
 	bool YafParser::loadCameras(TiXmlElement* camerasElement){
-
-		//XMLNode *node = elem->FirstChildElement(node_names[CAMERAS]);
 
 		if(camerasElement == NULL){
 			cout <<
@@ -247,10 +244,11 @@ namespace Parser {
 		}
 		int count = 0;
 		char *id,*file;
-		texturesElement = texturesElement->FirstChildElement();
-		while(texturesElement){
-			id = (char*) texturesElement->Attribute("id");
-			file = (char*) texturesElement->Attribute("file");
+		TiXmlElement* textureElement = texturesElement->FirstChildElement();
+        
+		while(textureElement){
+			id = (char*) textureElement->Attribute("id");
+			file = (char*) textureElement->Attribute("file");
 			if(!id || !file){
 				//Bad texture
 				cout << node_names[TEXTURE] <<
@@ -268,7 +266,7 @@ namespace Parser {
 				count ++;
 			}
 			//next texture
-			texturesElement = texturesElement->NextSiblingElement();
+			textureElement = textureElement->NextSiblingElement();
 		}
 		//print how many where read
 		cout << "Found " << 
@@ -279,6 +277,134 @@ namespace Parser {
 
 	bool YafParser::loadAppearances(TiXmlElement *appearancesElement){
 
+        if(appearancesElement == NULL){
+			cout <<
+            element_not_found <<
+            node_names[TEXTURE] <<
+            endl;
+			return false;
+		}
+        
+        int count = 0;
+		char *id, *textureref;
+        float emissiveFloatValues[4];
+        float ambientFloatValues[4];
+        float diffuseFloatValues[4];
+        float specularFloatValues[4];
+        char *emissiveStr;
+        char *ambientStr;
+        char *diffuseStr;
+        char *specularStr;
+        char *shininessStr;
+        
+        /* Texturas: de forma a manter as texturas numa escala adequada, o mapeamento de coordenadas de vértices de polígonos (retângulo, triângulo ou outros, mas não em quádricas) sobre o sistema referencial das texturas deve respeitar a escala definida na textura. Por exemplo, se texlength_s=3 , significa que uma ocorrência da textura, em comprimento, deve cobrir com exatidão um polígono de comprimento 3 unidades; mas se texlength_t=0.4 , então deve cobrir um comprimento de 0.4 unidades. Aceita-se que posteriores utilizações de escalamentos sobre os objetos respetivos venham a invalidar esta regra. */
+        
+        float shininess, texlength_s, texlength_t;
+        
+		TiXmlElement* appearanceElement = appearancesElement->FirstChildElement();
+		
+        while(appearanceElement){
+			id = (char*) appearanceElement->Attribute("id");
+			emissiveStr = (char*) appearanceElement->Attribute("emissive");
+            ambientStr = (char*) appearanceElement->Attribute("ambient");
+            diffuseStr = (char*) appearanceElement->Attribute("diffuse");
+            specularStr = (char*) appearanceElement->Attribute("specular");
+            shininessStr = (char*) appearanceElement->Attribute("shininess");
+            textureref = (char*) appearanceElement->Attribute("textureref");
+            
+			// id attribute
+            
+            if(!id){
+				
+                // invalid id
+				cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), ignoring.\n";
+			}
+            else{
+				// valid id
+				cout << node_names[APPEARANCE] << " id: " << id << ", processed." << endl;
+    
+			}
+            
+            
+            // emissive attribute
+            
+            if(!emissiveStr)
+            {
+                
+                // invalid emission
+				cout << node_names[APPEARANCE] << " emission: " << " has invalid field(s), ignoring.\n";
+
+            }
+            else{
+                
+                // valid emission
+                StringParsing::FloatReader(emissiveStr, emissiveFloatValues);
+				cout << node_names[APPEARANCE] << " emission: " << emissiveStr << ", processed." << endl;
+                
+            }
+            
+            // ambient attribute
+            
+            if(!ambientStr)
+            {
+                
+                // invalid ambient
+				cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), ignoring.\n";
+                
+            }
+            else{
+                
+                // valid ambient
+                StringParsing::FloatReader(ambientStr, ambientFloatValues);
+				cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", processed." << endl;
+                
+            }
+            
+            // diffuse attribute
+            
+            if(!diffuseStr)
+            {
+                
+                // invalid diffuse
+				cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), ignoring.\n";
+                
+            }
+            else{
+                
+                // valid diffuse
+                StringParsing::FloatReader(diffuseStr, diffuseFloatValues);
+				cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", processed." << endl;
+                
+            }
+            
+            // specular attribute
+    
+            if(!specularStr)
+            {
+                
+                // invalid specular
+				cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), ignoring.\n";
+                
+            }
+            else{
+                
+                // valid specular
+                StringParsing::FloatReader(specularStr, specularFloatValues);
+				cout << node_names[APPEARANCE] << " specular: " << specularStr << ", processed." << endl;
+                
+            }
+            
+            // WORK IN PROGRESS
+			
+            // next appearance
+			appearanceElement = appearanceElement->NextSiblingElement();
+            count ++;
+		}
+    
+		// print how many where read
+		cout << "Found " << count << " appearance(s).\n\n";
+
+        
 		return true;
 	}
 }
