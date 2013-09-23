@@ -30,13 +30,13 @@
             <!-- Os identificadores "id" nao podem ser repetidos --> 
             <omni id="s0" enabled="true" 
                 location="10 5 2 3" 
-                ambient="10 5 2 3" 
+                ambient="10 54 2 3" 
                 diffuse="10 5 2 3" 
                 specular="10 5 2 3" 
             /> 
 
             <spot id="s1" enabled="true" 
-                location="10 5 2" 
+                location="10 5 2 5" 
                 ambient="10 5 2 3" 
                 diffuse="10 5 2 3" 
                 specular="10 5 2 3"

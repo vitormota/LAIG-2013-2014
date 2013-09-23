@@ -73,6 +73,10 @@ namespace Parser {
 		cout << "----------------------\n";
 		cout << "- cameras processed. -\n";
 		cout << "----------------------\n\n";
+		if(!loadLightning(lightingElement)) return lightning_error;
+		cout << "------------------------\n";
+		cout << "- lightning processed. -\n";
+		cout << "------------------------\n\n";
 		if(!loadTextures(texturesElement)) return textures_error;
 		cout << "-----------------------\n";
 		cout << "- textures processed. -\n";
@@ -269,36 +273,51 @@ namespace Parser {
 		}
 		char *id;
 		bool enabled_child=false;
-		float location[4],ambient[4],diffuse[4],specular[4],angle=0,exponent=0,direction[3];
+		float location[4],ambient_child[4],diffuse[4],specular[4],angle=0,exponent=0,direction[3];
+		int count =0;
 		while(child){
 			bool error = false,spot=false;
 			id = (char*) child->Attribute("id");
-			if(strcmp(child->Attribute("enabled"),"true")){
+			if(!strcmp(child->Attribute("enabled"),"true")){
 				enabled_child=true;
-				if(!id ||
-					StringParsing::FloatReader(child->Attribute("location"),location) != 4 ||
-					StringParsing::FloatReader(child->Attribute("ambient"),ambient) != 4 ||
-					StringParsing::FloatReader(child->Attribute("diffuse"),diffuse) != 4 ||
-					StringParsing::FloatReader(child->Attribute("specular"),specular) != 4)
+			}
+			if(!id ||
+				StringParsing::FloatReader(child->Attribute("location"),location) != 4 ||
+				StringParsing::FloatReader(child->Attribute("ambient"),ambient_child) != 4 ||
+				StringParsing::FloatReader(child->Attribute("diffuse"),diffuse) != 4 ||
+				StringParsing::FloatReader(child->Attribute("specular"),specular) != 4)
+			{
+				//bad base attributes
+				error = true;
+			}
+			char* s = (char*) child->Value();
+			if(!error && !strcmp(child->Value(),node_names[SPOT])){
+				//it is a spot camera
+				//extra attr to parse
+				spot = true;
+				if(child->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS ||
+					child->QueryFloatAttribute("exponent",&exponent) != TIXML_SUCCESS ||
+					StringParsing::FloatReader(child->Attribute("direction"),direction)!=3)
 				{
-					//bad base attributes
+					//bad spot camera
 					error = true;
 				}
-				if(!error && !strcmp(child->Value(),node_names[SPOT])){
-					//it is a spot camera
-					//extra attr to parse
-					spot = true;
-					if(!child->QueryFloatAttribute("angle",&angle) ||
-						!child->QueryFloatAttribute("exponent",&exponent) ||
-						StringParsing::FloatReader(child->Attribute("direction"),direction)!=3)
-					{
-						//bad spot camera
-
-					}
-				}
+			}
+			if(!error){
+				//save camera
+				cout << child->Value() << " id: " << id << " processed.\n";
+				count ++;
+			}else{
+				cout <<  child->Value() <<
+					" id: " <<
+					id <<
+					" has invalid field(s), ignoring.\n";
 			}
 			child = child->NextSiblingElement();
 		}
+		cout << "Found " <<
+			count <<
+			" light(s)\n\n";
 		return true;
 	}
 
@@ -515,7 +534,7 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 			floatNumbers[n++] = (float) atof(f);
 			return n;
 		}
-		if(value < 48 && value != 32){
+		if((value < 48 || value > 57) && value != 32){
 			//not a valid character
 			return ERROR;
 		}
