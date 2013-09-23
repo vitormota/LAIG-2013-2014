@@ -25,24 +25,24 @@
    
 
     <!-- bloco de iluminacao; segue os parametros do OpenGL --> 
-    <lighting doublesided="tt" local="tt" enabled="tt" ambient="ff ff ff ff" > 
+    <lighting doublesided="true" local="false" enabled="true" ambient="10 5 2 3" > 
              <!-- Deve existir pelo menos um dos seguintes blocos: omin ou spot --> 
             <!-- Os identificadores "id" nao podem ser repetidos --> 
-            <omni id="ss" enabled="tt" 
-                location="ff ff ff" 
-                ambient="ff ff ff ff" 
-                diffuse="ff ff ff ff" 
-                specular="ff ff ff ff" 
+            <omni id="s0" enabled="true" 
+                location="10 5 2 3" 
+                ambient="10 5 2 3" 
+                diffuse="10 5 2 3" 
+                specular="10 5 2 3" 
             /> 
 
-            <spot id="ss" enabled="tt" 
-                location="ff ff ff" 
-                ambient="ff ff ff ff" 
-                diffuse="ff ff ff ff" 
-                specular="ff ff ff ff"
-                angle="ff" 
-                exponent="ff" 
-                direction="ff ff ff" 
+            <spot id="s1" enabled="true" 
+                location="10 5 2" 
+                ambient="10 5 2 3" 
+                diffuse="10 5 2 3" 
+                specular="10 5 2 3"
+                angle="10" 
+                exponent="12" 
+                direction="10 5 2" 
             /> 
 
     </lighting> 

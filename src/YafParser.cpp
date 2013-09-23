@@ -8,7 +8,7 @@
 
 namespace StringParsing {
 
-	const int NO_ERROR = 0, ERROR = 1;
+	const int ERROR = 0;
 	int FloatReader(const char *,float *);
 
 } //StringParsing
@@ -18,7 +18,8 @@ namespace Parser {
 
 	const char attribute_not_found[] = "No such attribute";
 	const char element_not_found[] = "No such element";
-	const char *node_names[10] = {"globals","cameras","lightning","perspective","ortho","texture", "appearance"};
+	const char *node_names[10] = {"globals","cameras","lightning","omni",
+		"spot","perspective","ortho","texture", "appearance"};
 
 	YafParser::YafParser()
 	{
@@ -76,7 +77,7 @@ namespace Parser {
 		cout << "-----------------------\n";
 		cout << "- textures processed. -\n";
 		cout << "-----------------------\n\n";
-        if(!loadAppearances(appearancesElement)) return appearances_error;
+		if(!loadAppearances(appearancesElement)) return appearances_error;
 		cout << "-----------------------\n";
 		cout << "- appearances processed. -\n";
 		cout << "-----------------------\n\n";
@@ -187,8 +188,8 @@ namespace Parser {
 					perspectiveElement->QueryFloatAttribute("near",&near) != TIXML_SUCCESS ||
 					perspectiveElement->QueryFloatAttribute("far",&far) != TIXML_SUCCESS ||
 					perspectiveElement->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS ||
-					StringParsing::FloatReader(perspectiveElement->Attribute("pos"),pos) != StringParsing::NO_ERROR ||
-					StringParsing::FloatReader(perspectiveElement->Attribute("target"),target) != StringParsing::NO_ERROR)
+					StringParsing::FloatReader(perspectiveElement->Attribute("pos"),pos) != 3 ||
+					StringParsing::FloatReader(perspectiveElement->Attribute("target"),target) != 3)
 				{
 					//bad perspective found
 					cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), ignoring.\n";
@@ -234,6 +235,73 @@ namespace Parser {
 		return true;
 	}
 
+	bool YafParser::loadLightning(TiXmlElement *lightningElement){
+		if(lightingElement == NULL){
+			cout <<
+				element_not_found <<
+				node_names[LIGHTNING] <<
+				endl;
+			return false;
+		}
+		TiXmlElement *child = lightingElement->FirstChildElement();
+		if(!child){
+			cout << element_not_found <<
+				node_names[OMNI] <<
+				"," <<
+				node_names[SPOT] <<
+				endl;
+			return false;
+		}
+		bool doublesided=false,local=false,enabled=false;
+		float ambient[4];
+		if(strcmp(lightingElement->Attribute("doublesided"),"true")){
+			doublesided=true;
+		}
+		if(strcmp(lightingElement->Attribute("enabled"),"true")){
+			enabled=true;
+		}
+		if(strcmp(lightingElement->Attribute("local"),"true")){
+			local=true;
+		}
+		if(StringParsing::FloatReader(lightingElement->Attribute("ambient"),ambient)!=4){
+			//error ambient attr does not have at least 4 values
+			cout << "Bad ambient attribute\n";
+		}
+		char *id;
+		bool enabled_child=false;
+		float location[4],ambient[4],diffuse[4],specular[4],angle=0,exponent=0,direction[3];
+		while(child){
+			bool error = false,spot=false;
+			id = (char*) child->Attribute("id");
+			if(strcmp(child->Attribute("enabled"),"true")){
+				enabled_child=true;
+				if(!id ||
+					StringParsing::FloatReader(child->Attribute("location"),location) != 4 ||
+					StringParsing::FloatReader(child->Attribute("ambient"),ambient) != 4 ||
+					StringParsing::FloatReader(child->Attribute("diffuse"),diffuse) != 4 ||
+					StringParsing::FloatReader(child->Attribute("specular"),specular) != 4)
+				{
+					//bad base attributes
+					error = true;
+				}
+				if(!error && !strcmp(child->Value(),node_names[SPOT])){
+					//it is a spot camera
+					//extra attr to parse
+					spot = true;
+					if(!child->QueryFloatAttribute("angle",&angle) ||
+						!child->QueryFloatAttribute("exponent",&exponent) ||
+						StringParsing::FloatReader(child->Attribute("direction"),direction)!=3)
+					{
+						//bad spot camera
+
+					}
+				}
+			}
+			child = child->NextSiblingElement();
+		}
+		return true;
+	}
+
 	bool YafParser::loadTextures(TiXmlElement *texturesElement){
 		if(texturesElement == NULL){
 			cout <<
@@ -245,7 +313,7 @@ namespace Parser {
 		int count = 0;
 		char *id,*file;
 		TiXmlElement* textureElement = texturesElement->FirstChildElement();
-        
+
 		while(textureElement){
 			id = (char*) textureElement->Attribute("id");
 			file = (char*) textureElement->Attribute("file");
@@ -277,134 +345,134 @@ namespace Parser {
 
 	bool YafParser::loadAppearances(TiXmlElement *appearancesElement){
 
-        if(appearancesElement == NULL){
+		if(appearancesElement == NULL){
 			cout <<
-            element_not_found <<
-            node_names[TEXTURE] <<
-            endl;
+				element_not_found <<
+				node_names[TEXTURE] <<
+				endl;
 			return false;
 		}
-        
-        int count = 0;
+
+		int count = 0;
 		char *id, *textureref;
-        float emissiveFloatValues[4];
-        float ambientFloatValues[4];
-        float diffuseFloatValues[4];
-        float specularFloatValues[4];
-        char *emissiveStr;
-        char *ambientStr;
-        char *diffuseStr;
-        char *specularStr;
-        char *shininessStr;
-        
-        /* Texturas: de forma a manter as texturas numa escala adequada, o mapeamento de coordenadas de vértices de polígonos (retângulo, triângulo ou outros, mas não em quádricas) sobre o sistema referencial das texturas deve respeitar a escala definida na textura. Por exemplo, se texlength_s=3 , significa que uma ocorrência da textura, em comprimento, deve cobrir com exatidão um polígono de comprimento 3 unidades; mas se texlength_t=0.4 , então deve cobrir um comprimento de 0.4 unidades. Aceita-se que posteriores utilizações de escalamentos sobre os objetos respetivos venham a invalidar esta regra. */
-        
-        float shininess, texlength_s, texlength_t;
-        
+		float emissiveFloatValues[4];
+		float ambientFloatValues[4];
+		float diffuseFloatValues[4];
+		float specularFloatValues[4];
+		char *emissiveStr;
+		char *ambientStr;
+		char *diffuseStr;
+		char *specularStr;
+		char *shininessStr;
+
+		/* Texturas: de forma a manter as texturas numa escala adequada, o mapeamento de coordenadas de vértices de polígonos (retângulo, triângulo ou outros, mas não em quádricas) sobre o sistema referencial das texturas deve respeitar a escala definida na textura. Por exemplo, se texlength_s=3 , significa que uma ocorrência da textura, em comprimento, deve cobrir com exatidão um polígono de comprimento 3 unidades; mas se texlength_t=0.4 , então deve cobrir um comprimento de 0.4 unidades. Aceita-se que posteriores utilizações de escalamentos sobre os objetos respetivos venham a invalidar esta regra. */
+
+		float shininess, texlength_s, texlength_t;
+
 		TiXmlElement* appearanceElement = appearancesElement->FirstChildElement();
-		
-        while(appearanceElement){
+
+		while(appearanceElement){
 			id = (char*) appearanceElement->Attribute("id");
 			emissiveStr = (char*) appearanceElement->Attribute("emissive");
-            ambientStr = (char*) appearanceElement->Attribute("ambient");
-            diffuseStr = (char*) appearanceElement->Attribute("diffuse");
-            specularStr = (char*) appearanceElement->Attribute("specular");
-            shininessStr = (char*) appearanceElement->Attribute("shininess");
-            textureref = (char*) appearanceElement->Attribute("textureref");
-            
+			ambientStr = (char*) appearanceElement->Attribute("ambient");
+			diffuseStr = (char*) appearanceElement->Attribute("diffuse");
+			specularStr = (char*) appearanceElement->Attribute("specular");
+			shininessStr = (char*) appearanceElement->Attribute("shininess");
+			textureref = (char*) appearanceElement->Attribute("textureref");
+
 			// id attribute
-            
-            if(!id){
-				
-                // invalid id
+
+			if(!id){
+
+				// invalid id
 				cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), ignoring.\n";
 			}
-            else{
+			else{
 				// valid id
 				cout << node_names[APPEARANCE] << " id: " << id << ", processed." << endl;
-    
+
 			}
-            
-            
-            // emissive attribute
-            
-            if(!emissiveStr)
-            {
-                
-                // invalid emission
+
+
+			// emissive attribute
+
+			if(!emissiveStr)
+			{
+
+				// invalid emission
 				cout << node_names[APPEARANCE] << " emission: " << " has invalid field(s), ignoring.\n";
 
-            }
-            else{
-                
-                // valid emission
-                StringParsing::FloatReader(emissiveStr, emissiveFloatValues);
+			}
+			else{
+
+				// valid emission
+				StringParsing::FloatReader(emissiveStr, emissiveFloatValues);
 				cout << node_names[APPEARANCE] << " emission: " << emissiveStr << ", processed." << endl;
-                
-            }
-            
-            // ambient attribute
-            
-            if(!ambientStr)
-            {
-                
-                // invalid ambient
+
+			}
+
+			// ambient attribute
+
+			if(!ambientStr)
+			{
+
+				// invalid ambient
 				cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), ignoring.\n";
-                
-            }
-            else{
-                
-                // valid ambient
-                StringParsing::FloatReader(ambientStr, ambientFloatValues);
+
+			}
+			else{
+
+				// valid ambient
+				StringParsing::FloatReader(ambientStr, ambientFloatValues);
 				cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", processed." << endl;
-                
-            }
-            
-            // diffuse attribute
-            
-            if(!diffuseStr)
-            {
-                
-                // invalid diffuse
+
+			}
+
+			// diffuse attribute
+
+			if(!diffuseStr)
+			{
+
+				// invalid diffuse
 				cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), ignoring.\n";
-                
-            }
-            else{
-                
-                // valid diffuse
-                StringParsing::FloatReader(diffuseStr, diffuseFloatValues);
+
+			}
+			else{
+
+				// valid diffuse
+				StringParsing::FloatReader(diffuseStr, diffuseFloatValues);
 				cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", processed." << endl;
-                
-            }
-            
-            // specular attribute
-    
-            if(!specularStr)
-            {
-                
-                // invalid specular
+
+			}
+
+			// specular attribute
+
+			if(!specularStr)
+			{
+
+				// invalid specular
 				cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), ignoring.\n";
-                
-            }
-            else{
-                
-                // valid specular
-                StringParsing::FloatReader(specularStr, specularFloatValues);
+
+			}
+			else{
+
+				// valid specular
+				StringParsing::FloatReader(specularStr, specularFloatValues);
 				cout << node_names[APPEARANCE] << " specular: " << specularStr << ", processed." << endl;
-                
-            }
-            
-            // WORK IN PROGRESS
-			
-            // next appearance
+
+			}
+
+			// WORK IN PROGRESS
+
+			// next appearance
 			appearanceElement = appearanceElement->NextSiblingElement();
-            count ++;
+			count ++;
 		}
-    
+
 		// print how many where read
 		cout << "Found " << count << " appearance(s).\n\n";
 
-        
+
 		return true;
 	}
 }
@@ -417,7 +485,7 @@ namespace Parser {
 /// </summary>
 /// <param name="text">The char array (string) containing the text to parse</param>
 /// <param name="floatNumbers">The float array to store the numbers read</param>
-/// <returns>0 on success<p>1 on invalid character read</returns>
+/// <returns>0 on error<p>1+ on success meaning how many where read</returns>
 int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 	char f[15];
 	char value;
@@ -444,12 +512,12 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 		if(value == 0){
 			//reached end
 			f[v]=value;
-			floatNumbers[n] = (float) atof(f);
-			return 0;
+			floatNumbers[n++] = (float) atof(f);
+			return n;
 		}
 		if(value < 48 && value != 32){
 			//not a valid character
-			return 1;
+			return ERROR;
 		}
 	}
 }

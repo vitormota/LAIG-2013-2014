@@ -36,7 +36,7 @@ int main(void){
     
 	Parser::YafParser f = Parser::YafParser();
 	switch(f.loadYaf()){
-	case 3:
+	case Parser::file_not_found:
 		cout << "File not found or ill formed xml.";
 		break;
 	}

@@ -14,8 +14,14 @@ namespace Parser {
     
 	using namespace std;
     
-	enum ERRORS {globals_error = 1, cameras_error, textures_error, appearances_error, file_not_found,};
-	enum node_i {GLOBALS, CAMERAS, LIGHTNING, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCE};
+	enum ERRORS {
+		globals_error = 1, cameras_error, lightning_error, textures_error, 
+		appearances_error, file_not_found,
+	};
+	enum node_i {
+		GLOBALS, CAMERAS, LIGHTNING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE,
+		APPEARANCE
+	};
     
 	class YafParser {
 	
