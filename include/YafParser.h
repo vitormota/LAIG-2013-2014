@@ -16,11 +16,11 @@ namespace Parser {
     
 	enum ERRORS {
 		globals_error = 1, cameras_error, lightning_error, textures_error, 
-		appearances_error, file_not_found,
+		appearances_error, graph_error, file_not_found
 	};
 	enum node_i {
-		GLOBALS, CAMERAS, LIGHTNING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE,
-		APPEARANCE
+		GLOBALS, CAMERAS, LIGHTNING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCES,
+		APPEARANCE, GRAPH, NODE, TRANSFORMS, TRANSLATE, ROTATE, SCALE, APPEARANCEREF, CHILDREN, RECTANGLE, TRIANGLE, CYLINDER, SPHERE, TORUS, NODEREF
 	};
     
 	class YafParser {

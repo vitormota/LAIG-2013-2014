@@ -82,9 +82,11 @@
                 <!-- ex: bloco transforms pode ficar sem conteudo --> 
                 <!-- ex: bloco transforms pode ser R,T (nao tem S) --> 
                 <!-- ex: bloco transforms pode ser R,S,T,S --> 
-                <translate to="ff ff ff" /> 
-                <rotate axis="ee" angle="ff" /> 
-                <scale factor="ff ff ff" /> 
+                <translate to="1.0 1.0 1.0" />
+                <rotate axis="x" angle="1.0" />
+                <scale factor="1.0 1.0 1.0" />
+                <scale factor="1.0 2.0 1.0" />
+                <rotate axis="y" angle="1.0" />
             </transforms> 
            
             <!-- declaracao da aparencia a utilizar (pode ser omitida): --> 
@@ -102,11 +104,11 @@
                 <!-- Primitivas : rectangle, triangle, cylinder, sphere, torus --> 
                 <!--   Comandos a serem interpretados genericamente como em OpenGL/GLUT, exceto --> 
                 <!--   o cilindro, que deve adicionalmente ter topos ou tampas) -->             
-                <rectangle xy1="ff ff" xy2="ff ff" /> 
-                <triangle xyz1="ff ff ff" xyz2="ff ff ff" xyz3="ff ff ff" /> 
-                <cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />      <!-- deve ter topos --> 
-                <sphere radius="ff" slices="ii" stacks="ii" /> 
-                <torus inner="ff" outer="ff" slices="ii" loops="ii" /> 
+                <rectangle xy1="1.0 1.0" xy2="1.0 1.0" />
+                <triangle xyz1="1.0 1.0 1.0" xyz2="1.0 2.0 1.0" xyz3="1.0 1.0 2.0" />
+                <cylinder base="1.0" top="1.0" height="1.0" slices="3" stacks="1" />      <!-- deve ter topos -->
+                <sphere radius="1.0" slices="4" stacks="2" />
+                <torus inner="1.0" outer="1.0" slices="20" loops="10" />
                 
                 <!-- Referencia a outros elementos do grafo --> 
                 <!-- (repetir o nº de vezes necessario) --> 

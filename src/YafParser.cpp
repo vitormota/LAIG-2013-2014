@@ -7,63 +7,63 @@
 
 
 namespace StringParsing {
-
+    
 	const int ERROR = 0;
 	int FloatReader(const char *,float *);
-
+    
 } //StringParsing
 
 
 namespace Parser {
-
+    
 	const char attribute_not_found[] = "No such attribute";
 	const char element_not_found[] = "No such element";
-	const char *node_names[10] = {"globals","cameras","lightning","omni",
-		"spot","perspective","ortho","texture", "appearance"};
-
+	const char *node_names[24] = {"globals","cameras","lightning","omni",
+		"spot","perspective","ortho","texture", "appearances", "appearance", "graph", "node", "transforms", "translate", "rotate", "scale", "appearanceref", "children", "rectangle", "triangle", "cylinder", "sphere", "torus", "noderef"};
+    
 	YafParser::YafParser()
 	{
 		this->_filename = "yaf.xml";
 	}
-
+    
 	YafParser::YafParser(string filename)
 	{
 		this->_filename = filename;
 		loadYaf();
 	}
-
+    
 	YafParser::~YafParser(void)
 	{
 		delete(doc);
 	}
-
+    
 	int YafParser::loadYaf(void){
-
+        
 		// Read XML from file
 		doc = new TiXmlDocument(_filename.c_str());
-
+        
 		bool loadOkay = doc->LoadFile();
-
+        
 		if (!loadOkay)
 		{
 			return file_not_found;
 		}
-
+        
 		TiXmlElement* yafElement = doc->FirstChildElement("yaf");
-
+        
 		if (yafElement == NULL)
 		{
 			printf("Main yaf block element not found! Exiting!\n");
 			exit(1);
 		}
-
+        
 		globalsElement = yafElement->FirstChildElement("globals");
 		camerasElement = yafElement->FirstChildElement("cameras");
 		lightingElement = yafElement->FirstChildElement("lighting");
 		texturesElement = yafElement->FirstChildElement("textures");
 		appearancesElement = yafElement->FirstChildElement("appearances");
 		graphElement = yafElement->FirstChildElement("graph");
-
+        
 		if(!loadGlobals(globalsElement)) return globals_error;
 		//make output readable
 		cout << "----------------------\n";
@@ -85,115 +85,119 @@ namespace Parser {
 		cout << "-----------------------\n";
 		cout << "- appearances processed. -\n";
 		cout << "-----------------------\n\n";
-
+        if(!loadGraph(graphElement)) return graph_error;
+		cout << "-----------------------\n";
+		cout << "-   graph processed.  -\n";
+		cout << "-----------------------\n\n";
+        
 		return 0;
 	}
-
+    
 	bool YafParser::loadGlobals(TiXmlElement* globalsElement){
-
+        
 		if(globalsElement == NULL){
 			cout << element_not_found
-				<< node_names[GLOBALS]
+            << node_names[GLOBALS]
 			<< endl;
 			return false;
 		}
-
+        
 		char *attributeStr;
-
+        
 		// background attribute
 		float backgroundFloatValues[4];
 		bool error = false;
 		attributeStr = (char*) globalsElement->Attribute("background");
-
+        
 		//cout << attributeStr << endl;
-
+        
 		StringParsing::FloatReader(attributeStr, backgroundFloatValues);
-
+        
 		// drawmode attribute
 		attributeStr = (char*) globalsElement->Attribute("drawmode");
-
+        
 		if(strcmp(attributeStr,"fill")!=0 && strcmp(attributeStr,"line")!=0 && strcmp(attributeStr,"point")!=0){
 			cout << "Invalid drawmode..." << endl;
 			error = true;
 		}
-
+        
 		// shading attribute
 		attributeStr = (char*) globalsElement->Attribute("shading");
-
+        
 		if(strcmp(attributeStr,"flat")!=0 && strcmp(attributeStr,"gouraud")!=0){
 			cout << "Invalid shading..." << endl;
 			error = true;
 		}
-
+        
 		// cullface attribute
 		attributeStr = (char*) globalsElement->Attribute("cullface");
-
+        
 		if(strcmp(attributeStr, "none")!=0 && strcmp(attributeStr,"back")!=0 && strcmp(attributeStr,"front")!=0 && strcmp(attributeStr,"both")!=0){
 			cout << "Invalid cullface..." << endl;
 			error = true;
 		}
-
+        
 		// cullorder attribute
 		attributeStr = (char*) globalsElement->Attribute("cullorder");
 		if(strcmp(attributeStr,"CCW")!=0 && strcmp(attributeStr,"CW")!=0){
 			cout << "Invalid cullorder..." << endl;
 			error = true;
 		}
-
+        
 		if(error)
 		{return false;}
 		else
 		{return true;}
 	}
-
+    
 	bool YafParser::loadCameras(TiXmlElement* camerasElement){
-
+        
 		if(camerasElement == NULL){
 			cout <<
-				element_not_found <<
-				node_names[CAMERAS] <<
-				endl;
+            element_not_found <<
+            node_names[CAMERAS] <<
+            endl;
 			return false;
 		}
-
+        
 		TiXmlElement *perspectiveElement = camerasElement->FirstChildElement();
-
+        
 		if(perspectiveElement == NULL){
 			cout << element_not_found <<
-				node_names[PERSPECTIVE] <<
-				"," <<
-				node_names[ORTHO] <<
-				endl;
+            node_names[PERSPECTIVE] <<
+            "," <<
+            node_names[ORTHO] <<
+            endl;
 			return false;
 		}
-
+        
 		char *initialElementStr = (char*) camerasElement->Attribute("initial");
 		if(initialElementStr == NULL){
 			cout << "Initial camera not found, using first read."
-				<< endl;
+            << endl;
 		}
-
+        
 		// perspective element
-
+        
 		bool error = true;
 		char *id;
-
+        
 		float near = 0, far = 0, angle = 0, pos[3], target[3], left = 0, right = 0, top = 0, bottom = 0;
-
+        
 		while(perspectiveElement){
-
+            
 			id = (char*) perspectiveElement->Attribute("id");
-
+            
 			//BUG ---->   if((char*) perspectiveElement->ToText() == node_names[PERSPECTIVE]){ ??
 			if(strcmp(perspectiveElement->Value(),node_names[PERSPECTIVE])==0){
-
+                
 				//perspective found
 				if(!id ||
-					perspectiveElement->QueryFloatAttribute("near",&near) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("far",&far) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS ||
-					StringParsing::FloatReader(perspectiveElement->Attribute("pos"),pos) != 3 ||
-					StringParsing::FloatReader(perspectiveElement->Attribute("target"),target) != 3)
+                   perspectiveElement->QueryFloatAttribute("near",&near) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("far",&far) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS ||
+                   StringParsing::FloatReader(perspectiveElement->Attribute("pos"),pos) != 3 ||
+                   StringParsing::FloatReader(perspectiveElement->Attribute("target"),target) != 3)
 				{
 					//bad perspective found
 					cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), ignoring.\n";
@@ -201,32 +205,32 @@ namespace Parser {
 				else
 				{
 					cout << node_names[PERSPECTIVE] <<
-						" id: " << id << ", processed." << endl;
+                    " id: " << id << ", processed." << endl;
 					//pre-requesite, at least one so, flag off
 					if(error) error = false;
 				}
 			}else if(strcmp(perspectiveElement->Value(),node_names[ORTHO])==0){
 				//ortho found
 				if(!id ||
-					perspectiveElement->QueryFloatAttribute("near",&near) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("far",&far) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("left",&left) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("right",&right) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("top",&top) != TIXML_SUCCESS ||
-					perspectiveElement->QueryFloatAttribute("bottom",&bottom) != TIXML_SUCCESS)
+                   perspectiveElement->QueryFloatAttribute("near",&near) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("far",&far) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("left",&left) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("right",&right) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("top",&top) != TIXML_SUCCESS ||
+                   perspectiveElement->QueryFloatAttribute("bottom",&bottom) != TIXML_SUCCESS)
 				{
 					//bad ortho found
 					cout <<  node_names[ORTHO] <<
-						" id: " <<
-						id <<
-						" has invalid field(s), ignoring.\n";
+                    " id: " <<
+                    id <<
+                    " has invalid field(s), ignoring.\n";
 				}
 				else{
 					cout << node_names[ORTHO] <<
-						" id: " <<
-						id <<
-						", processed." <<
-						endl;
+                    " id: " <<
+                    id <<
+                    ", processed." <<
+                    endl;
 					//pre-requesite, at least one so, flag off
 					if(error) error = false;
 				}
@@ -238,22 +242,22 @@ namespace Parser {
 		cout << endl;
 		return true;
 	}
-
+    
 	bool YafParser::loadLightning(TiXmlElement *lightningElement){
 		if(lightingElement == NULL){
 			cout <<
-				element_not_found <<
-				node_names[LIGHTNING] <<
-				endl;
+            element_not_found <<
+            node_names[LIGHTNING] <<
+            endl;
 			return false;
 		}
 		TiXmlElement *child = lightingElement->FirstChildElement();
 		if(!child){
 			cout << element_not_found <<
-				node_names[OMNI] <<
-				"," <<
-				node_names[SPOT] <<
-				endl;
+            node_names[OMNI] <<
+            "," <<
+            node_names[SPOT] <<
+            endl;
 			return false;
 		}
 		bool doublesided=false,local=false,enabled=false;
@@ -282,22 +286,22 @@ namespace Parser {
 				enabled_child=true;
 			}
 			if(!id ||
-				StringParsing::FloatReader(child->Attribute("location"),location) != 4 ||
-				StringParsing::FloatReader(child->Attribute("ambient"),ambient_child) != 4 ||
-				StringParsing::FloatReader(child->Attribute("diffuse"),diffuse) != 4 ||
-				StringParsing::FloatReader(child->Attribute("specular"),specular) != 4)
+               StringParsing::FloatReader(child->Attribute("location"),location) != 4 ||
+               StringParsing::FloatReader(child->Attribute("ambient"),ambient_child) != 4 ||
+               StringParsing::FloatReader(child->Attribute("diffuse"),diffuse) != 4 ||
+               StringParsing::FloatReader(child->Attribute("specular"),specular) != 4)
 			{
 				//bad base attributes
 				error = true;
 			}
-			char* s = (char*) child->Value();
+			//char* s = (char*) child->Value();
 			if(!error && !strcmp(child->Value(),node_names[SPOT])){
 				//it is a spot camera
 				//extra attr to parse
 				spot = true;
 				if(child->QueryFloatAttribute("angle",&angle) != TIXML_SUCCESS ||
-					child->QueryFloatAttribute("exponent",&exponent) != TIXML_SUCCESS ||
-					StringParsing::FloatReader(child->Attribute("direction"),direction)!=3)
+                   child->QueryFloatAttribute("exponent",&exponent) != TIXML_SUCCESS ||
+                   StringParsing::FloatReader(child->Attribute("direction"),direction)!=3)
 				{
 					//bad spot camera
 					error = true;
@@ -309,59 +313,59 @@ namespace Parser {
 				count ++;
 			}else{
 				cout <<  child->Value() <<
-					" id: " <<
-					id <<
-					" has invalid field(s), ignoring.\n";
+                " id: " <<
+                id <<
+                " has invalid field(s), ignoring.\n";
 			}
 			child = child->NextSiblingElement();
 		}
 		cout << "Found " <<
-			count <<
-			" light(s)\n\n";
+        count <<
+        " light(s)\n\n";
 		return true;
 	}
-
+    
 	bool YafParser::loadTextures(TiXmlElement *texturesElement){
 		if(texturesElement == NULL){
 			cout <<
-				element_not_found <<
-				node_names[TEXTURE] <<
-				endl;
+            element_not_found <<
+            node_names[TEXTURE] <<
+            endl;
 			return false;
 		}
 		int count = 0;
 		char *id,*file;
 		TiXmlElement* textureElement = texturesElement->FirstChildElement();
-
+        
 		while(textureElement){
 			id = (char*) textureElement->Attribute("id");
 			file = (char*) textureElement->Attribute("file");
 			if(!id || !file){
 				//Bad texture
 				cout << node_names[TEXTURE] <<
-					" id: " <<
-					" has invalid field(s), ignoring.\n";
+                " id: " <<
+                " has invalid field(s), ignoring.\n";
 			}else{
 				//valid texture
 				//this id must be saved, for cross-reference
 				//with an appearance with same id
 				cout << node_names[TEXTURE] <<
-					" id: " <<
-					id <<
-					", processed." <<
-					endl;
+                " id: " <<
+                id <<
+                ", processed." <<
+                endl;
 				count ++;
 			}
 			//next texture
 			textureElement = textureElement->NextSiblingElement();
 		}
 		//print how many where read
-		cout << "Found " << 
-			count <<
-			" texture(s).\n\n";
+		cout << "Found " <<
+        count <<
+        " texture(s).\n\n";
 		return true;
 	}
-
+    
     
     // TODO textureref, texlength_s e textlength_t sao atributos opcionais se for usada uma textura
     bool YafParser::loadAppearances(TiXmlElement *appearancesElement){
@@ -376,10 +380,10 @@ namespace Parser {
         
 		int count = 0; // number of appearance elements
 		char *id, *textureref;
-		float emissiveFloatValues[4];
-		float ambientFloatValues[4];
-		float diffuseFloatValues[4];
-		float specularFloatValues[4];
+		float emissive[4];
+		float ambient[4];
+		float diffuse[4];
+		float specular[4];
 		char *emissiveStr;
 		char *ambientStr;
 		char *diffuseStr;
@@ -397,9 +401,9 @@ namespace Parser {
         // check if there is at least one appearance element
         if(appearanceElement == NULL){
 			cout << element_not_found <<
-            node_names[PERSPECTIVE] <<
+            node_names[APPEARANCES] <<
             "," <<
-            node_names[ORTHO] <<
+            node_names[APPEARANCE] <<
             endl;
 			return false;
 		}
@@ -432,7 +436,7 @@ namespace Parser {
             
 			// emissive attribute
             
-			if(!emissiveStr || (StringParsing::FloatReader(emissiveStr, emissiveFloatValues) != 4))
+			if(!emissiveStr || (StringParsing::FloatReader(emissiveStr, emissive) != 4))
 			{
                 
 				// invalid emission
@@ -448,7 +452,7 @@ namespace Parser {
             
 			// ambient attribute
             
-			if(!ambientStr || (StringParsing::FloatReader(ambientStr, ambientFloatValues)) != 4)
+			if(!ambientStr || (StringParsing::FloatReader(ambientStr, ambient)) != 4)
 			{
                 
 				// invalid ambient
@@ -464,7 +468,7 @@ namespace Parser {
             
 			// diffuse attribute
             
-			if(!diffuseStr || (StringParsing::FloatReader(diffuseStr, diffuseFloatValues)) != 4)
+			if(!diffuseStr || (StringParsing::FloatReader(diffuseStr, diffuse)) != 4)
 			{
                 
 				// invalid diffuse
@@ -480,7 +484,7 @@ namespace Parser {
             
 			// specular attribute
             
-			if(!specularStr || (StringParsing::FloatReader(specularStr, specularFloatValues)) != 4)
+			if(!specularStr || (StringParsing::FloatReader(specularStr, specular)) != 4)
 			{
                 
 				// invalid specular
@@ -568,7 +572,659 @@ namespace Parser {
         
 		return true;
 	}
+    
+    
+    bool YafParser::loadGraph(TiXmlElement* graphElement)
+    {
+        if(graphElement == NULL){
+			cout << element_not_found
+            << node_names[GRAPH]
+			<< endl;
+			return false;
+		}
+        
+        char *rootid;
+        
+        // rootid attribute
+        rootid = (char*) graphElement->Attribute("rootid");
+        
+        if(!rootid){
+            
+            // invalid rootid
+            cout << node_names[GRAPH] << " rootid: " << " has invalid field(s), ignoring.\n";
+        }
+        else{
+            // valid rootid
+            cout << node_names[GRAPH] << " rootid: " << rootid << ", processed." << endl;
+            
+        }
+        
+        int count = 0; // number of node elements
+        
+        TiXmlElement* nodeElement = graphElement->FirstChildElement();
+        
+        // check if there is at least one node element
+        if(nodeElement == NULL){
+			cout << element_not_found <<
+            node_names[GRAPH] <<
+            "," <<
+            node_names[NODE] <<
+            endl;
+			return false;
+		}
+        
+        
+        while(nodeElement){
+            
+            char *node_id;
+            
+            // id attribute of the element node
+            node_id = (char*) nodeElement->Attribute("id");
+            
+            if(!node_id){
+                
+                // invalid id
+                cout << node_names[NODE] << " id: " << " has invalid field(s), ignoring.\n";
+            }
+            else{
+                // valid id
+                cout << node_names[NODE] << " id: " << node_id << ", processed." << endl;
+                
+            }
+            
+            // transforms element
+            
+            TiXmlElement* transformsElement = nodeElement->FirstChildElement("transforms");
+            
+            if(transformsElement == NULL){
+                cout << element_not_found
+                << node_names[TRANSFORMS]
+                << endl;
+                return false;
+            }
+            
+            
+            // check all transformations (translate, rotate or scale)
+            
+            TiXmlElement* transformationElement = transformsElement->FirstChildElement();
+            
+            
+            while(transformationElement)
+            {
+                
+                // if the element is "translate"
+                if(strcmp(transformationElement->Value(), "translate") == 0)
+                {
+                    // to attribute
+                    
+                    float to[3];
+                    char *toStr;
+                    
+                    toStr = (char*) transformationElement->Attribute("to");
+                    
+                    
+                    if(!toStr || (StringParsing::FloatReader(toStr, to) != 3))
+                    {
+                        
+                        // invalid to
+                        cout << node_names[TRANSLATE] << " to: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid to
+                        cout << node_names[TRANSLATE] << " to: " << toStr << ", processed." << endl;
+                        
+                    }
+                    
+                }
+                // if the element is "rotate"
+                else
+                    if(strcmp(transformationElement->Value(), "rotate") == 0)
+                    {
+                        // axis attribute
+                        
+                        char *axis;
+                        
+                        axis = (char*) transformationElement->Attribute("axis");
+                        
+                        // the axis has to be "x, y or z"
+                        if(!axis || (strcmp("x", axis) && strcmp("y", axis) && strcmp("x", axis)))
+                        {
+                            
+                            // invalid axis
+                            cout << node_names[ROTATE] << " axis: " << " has invalid field(s), ignoring.\n";
+                            
+                        }
+                        else{
+                            
+                            // valid axis
+                            cout << node_names[ROTATE] << " axis: " << axis << ", processed." << endl;
+                            
+                        }
+                        
+                        // angle attribute
+                        
+                        float angle[1];
+                        char *angleStr;
+                        
+                        angleStr = (char*) transformationElement->Attribute("angle");
+                        
+                        if(!angleStr || (StringParsing::FloatReader(angleStr, angle)) != 1)
+                        {
+                            
+                            // invalid angle
+                            cout << node_names[ROTATE] << " angle: " << " has invalid field(s), ignoring.\n";
+                            
+                        }
+                        else{
+                            
+                            // valid angle
+                            cout << node_names[ROTATE] << " angle: " << angleStr << ", processed." << endl;
+                            
+                        }
+                        
+                    }
+                // if the element is "scale"
+                    else
+                        if(strcmp(transformationElement->Value(), "scale") == 0)
+                        {
+                            
+                            // factor attribute
+                            
+                            float factor[3];
+                            char *factorStr;
+                            
+                            factorStr = (char*) transformationElement->Attribute("factor");
+                            
+                            
+                            if(!factorStr || (StringParsing::FloatReader(factorStr, factor) != 3))
+                            {
+                                
+                                // invalid factor
+                                cout << node_names[SCALE] << " factor: " << " has invalid field(s), ignoring.\n";
+                                
+                            }
+                            else{
+                                
+                                // valid factor
+                                cout << node_names[SCALE] << " factor: " << factorStr << ", processed." << endl;
+                                
+                            }
+                        }
+                
+                // next transformation
+                transformationElement = transformationElement->NextSiblingElement();
+                
+            }
+            
+            // appearanceref element
+            
+            TiXmlElement* appearancerefElement = nodeElement->FirstChildElement("appearanceref");
+            
+            char *appearanceref_id;
+            
+            // id attribute of the element appearanceref
+            
+            appearanceref_id = (char*) appearancerefElement->Attribute("id");
+            
+            if(!appearanceref_id){
+                
+                // invalid appearanceref_id
+                cout << node_names[APPEARANCEREF] << " id: " << " has invalid field(s), ignoring.\n";
+            }
+            else{
+                // valid appearanceref_id
+                cout << node_names[APPEARANCEREF] << " id: " << appearanceref_id << ", processed." << endl;
+                
+            }
+            
+            // children element
+            
+            TiXmlElement* childrenElement = nodeElement->FirstChildElement("children");
+            
+            if(childrenElement == NULL){
+                cout << element_not_found
+                << node_names[CHILDREN]
+                << endl;
+                return false;
+            }
+            
+            
+            // check all children (rectangle, triangle, cylinder, sphere, torus or noderef)
+            
+            TiXmlElement* childElement = childrenElement->FirstChildElement();
+            
+            
+            while(childElement)
+            {
+                
+                // if the element is "rectangle"
+                if(strcmp(childElement->Value(), "rectangle") == 0)
+                {
+                    // xy1 attribute
+                    
+                    float xy1[2];
+                    char *xy1Str;
+                    
+                    xy1Str = (char*) childElement->Attribute("xy1");
+                    
+                    if(!xy1Str || (StringParsing::FloatReader(xy1Str, xy1)) != 2)
+                    {
+                        
+                        // invalid xy1
+                        cout << node_names[RECTANGLE] << " xy1: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid xy1
+                        cout << node_names[RECTANGLE] << " xy1: " << xy1Str << ", processed." << endl;
+                        
+                    }
+                    
+                    // xy2 attribute
+                    
+                    float xy2[2];
+                    char *xy2Str;
+                    
+                    xy2Str = (char*) childElement->Attribute("xy2");
+                    
+                    if(!xy2Str || (StringParsing::FloatReader(xy2Str, xy2)) != 2)
+                    {
+                        
+                        // invalid xy2
+                        cout << node_names[RECTANGLE] << " xy2: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid xy2
+                        cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", processed." << endl;
+                        
+                    }
+                    
+                }
+                // if the element is "triangle"
+                else
+                if(strcmp(childElement->Value(), "triangle") == 0)
+                {
+                    // xyz1 attribute
+                    
+                    float xyz1[3];
+                    char *xyz1Str;
+                    
+                    xyz1Str = (char*) childElement->Attribute("xyz1");
+                    
+                    if(!xyz1Str || (StringParsing::FloatReader(xyz1Str, xyz1)) != 3)
+                    {
+                        
+                        // invalid xyz1
+                        cout << node_names[TRIANGLE] << " xyz1: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid xyz1
+                        cout << node_names[TRIANGLE] << " xyz1: " << xyz1Str << ", processed." << endl;
+                        
+                    }
+                    
+                    // xyz2 attribute
+                    
+                    float xyz2[3];
+                    char *xyz2Str;
+                    
+                    xyz2Str = (char*) childElement->Attribute("xyz2");
+                    
+                    if(!xyz2Str || (StringParsing::FloatReader(xyz2Str, xyz2)) != 3)
+                    {
+                        
+                        // invalid xyz2
+                        cout << node_names[TRIANGLE] << " xyz2: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid xyz2
+                        cout << node_names[TRIANGLE] << " xyz2: " << xyz2Str << ", processed." << endl;
+                        
+                    }
+                    
+                    // xyz3 attribute
+                    
+                    float xyz3[3];
+                    char *xyz3Str;
+                    
+                    xyz3Str = (char*) childElement->Attribute("xyz3");
+                    
+                    if(!xyz3Str || (StringParsing::FloatReader(xyz3Str, xyz3)) != 3)
+                    {
+                        
+                        // invalid xyz3
+                        cout << node_names[TRIANGLE] << " xyz3: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid xyz3
+                        cout << node_names[TRIANGLE] << " xyz3: " << xyz3Str << ", processed." << endl;
+                        
+                    }
+                    
+                }
+                // if the element is "cylinder"
+                else
+                if(strcmp(childElement->Value(), "cylinder") == 0)
+                {
+                    // base attribute
+                    
+                    float base[1];
+                    char *baseStr;
+                    
+                    baseStr = (char*) childElement->Attribute("base");
+                    
+                    if(!baseStr || (StringParsing::FloatReader(baseStr, base)) != 1)
+                    {
+                        
+                        // invalid base
+                        cout << node_names[CYLINDER] << " base: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid base
+                        cout << node_names[CYLINDER] << " base: " << baseStr << ", processed." << endl;
+                        
+                    }
+                    
+                    // top attribute
+                    
+                    float top[1];
+                    char *topStr;
+                    
+                    topStr = (char*) childElement->Attribute("top");
+                    
+                    if(!topStr || (StringParsing::FloatReader(topStr, top)) != 1)
+                    {
+                        
+                        // invalid top
+                        cout << node_names[CYLINDER] << " top: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid top
+                        cout << node_names[CYLINDER] << " top: " << topStr << ", processed." << endl;
+                        
+                    }
+                    
+                    // height attribute
+                    
+                    float height[1];
+                    char *heightStr;
+                    
+                    heightStr = (char*) childElement->Attribute("height");
+                    
+                    if(!heightStr || (StringParsing::FloatReader(heightStr, height)) != 1)
+                    {
+                        
+                        // invalid height
+                        cout << node_names[CYLINDER] << " height: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid height
+                        cout << node_names[CYLINDER] << " height: " << heightStr << ", processed." << endl;
+                        
+                    }
 
+                    // slices attribute
+    
+                    int slices = 0;
+                    int retSlices;
+                    
+                    retSlices = childElement->QueryIntAttribute("slices", &slices);
+                    
+                    if(slices <= 0 || (retSlices != TIXML_SUCCESS))
+                    {
+                        
+                        // invalid slices
+                        cout << node_names[CYLINDER] << " slices: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid slices
+                        cout << node_names[CYLINDER] << " slices: " << slices << ", processed." << endl;
+                        
+                    }
+                    
+                    // stacks attribute
+                    
+                    int stacks = 0;
+                    int retStacks;
+                    
+                    retStacks = childElement->QueryIntAttribute("stacks", &stacks);
+                    
+                    if(slices <= 0 || (retStacks != TIXML_SUCCESS))
+                    {
+                        
+                        // invalid stacks
+                        cout << node_names[CYLINDER] << " stacks: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid stacks
+                        cout << node_names[CYLINDER] << " stacks: " << stacks << ", processed." << endl;
+                        
+                    }
+                    
+                }
+                else
+                // if the element is "sphere"
+                if(strcmp(childElement->Value(), "sphere") == 0)
+                {
+                    
+                    // radius attribute
+                    
+                    float radius[1];
+                    char *radiusStr;
+                    
+                    radiusStr = (char*) childElement->Attribute("radius");
+                    
+                    if(!radiusStr || (StringParsing::FloatReader(radiusStr, radius)) != 1)
+                    {
+                        
+                        // invalid radius
+                        cout << node_names[SPHERE] << " radius: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid radius
+                        cout << node_names[SPHERE] << " radius: " << radiusStr << ", processed." << endl;
+                        
+                    }
+                    
+                    // slices attribute
+                    
+                    int slices = 0;
+                    int retSlices;
+                    
+                    retSlices = childElement->QueryIntAttribute("slices", &slices);
+                    
+                    if(slices <= 0 || (retSlices != TIXML_SUCCESS))
+                    {
+                        
+                        // invalid slices
+                        cout << node_names[SPHERE] << " slices: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid slices
+                        cout << node_names[SPHERE] << " slices: " << slices << ", processed." << endl;
+                        
+                    }
+                    
+                    // stacks attribute
+                    
+                    int stacks = 0;
+                    int retStacks;
+                    
+                    retStacks = childElement->QueryIntAttribute("stacks", &stacks);
+                    
+                    if(slices <= 0 || (retStacks != TIXML_SUCCESS))
+                    {
+                        
+                        // invalid stacks
+                        cout << node_names[SPHERE] << " stacks: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid stacks
+                        cout << node_names[SPHERE] << " stacks: " << stacks << ", processed." << endl;
+                        
+                    }
+
+
+                    
+                }
+                else
+                // if the element is "torus"
+                if(strcmp(childElement->Value(), "torus") == 0)
+                {
+                    // inner attribute
+                    
+                    float inner[1];
+                    char *innerStr;
+                    
+                    innerStr = (char*) childElement->Attribute("inner");
+                    
+                    if(!innerStr || (StringParsing::FloatReader(innerStr, inner)) != 1)
+                    {
+                        
+                        // invalid inner
+                        cout << node_names[TORUS] << " inner: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid inner
+                        cout << node_names[TORUS] << " inner: " << innerStr << ", processed." << endl;
+                        
+                    }
+                    
+                    // outer attribute
+                    
+                    float outer[1];
+                    char *outerStr;
+                    
+                    outerStr = (char*) childElement->Attribute("outer");
+                    
+                    if(!outerStr || (StringParsing::FloatReader(outerStr, outer)) != 1)
+                    {
+                        
+                        // invalid outer
+                        cout << node_names[TORUS] << " outer: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid outer
+                        cout << node_names[TORUS] << " outer: " << outerStr << ", processed." << endl;
+                        
+                    }
+                    
+                    // slices attribute
+                    
+                    int slices = 0;
+                    int retSlices;
+                    
+                    retSlices = childElement->QueryIntAttribute("slices", &slices);
+                    
+                    if(slices <= 0 || (retSlices != TIXML_SUCCESS))
+                    {
+                        
+                        // invalid slices
+                        cout << node_names[TORUS] << " slices: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid slices
+                        cout << node_names[TORUS] << " slices: " << slices << ", processed." << endl;
+                        
+                    }
+                    
+                    // loops attribute
+                    
+                    int loops = 0;
+                    int retLoops;
+                    
+                    retLoops = childElement->QueryIntAttribute("loops", &loops);
+                    
+                    if(loops <= 0 || (retLoops != TIXML_SUCCESS))
+                    {
+                        
+                        // invalid loops
+                        cout << node_names[TORUS] << " loops: " << " has invalid field(s), ignoring.\n";
+                        
+                    }
+                    else{
+                        
+                        // valid loops
+                        cout << node_names[TORUS] << " loops: " << loops << ", processed." << endl;
+                        
+                    }
+
+                }
+                else
+                // if the element is "noderef"
+                if(strcmp(childElement->Value(), "noderef") == 0)
+                {
+                    char *noderef_id;
+                    
+                    // id attribute of the element noderef
+                    
+                    noderef_id = (char*) childElement->Attribute("id");
+                    
+                    if(!noderef_id){
+                        
+                        // invalid noderef_id
+                        cout << node_names[NODEREF] << " id: " << " has invalid field(s), ignoring.\n";
+                    }
+                    else{
+                        // valid noderef_id
+                        cout << node_names[NODEREF] << " id: " << noderef_id << ", processed." << endl;
+                        
+                    }
+         
+                }
+                
+                // next child
+                childElement = childElement->NextSiblingElement();
+                
+            }
+            
+            
+            
+            // next node
+			nodeElement = nodeElement->NextSiblingElement();
+			count ++;
+            
+        }
+        
+        // print how many where read
+		cout << "Found " << count << " node(s).\n\n";
+        
+		return true;
+        
+    }
 }
 
 /// <summary>
@@ -584,7 +1240,7 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 	char f[15];
 	char value;
 	int i = 0, v = 0, n = 0;
-
+    
 	for(;;){
 		value = text[i++];
 		if(value >=48 && value <=57){
