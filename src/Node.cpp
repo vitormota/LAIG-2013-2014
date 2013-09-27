@@ -8,14 +8,24 @@ namespace scene{
 	/// Only copies node name
 	/// </summary>
 	/// <param name="n">The n.</param>
-	Node::Node(const Node &n){
+	/*Node::Node(const Node id){
 		this->name=n.name;
 		//////
-	}
+	}*/
 
-	Node::~Node(){
-		delete[] trasnforms;
-	}
+    Node::Node(string id)
+    {
+        this->id = id;
+    }
+    
+    Node::~Node()
+    {
+        
+    }
+    
+    /*Node::~Node(){
+		//delete[] trasnforms;
+	}*/
 
 
 }//scene

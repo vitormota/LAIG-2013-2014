@@ -10,7 +10,7 @@ namespace scene{
 
 	using namespace std;
 
-	class Scene_graph{
+	/*class Scene_graph{
 	public:
 		Scene_graph(string root);
 		~Scene_graph();
@@ -19,11 +19,21 @@ namespace scene{
 		string root_id;
 		map<string,Node*> graph;
 
-	};
+	};*/
+
+class Graph
+{
+    private:
+        string rootid = "0";
+        map<string, Node*> nodesMap; // the graph is a set of nodes stored in a <map>
+    
+    public:
+        Graph(string rootid);
+        ~Graph();
+        void addNode(Node*);
+};
+
+
 } //scene
-
-
-
-
 
 #endif
