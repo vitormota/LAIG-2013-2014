@@ -1,15 +1,26 @@
-﻿Build started 24/09/2013 12:23:03.
-     1>Project "E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.exe" /INCREMENTAL /NOLOGO /LIBPATH:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\lib" /LIBPATH:C:\Windows\System\lib glew32.lib CGFlibd.lib TinyXML.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.lib" /MACHINE:X86 Debug\Node.obj
-         Debug\Graph.obj
+﻿Build started 27/09/2013 23:06:41.
+     1>Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Windows\CGRA_lib\include /IC:\Windows\CGRA_lib\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Lightning.cpp src\YafParser.cpp src\main.cpp
+         main.cpp
+         YafParser.cpp
+         Lightning.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\lib" /LIBPATH:C:\Windows\CGRA_lib\lib /LIBPATH:C:\Windows\CGRA_lib\lib glew32.lib CGFlibd.lib TinyXML.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.lib" /MACHINE:X86 Debug\Graph.obj
+         Debug\Lightning.obj
          Debug\main.obj
+         Debug\Node.obj
+         Debug\Primitive.obj
+         Debug\tinyxml2.obj
+         Debug\Transform.obj
          Debug\YafParser.obj
+     1>main.obj : error LNK2005: "bool scene::enabled" (?enabled@scene@@3_NA) already defined in Lightning.obj
+     1>YafParser.obj : error LNK2005: "bool scene::enabled" (?enabled@scene@@3_NA) already defined in Lightning.obj
      1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>Node.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall scene::Node::draw(void)" (?draw@Node@scene@@UAEXXZ)
-     1>E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\Debug\CGraphics_LAIG_TP01.exe : fatal error LNK1120: 1 unresolved externals
-     1>Done Building Project "E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\CGraphics_LAIG_TP01.vcxproj" (Build target(s)) -- FAILED.
+     1>C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe : fatal error LNK1169: one or more multiply defined symbols found
+     1>Done Building Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.26
+Time Elapsed 00:00:03.91

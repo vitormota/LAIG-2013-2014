@@ -26,10 +26,22 @@
     <ClCompile Include="src\YafParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\Node.cpp">
+    <ClCompile Include="src\Graph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graph.cpp">
+    <ClCompile Include="src\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Primitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lightning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -49,7 +61,13 @@
     <ClInclude Include="include\Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Primitive.h">
+    <ClInclude Include="include\Primitive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Lightning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

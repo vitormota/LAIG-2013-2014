@@ -16,18 +16,24 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Node.cpp" />
     <ClCompile Include="src\Graph.cpp" />
+    <ClCompile Include="src\Lightning.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\Primitive.cpp" />
+    <ClCompile Include="src\tinyxml2.cpp" />
+    <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\YafParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Graph.h" />
+    <ClInclude Include="include\Lightning.h" />
     <ClInclude Include="include\Node.h" />
+    <ClInclude Include="include\Primitive.h" />
     <ClInclude Include="include\tinystr.h" />
     <ClInclude Include="include\tinyxml.h" />
+    <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\YafParser.h" />
-    <ClInclude Include="src\Primitive.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A18068-B93D-4EFD-88DB-4F6DD7DA6636}</ProjectGuid>
@@ -59,7 +65,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(VCInstallDir)bin;$(ProgramFiles)\Windows Kits\8.0\bin\x86;$(VSInstallDir)Common7\Tools\bin;$(VSInstallDir)Common7\tools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <IncludePath>E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\TP_01\CGraphics_LAIG_TP01\include;$(ProgramFiles)\Windows Kits\8.0\Include\um;$(ProgramFiles)\Windows Kits\8.0\Include\shared;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include</IncludePath>
+    <IncludePath>include;$(ProgramFiles)\Windows Kits\8.0\Include\um;$(ProgramFiles)\Windows Kits\8.0\Include\shared;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include</IncludePath>
     <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(ProgramFiles)\Windows Kits\8.0\lib\win8\um\x86;</LibraryPath>
     <ExcludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(ProgramFiles)\Windows Kits\8.0\lib\win8\um\x86;$(MSBuildToolsPath32);$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib;</ExcludePath>
   </PropertyGroup>
@@ -73,11 +79,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\include;$(GL_CONFIG)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Windows\CGRA_lib\include;$(GL_CONFIG)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\BACKUPS\vitor\FEUP\3ºANO\LAIG\Projects\LAIG-2013-2014_TP1\lib;$(GL_CONFIG)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\lib;C:\Windows\CGRA_lib\lib;$(GL_CONFIG)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;CGFlibd.lib;TinyXML.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

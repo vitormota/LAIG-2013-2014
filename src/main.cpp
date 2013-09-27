@@ -11,12 +11,12 @@
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
-#include <gl/glut.h>
+#include <gl\glut.h>
 #endif
 #ifdef __APPLE__
 #include <gl/glui.h>
 #else
-#include <gl/glui.h>
+#include <gl\glui.h>
 #endif
 
 #include <string>

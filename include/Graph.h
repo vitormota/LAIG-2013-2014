@@ -24,7 +24,7 @@ namespace scene{
 class Graph
 {
     private:
-        string rootid = "0";
+        string rootid;
         map<string, Node*> nodesMap; // the graph is a set of nodes stored in a <map>
     
     public:

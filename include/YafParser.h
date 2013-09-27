@@ -10,6 +10,7 @@
 #include <string>
 #include <map>
 #include "tinyxml.h"
+#include "Lightning.h"
 
 namespace Parser {
     
@@ -57,13 +58,13 @@ namespace Parser {
         
         /* globals */
         //float[4] background = "1.0 1.0 1.0 1.0";
-        string drawmode = "fill"; // predefined value = "fill"
-        string shading = "flat"; // predefined value = "flat"
-        string cullface = "none"; // predefined value = "none"
-        string cullorder = "CW"; // predefined value = "CW"
+        string drawmode; // predefined value = "fill"
+        string shading; // predefined value = "flat"
+        string cullface; // predefined value = "none"
+        string cullorder; // predefined value = "CW"
         
         /* cameras */
-        string initial = "0"; // id of the initial camera?
+        string initial; // id of the initial camera?
         //map<string, Camera*> camerasMap; // TODO : create Camera class (because it can be perspective or ortho)
         
         /* lightning */

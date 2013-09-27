@@ -4,7 +4,7 @@
 #ifdef __APPLE__
 #include "CGFobject.h"
 #else
-#include <CGFobject.h>
+#include <CGFObject.h>
 #endif
 
 #include "Transform.h"
