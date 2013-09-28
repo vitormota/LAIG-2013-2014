@@ -649,9 +649,6 @@ namespace Parser {
 			// create node with the id
 			Node* newNode = new Node(node_id);
 
-			//newNode->setAppearanceRef(appearanceref)
-
-
 
 			if(this->sceneGraph->getRootId() == rootid)
 			{
@@ -820,7 +817,7 @@ namespace Parser {
 
 			TiXmlElement* appearancerefElement = nodeElement->FirstChildElement("appearanceref");
 
-			char *appearanceref_id = nullptr;
+			char *appearanceref_id;
 
 			// id attribute of the element appearanceref
 			if(appearancerefElement)
@@ -834,13 +831,19 @@ namespace Parser {
 				else{
 					// valid appearanceref_id
 					cout << node_names[APPEARANCEREF] << " id: " << appearanceref_id << ", processed." << endl;
+                    
+                    newNode->setAppearanceRef(appearanceref_id);
 
 				}
+                
 			}
 
-            newNode->setAppearanceRef(appearanceref_id);
 
 			// children element
+            
+            vector<scene::Primitive*> primitives; // vector to save the primitives
+            
+            vector<string> childrenNodeRef; // vector to save the references to other nodes
 
 			TiXmlElement* childrenElement = nodeElement->FirstChildElement("children");
 
@@ -856,7 +859,7 @@ namespace Parser {
 
 			TiXmlElement* childElement = childrenElement->FirstChildElement();
 
-
+            
 			while(childElement)
 			{
 
@@ -904,6 +907,14 @@ namespace Parser {
 						cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", processed." << endl;
 
 					}
+                    
+                    // create and save child/primitive
+                    scene::Primitive* newPrimitive = new scene::Rectangle(node_id, xy1[0], xy1[1], xy2[0], xy2[1]);
+                    
+                    primitives.push_back(newPrimitive);
+                    
+                    cout << "Children saved: rectangle." << endl;
+
 
 				}
 				// if the element is "triangle"
@@ -972,6 +983,13 @@ namespace Parser {
 							cout << node_names[TRIANGLE] << " xyz3: " << xyz3Str << ", processed." << endl;
 
 						}
+                        
+                        // create and save child/primitive
+                        scene::Primitive* newPrimitive = new scene::Triangle(node_id, xyz1[0], xyz1[1], xyz1[2], xyz2[0], xyz2[1], xyz2[2], xyz3[0], xyz3[1], xyz3[0]);
+                        
+                        primitives.push_back(newPrimitive);
+                        
+                        cout << "Children saved: triangle." << endl;
 
 					}
 					// if the element is "cylinder"
@@ -1082,6 +1100,15 @@ namespace Parser {
 								cout << node_names[CYLINDER] << " stacks: " << stacks << ", processed." << endl;
 
 							}
+                            
+                            // create and save child/primitive
+                            scene::Primitive* newPrimitive =
+                            new scene::Cylinder(node_id, base[0], top[0], height[0], slices, stacks);
+                            
+                            
+                            primitives.push_back(newPrimitive);
+                            
+                            cout << "Children saved: cylinder." << endl;
 
 						}
 						else
@@ -1152,7 +1179,14 @@ namespace Parser {
 
 								}
 
-
+                                // create and save child/primitive
+                                scene::Primitive* newPrimitive =
+                                new scene::Sphere(node_id, radius[0], slices, stacks);
+                                
+                                
+                                primitives.push_back(newPrimitive);
+                                
+                                cout << "Children saved: sphere." << endl;
 
 							}
 							else
@@ -1242,6 +1276,15 @@ namespace Parser {
 										cout << node_names[TORUS] << " loops: " << loops << ", processed." << endl;
 
 									}
+                                    
+                                    // create and save child/primitive
+                                    scene::Primitive* newPrimitive =
+                                    new scene::Torus(node_id, inner[0], outer[0], slices, loops);
+                                    
+                                    
+                                    primitives.push_back(newPrimitive);
+                                    
+                                    cout << "Children saved: torus." << endl;
 
 								}
 								else
@@ -1264,14 +1307,25 @@ namespace Parser {
 											cout << node_names[NODEREF] << " id: " << noderef_id << ", processed." << endl;
 
 										}
+                                        
+                                        // save child/noderef
+                                        childrenNodeRef.push_back(noderef_id);
+                                        
+                                        cout << "Children saved: noderef." << endl;
 
 									}
 
+                
 									// next child
 									childElement = childElement->NextSiblingElement();
 
 			}
 
+            // save children in the node
+            newNode->setChildrenNodeRef(childrenNodeRef);
+            newNode->setPrimitives(primitives);
+            cout << "Saving children OK." << endl;
+            
 			// save node in the graph
 			this->sceneGraph->addNode(newNode);
 

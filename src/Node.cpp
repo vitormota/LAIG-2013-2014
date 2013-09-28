@@ -50,3 +50,13 @@ vector<string> Node::getChildrenNodeRef()
     return this->childrenNodeRef;
 }
 
+void Node::setPrimitives(vector<scene::Primitive*> primitives)
+{
+    this->primitives = primitives;
+}
+
+vector<scene::Primitive*> Node::getPrimitives()
+{
+    return this->primitives;
+}
+

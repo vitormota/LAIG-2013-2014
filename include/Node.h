@@ -27,11 +27,13 @@ using namespace std;
         void setId(string id);
         void setAppearanceRef(string appearanceref);
         void setTransforms(vector<Transform*> transforms);
+        void setPrimitives(vector<scene::Primitive*> primitives);
         void setChildrenNodeRef(vector<string> childrenNodeRef);
         string getId();
         string getAppearanceRef();
         vector<Transform*> getTransforms();
         vector<string> getChildrenNodeRef();
+        vector<scene::Primitive*> getPrimitives();
         
         
 		// TODO: Transform* getSingleTransform(); // multiply the matrixes of all the transforms vector
