@@ -6,8 +6,6 @@
 #include <vector>
 #include <string>
 
-namespace scene{
-
 	using namespace std;
 
 	/*class Scene_graph{
@@ -34,6 +32,5 @@ class Graph
 };
 
 
-} //scene
 
 #endif

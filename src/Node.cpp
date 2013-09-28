@@ -1,7 +1,5 @@
 #include "Node.h"
 
-namespace scene{
-
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Node"/> class.
@@ -20,12 +18,5 @@ namespace scene{
     
     Node::~Node()
     {
-        
+
     }
-    
-    /*Node::~Node(){
-		//delete[] trasnforms;
-	}*/
-
-
-}//scene

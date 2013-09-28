@@ -2,6 +2,19 @@
 #define _PRIMITIVE_H
 
 #include <string>
+#include <string>
+#ifdef __APPLE__
+#include <GLUT/GLUT.h>
+#else
+#include <gl\glut.h>
+#endif
+#ifdef __APPLE__
+#include <gl/glui.h>
+#else
+#include <gl\glui.h>
+#endif
+
+
 using std::string;
 
 class Primitive
@@ -22,10 +35,10 @@ public:
 class Rectangle: public Primitive{
 
 private:
-    float xy1, xy2;
+    float x1, y1, x2, y2;
     
 public:
-    Rectangle(string id,float xy1,float xy2);
+    Rectangle(string id,float x1, float y1, float x2, float y2);
     virtual void draw();
 };
 
@@ -33,10 +46,10 @@ public:
 class Triangle: public Primitive{
     
 private:
-    float xyz1, xyz2, xyz3;
+    float x1, y1, z1, x2, y2, z2, x3, y3, z3;
     
 public:
-    Triangle(string id, float xyz1, float xyz2, float xyz3);
+    Triangle(string id, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
     virtual void draw();
 };
 
@@ -46,6 +59,7 @@ class Cylinder: public Primitive{
 private:
     float base, top, height;
     int slices, stacks;
+    GLUquadric* cylinderQuadric;
     
 public:
     Cylinder(string id, float base, float top, float height, int slices, int stacks);

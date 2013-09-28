@@ -2,19 +2,24 @@
 #define _LIGHTNING_H
 
 #include <string>
+#ifdef __APPLE__
+#include "CGFlight.h"
+#else
 #include <CGFlight.h>
+#endif
 
-namespace scene{
 
 	using namespace std;
 
-	
-
-	class Light:public CGFlight{
+	class Lightning/*:public CGFlight*/{
+        
+    public:
+        Lightning();
+        ~Lightning();
 
 	};
 
-	class Omni:public Light{
+	class Omni:public Lightning{
 	public:
 		Omni(string id,bool enabled,float *location,float *ambient,float *difuse,float *specular);
 		~Omni();
@@ -28,9 +33,9 @@ namespace scene{
 			specular[4];
 	};
 
-	class Spot:public Light{
+	class Spot:public Lightning{
 	public:
-		Spot(string id,bool enabled,float *location,float *ambient,float *difuse,float *specular,float angle,float exponent,float *direction);
+		Spot(string id, bool enabled, float *location, float *ambient,float *difuse, float *specular, float angle, float exponent,float *direction);
 		~Spot();
 	private:
 		string id;
@@ -44,7 +49,5 @@ namespace scene{
 			exponent,
 			direction[3];
 	};
-
-} //scene
 
 #endif

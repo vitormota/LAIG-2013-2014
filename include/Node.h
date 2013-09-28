@@ -15,8 +15,6 @@
 
 using namespace std;
 
-namespace scene{
-
 	enum primitives{
 		COMPLEX, RECTANGLE, TRIANGLE, SPHERE, CYLINDER, TORUS
 	};
@@ -48,6 +46,5 @@ namespace scene{
 		
 	};
 
-}//scene
 
 #endif

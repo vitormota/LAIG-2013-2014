@@ -1,7 +1,5 @@
 #include "Graph.h"
 
-namespace scene{
-
 	/*Scene_graph::Scene_graph(string root){
 		this->root_id = root;
 	}
@@ -31,5 +29,3 @@ namespace scene{
     {
         //nodesMap
     }
-
-}//scene
