@@ -71,18 +71,108 @@
             texlength_t="1.0" />
     </appearances> 
 
-    <!-- bloco do grafo; "rootid" identifica o no de raiz --> 
-    <graph rootid="ss"> 
+	<graph rootid="floor"> 
+        <node id="floor"> 
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="floor1" />
+                <noderef id="wall1" />
+                <noderef id="wall2" />
+                <noderef id="objects" />
+            </children> 
+        </node>
+    <graph rootid="floor1"> 
+        <node id="floor1"> 
+            <transforms>
+            	<translate to="0 0.0 1.0" />
+            	<scale factor="30.0 1.0 20.0" />
+            	<rotate axis="x" angle="90"/>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
+            </children> 
+        </node>
+        <!-- xy plane wall -->
+        <node id="wall1"> 
+            <transforms>
+            	<scale factor="30.0 20.0 0.0" />
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
+            </children> 
+        </node>
+        <!-- zy plane wall -->
+        <node id="wall2"> 
+            <transforms>
+            	<scale factor="20.0 1.0 30.0" />
+            	<rotate axis="y" angle="-90"/>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
+            </children> 
+        </node>
+        <node id="objects"> 
+            <transforms>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <noderef id="tableA" />
+            </children> 
+        </node>
+        <!-- TableA will have 4 legs 6x4-->
+        <node id="tableA"> 
+            <transforms>
+            	<!-- floor1 center -->
+            	<translate to="15.0 0.0 10.0"/>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <noderef id="tableA_legs" />
+            </children> 
+        </node>
+        <node id="tableA"> 
+            <transforms>
+            	<translate to="0.0 0.0 10.0"/>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <noderef id="simple_square" />
+            </children> 
+        </node>
+        <node id="tableA"> 
+            <transforms>
+            	<!-- floor1 center -->
+            	<translate to="15.0 0.0 10.0"/>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <noderef id="simple_square" />
+            </children> 
+        </node>
+        <node id="tableA"> 
+            <transforms>
+            	<!-- floor1 center -->
+            	<translate to="15.0 0.0 10.0"/>
+            </transforms> 
+            <appearanceref id="ss" /> 
+            <children>
+                <noderef id="simple_square" />
+            </children> 
+        </node>
 
-        <!-- tem de existir, pelo menos, um bloco "node" --> 
-        <node id="ss"> 
+        <!-- tem de existir, pelo menos, um bloco "node"--> 
+        <!--node id="floor1"> 
             <!-- bloco "transforms" obrigatorio --> 
-            <transforms> 
+            <!--transforms> 
                 <!-- deve conter transformacoes explicitas usando as instrucoes seguintes sem limite nem ordem --> 
                 <!-- ex: bloco transforms pode ficar sem conteudo --> 
                 <!-- ex: bloco transforms pode ser R,T (nao tem S) --> 
                 <!-- ex: bloco transforms pode ser R,S,T,S --> 
-                <translate to="1.0 1.0 1.0" />
+                <!--<translate to="1.0 1.0 1.0" />
                 <rotate axis="x" angle="1.0" />
                 <scale factor="1.0 1.0 1.0" />
                 <scale factor="1.0 2.0 1.0" />
@@ -93,10 +183,10 @@
             <!-- a) se declarada sobrepoe-se 'a aparencia do "pai" --> 
             <!-- b) se omitida, o no' mantem (herda) a aparencia do "pai" --> 
 
-            <appearanceref id="ss" /> 
+            <!--appearanceref id="ss" /> 
                                
              <!-- bloco "children" obrigatorio --> 
-            <children> 
+            <!--<children> 
 
                 <!-- deve existir no minimo uma primitiva, ou uma referencia a outros nos --> 
                 <!-- podem existir varias primitivas e/ou referencias a outros nos --> 
@@ -104,10 +194,10 @@
                 <!-- Primitivas : rectangle, triangle, cylinder, sphere, torus --> 
                 <!--   Comandos a serem interpretados genericamente como em OpenGL/GLUT, exceto --> 
                 <!--   o cilindro, que deve adicionalmente ter topos ou tampas) -->             
-                <rectangle xy1="1.0 1.0" xy2="1.0 1.0" />
+                <!--rectangle xy1="1.0 1.0" xy2="1.0 1.0" />
                 <triangle xyz1="1.0 1.0 1.0" xyz2="1.0 2.0 1.0" xyz3="1.0 1.0 2.0" />
                 <cylinder base="1.0" top="1.0" height="1.0" slices="3" stacks="1" />      <!-- deve ter topos -->
-                <sphere radius="1.0" slices="4" stacks="2" />
+                <!--<sphere radius="1.0" slices="4" stacks="2" />
                 <torus inner="1.0" outer="1.0" slices="20" loops="10" />
                 
                 <!-- Referencia a outros elementos do grafo --> 
@@ -115,7 +205,7 @@
                 <!-- LEMBRANDO: qualquer no' pode ser referenciado previamente 'a sua declaracao; isto --> 
                 <!--            é, a ordem pela qual os nós são declarados é irrelevante --> 
 
-                <noderef id="ss" /> 
+                <!--<noderef id="ss" /> -->
 
             </children> 
         </node> 

@@ -1,10 +1,9 @@
-﻿Build started 28/09/2013 01:02:41.
-     1>Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 28/09/2013 13:53:19.
+     1>Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Windows\CGRA_lib\include /IC:\Windows\CGRA_lib\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Cameras.cpp src\Graph.cpp src\Lightning.cpp src\main.cpp src\Node.cpp src\Primitive.cpp src\tinyxml2.cpp src\Transform.cpp src\YafParser.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Windows\CGRA_lib\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Cameras.cpp src\Graph.cpp src\Lightning.cpp src\main.cpp src\Node.cpp src\Primitive.cpp src\Transform.cpp src\YafParser.cpp
          YafParser.cpp
          Transform.cpp
-         tinyxml2.cpp
          Primitive.cpp
          Node.cpp
          main.cpp
@@ -19,24 +18,47 @@
          Debug\main.obj
          Debug\Node.obj
          Debug\Primitive.obj
-         Debug\tinyxml2.obj
          Debug\Transform.obj
          Debug\YafParser.obj
+     1>LIBCMT.lib(stdexcpt.obj) : error LNK2005: "public: __thiscall std::exception::exception(char const * const &)" (??0exception@std@@QAE@ABQBD@Z) already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(stdexcpt.obj) : error LNK2005: "public: __thiscall std::exception::exception(class std::exception const &)" (??0exception@std@@QAE@ABV01@@Z) already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(stdexcpt.obj) : error LNK2005: "public: virtual __thiscall std::exception::~exception(void)" (??1exception@std@@UAE@XZ) already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(stdexcpt.obj) : error LNK2005: "public: virtual char const * __thiscall std::exception::what(void)const " (?what@exception@std@@UBEPBDXZ) already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(fpinit.obj) : error LNK2005: __fltused already defined in a previous module
+     1>LIBCMT.lib(fpinit.obj) : error LNK2005: __ldused already defined in a previous module
+     1>LIBCMT.lib(invarg.obj) : error LNK2005: __invalid_parameter already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(invarg.obj) : error LNK2005: __invoke_watson already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(_ctype.obj) : error LNK2005: _isalnum already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(_ctype.obj) : error LNK2005: _isalpha already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(_ctype.obj) : error LNK2005: _isspace already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(crt0dat.obj) : error LNK2005: __amsg_exit already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(crt0dat.obj) : error LNK2005: __cexit already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(crt0dat.obj) : error LNK2005: __exit already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(crt0dat.obj) : error LNK2005: __initterm_e already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(crt0dat.obj) : error LNK2005: _exit already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(wsetloca.obj) : error LNK2005: __configthreadlocale already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(mlock.obj) : error LNK2005: __lock already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(mlock.obj) : error LNK2005: __unlock already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(winapisupp.obj) : error LNK2005: ___crtSetUnhandledExceptionFilter already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(winapisupp.obj) : error LNK2005: ___crtTerminateProcess already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(winapisupp.obj) : error LNK2005: ___crtUnhandledException already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(winxfltr.obj) : error LNK2005: __XcptFilter already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(hooks.obj) : error LNK2005: "void __cdecl terminate(void)" (?terminate@@YAXXZ) already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>LIBCMT.lib(crt0init.obj) : error LNK2005: ___xi_a already defined in MSVCRTD.lib(cinitexe.obj)
+     1>LIBCMT.lib(crt0init.obj) : error LNK2005: ___xi_z already defined in MSVCRTD.lib(cinitexe.obj)
+     1>LIBCMT.lib(crt0init.obj) : error LNK2005: ___xc_a already defined in MSVCRTD.lib(cinitexe.obj)
+     1>LIBCMT.lib(crt0init.obj) : error LNK2005: ___xc_z already defined in MSVCRTD.lib(cinitexe.obj)
+     1>LIBCMT.lib(errmode.obj) : error LNK2005: ___set_app_type already defined in MSVCRTD.lib(MSVCR110D.dll)
+     1>MSVCRTD.lib(MSVCR110D.dll) : error LNK2005: ___iob_func already defined in LIBCMT.lib(_file.obj)
+     1>MSVCRTD.lib(MSVCR110D.dll) : error LNK2005: _fflush already defined in LIBCMT.lib(fflush.obj)
+     1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
      1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>CGFlibd.lib(CGFappearance.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>CGFlibd.lib(CGFcamera.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>CGFlibd.lib(CGFlight.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>CGFlibd.lib(CGFobject.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>CGFlibd.lib(CGFtexture.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>CGFlibd.lib(imagetools.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>CGFlibd.lib(stb_image.obj) : warning LNK4204: 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>TinyXML.lib(tinystr.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'TinyXML.lib(tinystr.obj)' or at 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc100.pdb'; linking object as if no debug info
-     1>TinyXML.lib(tinyxml.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'TinyXML.lib(tinyxml.obj)' or at 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc100.pdb'; linking object as if no debug info
-     1>TinyXML.lib(tinyxmlerror.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'TinyXML.lib(tinyxmlerror.obj)' or at 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc100.pdb'; linking object as if no debug info
-     1>TinyXML.lib(tinyxmlparser.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'TinyXML.lib(tinyxmlparser.obj)' or at 'C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\vc100.pdb'; linking object as if no debug info
-         CGraphics_LAIG_TP01.vcxproj -> C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe
-     1>Done Building Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Rebuild target(s)).
+     1>main.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Scene::init(void)" (?init@Scene@@UAEXXZ)
+     1>main.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Scene::display(void)" (?display@Scene@@UAEXXZ)
+     1>main.obj : error LNK2019: unresolved external symbol "public: virtual __thiscall Scene::~Scene(void)" (??1Scene@@UAE@XZ) referenced in function "public: virtual void * __thiscall Scene::`scalar deleting destructor'(unsigned int)" (??_GScene@@UAEPAXI@Z)
+     1>C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe : fatal error LNK1120: 3 unresolved externals
+     1>Done Building Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:09.63
+Time Elapsed 00:00:08.70
