@@ -25,12 +25,12 @@
         
     }
 
-void Graph::setRootId(string rootid)
+    void Graph::setRootId(string rootid)
     {
         this->rootid = rootid;
     }
 
-string Graph::getRootId()
+    string Graph::getRootId()
     {
         return this->rootid;
     }

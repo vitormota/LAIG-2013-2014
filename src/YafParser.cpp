@@ -710,6 +710,13 @@ namespace Parser {
 
 					}
 
+                    // create and save transform
+                    Transform* newTranslate = new Translate(to[0], to[1], to[2]);
+                    
+                    transforms.push_back(newTranslate);
+                    
+                    cout << "Transformation saved: translate." << endl;
+                    
 				}
 				// if the element is "rotate"
 				else
@@ -756,6 +763,13 @@ namespace Parser {
 							cout << node_names[ROTATE] << " angle: " << angleStr << ", processed." << endl;
 
 						}
+                        
+                        // create and save transform
+                        Transform* newRotate = new Rotate(axis, angle[0]);
+                        
+                        transforms.push_back(newRotate);
+                        
+                        cout << "Transformation saved: rotate." << endl;
 
 					}
 					// if the element is "scale"
@@ -784,6 +798,13 @@ namespace Parser {
 								cout << node_names[SCALE] << " factor: " << factorStr << ", processed." << endl;
 
 							}
+                            
+                            // create and save transform
+                            Transform* newScale = new Scale(factor[0], factor[1], factor[2]);
+                            
+                            transforms.push_back(newScale);
+                            
+                            cout << "Transformation saved: scale." << endl;
 						}
 
 						// next transformation
@@ -792,17 +813,18 @@ namespace Parser {
 			}
 
 			// save transforms in the node
-			//newNode->setTransforms(transforms);
+			newNode->setTransforms(transforms);
 			cout << "Saving transforms OK." << endl;
 
 			// appearanceref element
 
 			TiXmlElement* appearancerefElement = nodeElement->FirstChildElement("appearanceref");
 
-			char *appearanceref_id;
+			char *appearanceref_id = nullptr;
 
 			// id attribute of the element appearanceref
-			if(appearancerefElement){
+			if(appearancerefElement)
+            {
 				appearanceref_id = (char*) appearancerefElement->Attribute("id");
 				if(!appearanceref_id){
 
@@ -816,7 +838,7 @@ namespace Parser {
 				}
 			}
 
-
+            newNode->setAppearanceRef(appearanceref_id);
 
 			// children element
 
@@ -1307,7 +1329,7 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 		}
 		if((value < 48 || value > 57) && value != 32){
 			//not a valid character
-			return ERROR;
+			return _ERROR;
 		}
 	}
 }
