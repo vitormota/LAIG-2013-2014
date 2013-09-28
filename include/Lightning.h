@@ -11,13 +11,6 @@
 
 	using namespace std;
 
-<<<<<<< HEAD
-	class Lightning/*:public CGFlight*/{
-        
-    public:
-        Lightning();
-        ~Lightning();
-=======
 	typedef struct{
 		bool doublesided;
 		bool local;
@@ -31,7 +24,7 @@
 			float *pos,float location[4],float ambient[4],
 			float difuse[4],float specular[4],float *dir=NULL);
 		virtual ~Light();
->>>>>>> b025d1450191b30cdd6a03f0487632930308d71e
+
 
 		string getId()const {return id;}
 		bool isEnabled()const {return enabled;}
@@ -48,7 +41,7 @@
 			*specular;
 	};
 
-	class Omni:public Lightning{
+	class Omni:public Light{
 	public:
 		Omni(string id,bool enabled,unsigned int light_id,
 			float *pos,float location[4],float ambient[4],
@@ -60,16 +53,14 @@
 		
 	};
 
-	class Spot:public Lightning{
+	class Spot:public Light{
 	public:
-<<<<<<< HEAD
-		Spot(string id, bool enabled, float *location, float *ambient,float *difuse, float *specular, float angle, float exponent,float *direction);
-=======
+
 		Spot(string id,bool enabled,unsigned int light_id,
 			float *pos,float location[4],float ambient[4],
 			float difuse[4],float specular[4],float angle,
 			float exponent, float direction[3],float *dir=NULL);
->>>>>>> b025d1450191b30cdd6a03f0487632930308d71e
+
 		~Spot();
 
 	private:

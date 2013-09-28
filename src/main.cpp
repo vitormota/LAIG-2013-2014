@@ -37,6 +37,16 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     
+   cout << "\n--> Loading .yaf file <--\n\n";
+    
+    Parser::YafParser f = Parser::YafParser();
+	switch(f.loadYaf()){
+        case Parser::file_not_found:
+            cout << "File not found or ill formed xml.";
+            break;
+	}
+	//cin.get();
+    
 	CGFapplication app = CGFapplication();
     
 	try {
@@ -55,16 +65,6 @@ int main(int argc, char* argv[]) {
 		cout << "Erro inesperado: " << ex.what();
 		return -1;
 	}
-    
-    cout << "\n--> Loading .yaf file <--\n\n";
-    
-    Parser::YafParser f = Parser::YafParser();
-	switch(f.loadYaf()){
-        case Parser::file_not_found:
-            cout << "File not found or ill formed xml.";
-            break;
-	}
-	cin.get();
     
 	return 0;
 }

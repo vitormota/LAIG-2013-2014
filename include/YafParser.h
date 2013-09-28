@@ -11,7 +11,6 @@
 #include <map>
 #include "tinyxml.h"
 #include "Lightning.h"
-#include "Cameras.h"
 
 namespace Parser {
     

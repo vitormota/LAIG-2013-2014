@@ -57,7 +57,7 @@ void Scene::display()
     // ---- END Background, camera and axis setup
     
     // ---- BEGIN Primitive drawing section
-    
+
 
     
     // ---- END Primitive drawing section

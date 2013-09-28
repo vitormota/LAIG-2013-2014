@@ -4,7 +4,6 @@
 //
 
 #include "Primitive.h"
-#include "main.cpp"
 
 Primitive::Primitive(string id)
 {
@@ -81,7 +80,7 @@ void Rectangle::draw()
 {
     glPushMatrix();
     
-    glBegin(GL_POLYGON);
+    glBegin(GL_QUADS);
     
     glVertex2f(x1, y1);
     glVertex2f(x2, y2);

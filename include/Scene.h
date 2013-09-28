@@ -25,6 +25,7 @@
 #include "CGFaxis.h"
 #include "CGFapplication.h"
 #include "CGFobject.h"
+#include "Primitive.h"
 
 class Scene : public CGFscene
 {
