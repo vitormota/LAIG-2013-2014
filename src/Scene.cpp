@@ -84,7 +84,7 @@ void Scene::display()
     /*TESTING*/
     
     // Declares scene elements
-    p = new Torus("t1", 0.05, 0.1, 8, 8);
+    p = new scene::Torus("t1", 0.05, 0.1, 8, 8);
     
     // Declares materials
     pAppearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
@@ -107,16 +107,16 @@ void Scene::display()
     pAppearance->apply();
     //p->draw();
     
-    //p = new Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);
+    //p = new scene::Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);
     //p->draw();
     
-    p = new Rectangle("r1", 0.0, 0.0, 10.0, 10.0);
+    p = new scene::Rectangle("r1", 0.0, 0.0, 10.0, 10.0);
     p->draw();
     
-    //p = new Sphere("s1", 3.0, 10, 10);
+    //p = new scene::Sphere("s1", 3.0, 10, 10);
     //p->draw();
     
-    //p = new Cylinder("c1", 1.0, 1.0, 2.0, 10, 10);
+    //p = new scene::Cylinder("c1", 1.0, 1.0, 2.0, 10, 10);
     //p->draw();
     
     

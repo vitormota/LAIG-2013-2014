@@ -41,7 +41,7 @@ public:
 	CGFlight* light1;
     CGFlight* light2;
     
-    Primitive* p;
+    scene::Primitive* p;
     CGFappearance* pAppearance;
     
     /* TESTING */

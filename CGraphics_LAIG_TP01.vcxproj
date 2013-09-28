@@ -22,6 +22,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Node.cpp" />
     <ClCompile Include="src\Primitive.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Transform.cpp" />
     <ClCompile Include="src\YafParser.cpp" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="include\Lightning.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\Primitive.h" />
+    <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\tinystr.h" />
     <ClInclude Include="include\tinyxml.h" />
     <ClInclude Include="include\Transform.h" />
@@ -86,6 +88,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\lib;C:\Windows\CGRA_lib\lib;$(GL_CONFIG)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;CGFlibd.lib;TinyXML.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

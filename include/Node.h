@@ -43,7 +43,7 @@ using namespace std;
         string appearanceref;
         vector<Transform*> transforms; // transforms of the node
         vector<string> childrenNodeRef; // noderef's of the children
-        vector<Primitive*> primitives; // primitives of the node
+        vector<scene::Primitive*> primitives; // primitives of the node
         
 		
 	};

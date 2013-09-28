@@ -1,23 +1,35 @@
-﻿Build started 28/09/2013 13:53:19.
-     1>Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
+﻿Build started 28/09/2013 20:52:53.
+     1>Project "C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Windows\CGRA_lib\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Cameras.cpp src\Graph.cpp src\Lightning.cpp src\main.cpp src\Node.cpp src\Primitive.cpp src\Transform.cpp src\YafParser.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Windows\System\CGRAPHICS\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Cameras.cpp src\Graph.cpp src\Lightning.cpp src\main.cpp src\Node.cpp src\Primitive.cpp src\Scene.cpp src\Transform.cpp src\YafParser.cpp
          YafParser.cpp
+     1>c:\windows\system\cgraphics\include\gl\glui.h(871): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
          Transform.cpp
+         Scene.cpp
+     1>c:\windows\system\cgraphics\include\gl\glui.h(871): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\vitor_000\documents\github\laig-2013-2014\src\scene.cpp(19): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\vitor_000\documents\github\laig-2013-2014\src\scene.cpp(20): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\vitor_000\documents\github\laig-2013-2014\src\scene.cpp(21): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\vitor_000\documents\github\laig-2013-2014\src\scene.cpp(87): warning C4305: 'argument' : truncation from 'double' to 'float'
          Primitive.cpp
+     1>c:\windows\system\cgraphics\include\gl\glui.h(871): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
          Node.cpp
+     1>c:\windows\system\cgraphics\include\gl\glui.h(871): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
          main.cpp
+     1>c:\windows\system\cgraphics\include\gl\glui.h(871): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
          Lightning.cpp
          Graph.cpp
+     1>c:\windows\system\cgraphics\include\gl\glui.h(871): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
          Cameras.cpp
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\lib" /LIBPATH:C:\Windows\CGRA_lib\lib /LIBPATH:C:\Windows\CGRA_lib\lib glew32.lib CGFlibd.lib TinyXML.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.lib" /MACHINE:X86 Debug\Cameras.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\lib" /LIBPATH:C:\Windows\CGRA_lib\lib /LIBPATH:C:\Windows\System\CGRAPHICS\lib glew32.lib CGFlibd.lib TinyXML.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.lib" /MACHINE:X86 Debug\Cameras.obj
          Debug\Graph.obj
          Debug\Lightning.obj
          Debug\main.obj
          Debug\Node.obj
          Debug\Primitive.obj
+         Debug\Scene.obj
          Debug\Transform.obj
          Debug\YafParser.obj
      1>LIBCMT.lib(stdexcpt.obj) : error LNK2005: "public: __thiscall std::exception::exception(char const * const &)" (??0exception@std@@QAE@ABQBD@Z) already defined in MSVCRTD.lib(MSVCR110D.dll)
@@ -53,12 +65,9 @@
      1>MSVCRTD.lib(MSVCR110D.dll) : error LNK2005: _fflush already defined in LIBCMT.lib(fflush.obj)
      1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
      1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>main.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Scene::init(void)" (?init@Scene@@UAEXXZ)
-     1>main.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Scene::display(void)" (?display@Scene@@UAEXXZ)
-     1>main.obj : error LNK2019: unresolved external symbol "public: virtual __thiscall Scene::~Scene(void)" (??1Scene@@UAE@XZ) referenced in function "public: virtual void * __thiscall Scene::`scalar deleting destructor'(unsigned int)" (??_GScene@@UAEPAXI@Z)
-     1>C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe : fatal error LNK1120: 3 unresolved externals
-     1>Done Building Project "C:\Users\Vitor Silva\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Build target(s)) -- FAILED.
+     1>C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe : fatal error LNK1169: one or more multiply defined symbols found
+     1>Done Building Project "C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Rebuild target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:08.70
+Time Elapsed 00:00:09.12
