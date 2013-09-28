@@ -83,7 +83,9 @@ void Rectangle::draw()
     glBegin(GL_QUADS);
     
     glVertex2f(x1, y1);
+    glVertex2f(x2, y1);
     glVertex2f(x2, y2);
+    glVertex2f(x1, y2);
     
     glEnd();
     
@@ -122,7 +124,7 @@ void Cylinder::draw()
     
     // base of the cylinder
     glPushMatrix();
-    //glRotated(180,0,1,0);
+    glRotated(180,0,1,0);
     gluDisk(cylinderQuadric, 0 , base, slices, stacks);
     glPopMatrix();
 }

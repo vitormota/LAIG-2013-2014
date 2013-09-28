@@ -9,6 +9,19 @@
 // Global ambient light (do not confuse with ambient component of individual lights)
 float globalAmbientLight[4]= {1.0,1.0,1.0,1.0};
 
+/*TESTING*/
+// Positions for lights
+float light0_pos[4] = {4, 6.0, 1.0, 1.0};
+float light1_pos[4] = {10.5, 6.0, 1.0, 1.0};
+float ambientNull[4]={0,0,0,1};
+
+// Coefficients for material slidesAppearance - Board A
+float ambSlides[3] = {0.2, 0.2, 0.2};
+float difSlides[3] = {0.6, 0.6, 0.6};
+float specSlides[3] = {0.5, 0.4, 0.4};
+float shininessSlides = 100.0f;
+
+
 void Scene::init()
 {
 	// Enables lighting computations
@@ -27,6 +40,18 @@ void Scene::init()
     
     // Initialization of variables
     
+    // Declares two lights, with null ambient component
+	light0 = new CGFlight(GL_LIGHT0, light0_pos);
+    light0->setAmbient(ambientNull);
+    
+	light1 = new CGFlight(GL_LIGHT1, light1_pos);
+	light1->setAmbient(ambientNull);
+    
+    // light2 Attenuation
+    light1->setKc(0.0);
+    light1->setKl(1.0);
+    light1->setKq(0.0);
+
     
 	// Uncomment below to enable normalization of lighting normal vectors
 	glEnable (GL_NORMALIZE);
@@ -48,8 +73,29 @@ void Scene::display()
     // Apply transformations corresponding to the camera position relative to the origin
     CGFscene::activeCamera->applyView();
     
+    // Draw
     // Draw lights
+    light0->draw();
+    light1->draw();
 
+    // Uncomment below to enable normalization of lighting normal vectors
+	glEnable (GL_NORMALIZE);
+    
+    /*TESTING*/
+    
+    // Declares scene elements
+    p = new Torus("t1", 0.05, 0.1, 8, 8);
+    
+    // Declares materials
+    pAppearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
+    
+    // Sets texture's wrap
+    pAppearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
+    
+    // Sets texture
+    //slidesAppearance->setTexture("../data/slides.png");
+    
+    /*TESTING*/
     
     // Draw axis
     axis.draw();
@@ -57,8 +103,22 @@ void Scene::display()
     // ---- END Background, camera and axis setup
     
     // ---- BEGIN Primitive drawing section
-
-
+    
+    pAppearance->apply();
+    //p->draw();
+    
+    //p = new Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);
+    //p->draw();
+    
+    p = new Rectangle("r1", 0.0, 0.0, 10.0, 10.0);
+    p->draw();
+    
+    //p = new Sphere("s1", 3.0, 10, 10);
+    //p->draw();
+    
+    //p = new Cylinder("c1", 1.0, 1.0, 2.0, 10, 10);
+    //p->draw();
+    
     
     // ---- END Primitive drawing section
     

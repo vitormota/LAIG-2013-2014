@@ -35,6 +35,16 @@ public:
 	void display();
     
 	~Scene();
+    
+    /* TESTING */
+    CGFlight* light0;
+	CGFlight* light1;
+    CGFlight* light2;
+    
+    Primitive* p;
+    CGFappearance* pAppearance;
+    
+    /* TESTING */
 };
 
 #endif /* defined(__LAIG___P1__Scene__) */

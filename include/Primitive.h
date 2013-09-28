@@ -14,6 +14,7 @@
 #include <gl\glui.h>
 #endif
 
+
 using std::string;
 
 class Primitive
