@@ -16,6 +16,7 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Cameras.cpp" />
     <ClCompile Include="src\Graph.cpp" />
     <ClCompile Include="src\Lightning.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="src\YafParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Cameras.h" />
     <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\Lightning.h" />
     <ClInclude Include="include\Node.h" />
