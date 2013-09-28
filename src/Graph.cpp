@@ -24,7 +24,17 @@
     {
         
     }
-    
+
+void Graph::setRootId(string rootid)
+    {
+        this->rootid = rootid;
+    }
+
+string Graph::getRootId()
+    {
+        return this->rootid;
+    }
+
     void Graph::addNode(Node* newNode)
     {
         //nodesMap

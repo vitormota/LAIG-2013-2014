@@ -19,29 +19,31 @@ using namespace std;
 		COMPLEX, RECTANGLE, TRIANGLE, SPHERE, CYLINDER, TORUS
 	};
 
-	class Node:public CGFobject{
+	class Node{
 	
     public:
         Node(string id);
         ~Node();
+        void setId(string id);
+        void setAppearanceRef(string appearanceref);
+        void setTransforms(vector<Transform*> transforms);
+        void setChildrenNodeRef(vector<string> childrenNodeRef);
+        string getId();
+        string getAppearanceRef();
+        vector<Transform*> getTransforms();
+        vector<string> getChildrenNodeRef();
         
-		/*Node(std::string id):
-			name(id){;}
-		Node(const Node &n);
-
-
-		float transforms[16];
-		///0 means complex object
-		int primitive_type;
-        */
+        
+		// TODO: Transform* getSingleTransform(); // multiply the matrixes of all the transforms vector
         
 		virtual void draw(){}
 	
 	private:
         string id;
-        vector<Transform*> transforms;
-        vector<Node*> children;
-        vector<Primitive*> primitives;
+        string appearanceref;
+        vector<Transform*> transforms; // transforms of the node
+        vector<string> childrenNodeRef; // noderef's of the children
+        vector<Primitive*> primitives; // primitives of the node
         
 		
 	};

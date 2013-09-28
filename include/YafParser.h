@@ -11,6 +11,9 @@
 #include <map>
 #include "tinyxml.h"
 #include "Lightning.h"
+#include "Primitive.h"
+#include "Graph.h"
+#include "Node.h"
 
 namespace Parser {
     
@@ -57,11 +60,11 @@ namespace Parser {
         
         
         /* globals */
-        //float[4] background = "1.0 1.0 1.0 1.0";
-        string drawmode; // predefined value = "fill"
-        string shading; // predefined value = "flat"
-        string cullface; // predefined value = "none"
-        string cullorder; // predefined value = "CW"
+        //float[4] background;
+        string drawmode;
+        string shading;
+        string cullface;
+        string cullorder;
         
         /* cameras */
         string initial; // id of the initial camera?
@@ -76,12 +79,8 @@ namespace Parser {
         /* appearances */
         //map<string, Appearance*> appearancesMap; // TODO : create Appearance class
 
-        
-        
-        //map<string,Primitive*> PrimitivesMap;
-        
-        /* transforms */
-        // map<string, Transform*> transformsMap; // TODO : create Transform class
+        /* graph */
+        Graph* sceneGraph;
         
 	};
 }

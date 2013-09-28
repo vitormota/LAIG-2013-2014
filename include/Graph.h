@@ -6,7 +6,9 @@
 #include <vector>
 #include <string>
 
-	using namespace std;
+using std::string;
+using std::vector;
+using std::map;
 
 	/*class Scene_graph{
 	public:
@@ -28,6 +30,8 @@ class Graph
     public:
         Graph(string rootid);
         ~Graph();
+        void setRootId(string rootid);
+        string getRootId();
         void addNode(Node*);
 };
 

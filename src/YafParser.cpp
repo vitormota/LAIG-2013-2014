@@ -597,6 +597,20 @@ namespace Parser {
             // valid rootid
             cout << node_names[GRAPH] << " rootid: " << rootid << ", processed." << endl;
             
+            
+            // create graph with the rootid
+            this->sceneGraph = new Graph(rootid);
+            
+            
+            if(this->sceneGraph->getRootId() == rootid)
+            {
+                cout << "Saving rootid OK." << endl;
+            }
+            else
+            {
+                cout << "Saving rootid FAILED." << endl;
+            }
+            
         }
         
         int count = 0; // number of node elements
@@ -632,7 +646,26 @@ namespace Parser {
                 
             }
             
+            // create node with the id
+            Node* newNode = new Node(node_id);
+            
+            //newNode->setAppearanceRef(appearanceref)
+            
+            
+            
+            if(this->sceneGraph->getRootId() == rootid)
+            {
+                cout << "Saving rootid OK." << endl;
+            }
+            else
+            {
+                cout << "Saving rootid FAILED." << endl;
+            }
+            
+            
             // transforms element
+            
+            vector<Transform*> transforms; // vector to save the transforms
             
             TiXmlElement* transformsElement = nodeElement->FirstChildElement("transforms");
             
@@ -757,6 +790,10 @@ namespace Parser {
                 transformationElement = transformationElement->NextSiblingElement();
                 
             }
+            
+            // save transforms in the node
+            //newNode->setTransforms(transforms);
+            cout << "Saving transforms OK." << endl;
             
             // appearanceref element
             
@@ -1211,7 +1248,8 @@ namespace Parser {
                 
             }
             
-            
+            // save node in the graph
+            this->sceneGraph->addNode(newNode);
             
             // next node
 			nodeElement = nodeElement->NextSiblingElement();
