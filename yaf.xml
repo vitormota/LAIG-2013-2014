@@ -18,7 +18,7 @@
     <cameras initial="one" > 
         <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) --> 
 
-        <perspective id="one" near="fde" far="2" angle="de4" pos="4 2 1" target="3 3 2" /> 
+        <perspective id="one" near="4" far="2" angle="30" pos="4 2 1" target="3 3 2" /> 
         <ortho id="two" near="2" far="5" left="4" right="2" top="3" bottom="4" /> 
 
     </cameras> 
