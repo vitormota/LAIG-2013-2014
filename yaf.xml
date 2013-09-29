@@ -16,263 +16,277 @@
     
     <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
     <cameras initial="one" >
-        <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
-         <perspective id="one" near="4.0" far="2.0" angle="30.0" pos="4.0 2.0 1.0" target="3.0 3.0 2.0" />
-        <ortho id="two" near="2.0" far="5.0" left="4.0" right="2.0" top="3.0" bottom="4.0" />
+	<!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
+	<perspective id="one" near="4.0" far="2.0" angle="30.0" pos="4.0 2.0 1.0" target="3.0 3.0 2.0" />
+	<ortho id="two" near="2.0" far="5.0" left="4.0" right="2.0" top="3.0" bottom="4.0" />
         
     </cameras>
     
     
     <!-- bloco de iluminacao; segue os parametros do OpenGL -->
     <lighting doublesided="true" local="false" enabled="true" ambient="10.0 5.0 2.0 3.0" >
-        <!-- Deve existir pelo menos um dos seguintes blocos: omin ou spot -->
-        <!-- Os identificadores "id" nao podem ser repetidos -->
-        <omni id="s0" enabled="true"
-        location="10 5 2 3"
-        ambient="10 54 2 3"
-        diffuse="10 5 2 3"
-        specular="10 5 2 3"
-        />
+	<!-- Deve existir pelo menos um dos seguintes blocos: omin ou spot -->
+	<!-- Os identificadores "id" nao podem ser repetidos -->
+	<omni id="s0" enabled="true"
+	      location="-10 5 2 3"
+	      ambient="10 54 2 3"
+	      diffuse="10 5 2 3"
+	      specular="10 5 2 3"
+	/>
         
-        <spot id="s1" enabled="true"
-        location="10 5 2 5"
-        ambient="10 5 2 3"
-        diffuse="10 5 2 3"
-        specular="10 5 2 3"
-        angle="10"
-        exponent="12"
-        direction="10 5 2"
-        />
+	<spot id="s1" enabled="true"
+	      location="10 5 2 5"
+	      ambient="10 5 2 3"
+	      diffuse="10 5 2 3"
+	      specular="10 5 2 3"
+	      angle="10"
+	      exponent="12"
+	      direction="10 5 2"
+	/>
         
     </lighting>
     
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas -->
     <textures>
-        <texture id="floor1" file="data/floor1.JPG" />
-        <texture id="wall_wood" file="data/wood_wall.jpg" />
-        <texture id="floor_wood" file="data/wood.jpg" />
-        <texture id="ceiling1" file="data/ceiling1.jpg" />
+	<texture id="floor1" file="data/floor1.JPG" />
+	<texture id="wall_wood" file="data/wood_wall.jpg" />
+	<texture id="floor_wood" file="data/wood.jpg" />
+	<texture id="ceiling1" file="data/ceiling1.jpg" />
     </textures>
     
     <!-- bloco de materiais; -->
     <appearances>
-        <!-- deve existir um ou mais blocos "appearance" -->
-        <!-- IMPORTANTE: -->
-        <!--   textureref, texlength_s e textlength_t sao atributos -->
-        <!--   opcionais se for usada uma textura. -->
-        <!--   ver topico 'Notas finais' no enunciado sobre os -->
-        <!--   parametros texlength_...) -->
-        <appearance id="app1" emissive="1.0 1.0 1.0 1.0" ambient="1.0 1.0 1.0 1.0" 
+	<!-- deve existir um ou mais blocos "appearance" -->
+	<!-- IMPORTANTE: -->
+	<!--   textureref, texlength_s e textlength_t sao atributos -->
+	<!--   opcionais se for usada uma textura. -->
+	<!--   ver topico 'Notas finais' no enunciado sobre os -->
+	<!--   parametros texlength_...) -->
+	<appearance id="app_floor" emissive="1.0 1.0 1.0 1.0" ambient="1.0 1.0 1.0 1.0" 
 		    diffuse="1.0 1.0 1.0 1.0" specular="1.0 1.0 1.0 1.0" 
-		    shininess="1.0" textureref="ss" texlength_s="1.0" texlength_t="2.0"/>
-	<appearance id="app2" emissive="15.0 120.0 10.0 40.0" ambient="5.0 5.0 6.0 10.0" 
+		    shininess="1.0" textureref="floor1" texlength_s="1.0" texlength_t="2.0"/>
+	<appearance id="app_wall" emissive="15.0 120.0 10.0 40.0" ambient="5.0 5.0 6.0 10.0" 
+		    diffuse="1.0 1.0 1.0 1.0" specular="1.0 1.0 1.0 1.0" 
+		    shininess="1.0" textureref="wall_wood" texlength_s="1.0" texlength_t="1.0"/>
+	<appearance id="app_wood" emissive="15.0 120.0 10.0 40.0" ambient="5.0 5.0 6.0 10.0" 
 		    diffuse="1.0 1.0 1.0 1.0" specular="1.0 1.0 1.0 1.0" 
 		    shininess="1.0" textureref="floor_wood" texlength_s="1.0" texlength_t="1.0"/>
     </appearances>
     
-	<graph rootid="root">
-        <node id="root">
-            <transforms>
-            </transforms>
-            <children>
-                <noderef id="floor" />
-                <noderef id="walls" />
-                <noderef id="objects" />
-            </children>
-        </node>
-        <node id="floor">
-            <transforms>
-            	<translate to="0 0.0 1.0" />
-            	<scale factor="30.0 1.0 20.0" />
-            	<rotate axis="x" angle="90"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-               <noderef id="unit_rectangle" />
-            </children>
-        </node>
-        <node id="walls">
-            <transforms>
-            </transforms>
-            <children>
-                <noderef id="wall1" />
-                <noderef id="wall2" />
-            </children>
-        </node>
-        <!-- xy plane wall -->
-        <node id="wall1">
-            <transforms>
-            	<scale factor="30.0 20.0 0.0" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="wall" />
-            </children>
-        </node>
-        <!-- zy plane wall -->
-        <node id="wall2">
-            <transforms>
-            	<scale factor="20.0 1.0 30.0" />
-            	<rotate axis="y" angle="-90"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="wall" />
-            </children>
-        </node>
-        <node id="wall">
-            <transforms>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="unit_rectangle" />
-            </children>
-        </node>
+    <graph rootid="root">
+	<node id="root">
+	    <transforms>
+	    </transforms>
+	    <children>
+		<noderef id="floor" />
+		<noderef id="walls" />
+		<noderef id="objects" />
+	    </children>
+	</node>
+	<node id="floor">
+	    <transforms>
+		<translate to="0 0.0 1.0" />
+		<scale factor="30.0 1.0 20.0" />
+		<rotate axis="x" angle="90"/>
+	    </transforms>
+	    <appearanceref id="ss" />
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="walls">
+	    <transforms>
+	    </transforms>
+	    <appearanceref id="app_wall" />
+	    <children>
+		<noderef id="wall1" />
+		<noderef id="wall2" />
+	    </children>
+	</node>
+	<!-- xy plane wall -->
+	<node id="wall1">
+	    <transforms>
+		<scale factor="30.0 20.0 0.0" />
+	    </transforms>
+            
+	    <children>
+		<noderef id="wall" />
+	    </children>
+	</node>
+	<!-- zy plane wall -->
+	<node id="wall2">
+	    <transforms>
+		<scale factor="20.0 1.0 30.0" />
+		<rotate axis="y" angle="-90"/>
+	    </transforms>
+	    <children>
+		<noderef id="wall" />
+	    </children>
+	</node>
+	<node id="wall">
+	    <transforms>
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
         
-        <node id="objects">
-            <transforms>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="tableA" />
-            </children>
-        </node>
-        <!-- TableA will have 4 legs 6x4-->
-        <node id="tableA">
-            <transforms>
-            	<!-- floor1 center -->
-            	<translate to="15.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="tableA_legs" />
-            </children>
-        </node>
-        <node id="tableA">
-            <transforms>
-            	<translate to="0.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="unit_rectangle" />
-            </children>
-        </node>
-        <node id="tableA">
-            <transforms>
-            	<!-- floor1 center -->
-            	<translate to="15.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="unit_rectangle" />
-            </children>
-        </node>
-        <!-- TableA will have 4 legs 6x4-->
-        <node id="leg1">
-            <transforms>
-            	<!-- floor1 center -->
-            	<translate to="15.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="leg" />
-            </children>
-        </node>
-        <node id="leg2">
-            <transforms>
-            	<translate to="0.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="leg" />
-            </children>
-        </node>
-        <node id="leg3">
-            <transforms>
-            	<!-- floor1 center -->
-            	<translate to="15.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="leg" />
-            </children>
-        </node>
-        <node id="leg4">
-            <transforms>
-            	<!-- floor1 center -->
-            	<translate to="15.0 0.0 10.0"/>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="leg" />
-            </children>
-        </node>
-        <node id="leg">
-            <transforms>
-                    <scale factor="1.0 1.0 4.0" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="unit_cube" />
-            </children>
-        </node>
-        <node id="side1">
-            <transforms>
-                <rotate axis="y" angle="90" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
-            </children>
-        </node>
-        <node id="side2">
-            <transforms>
-                <rotate axis="y" angle="90" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
-            </children>
-        </node>
-        <node id="side3">
-            <transforms>
-                <rotate axis="y" angle="90" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
-            </children>
-        </node>
-        <node id="side4">
-            <transforms>
-                <rotate axis="y" angle="90" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
-            </children>
-        </node>
-        <node id="unit_cube">
-            <transforms>
-                <scale factor="1.0 1.0 4.0" />
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                <noderef id="side1" />
-                <noderef id="side2" />
-                <noderef id="side3" />
-                <noderef id="side4" />
-                <noderef id="side5" />
-                <noderef id="side6" />
-            </children>
-        </node>
-        <node id="unit_rectangle">
-            <transforms>
-            </transforms>
-            <appearanceref id="ss" />
-            <children>
-                 <rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
-            </children>
-        </node>
+	<node id="objects">
+	    <transforms>
+	    </transforms>
+	    <children>
+		<noderef id="tableA" />
+	    </children>
+	</node>
+	<node id="tableA">
+	    <transforms>
+		<translate to=""/>
+	    </transforms>
+	    <children>
+		<noderef id="table_top" />
+		<noderef id="table_leg1" />
+		<noderef id="table_leg2" />
+		<noderef id="table_leg3" />
+		<noderef id="table_leg4" />
+	    </children>
+	</node>
+	<node id="table_top">
+	    <transforms>
+		<translate to="0.0 4.0 0.0"/>
+		<scale factor="6.0 0.3 4.0"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube"/>
+	    </children>
+	</node>
+	<node id="table_leg1">
+	    <transforms>
+		<translate to="-3.0 0 2.0"/>
+		<scale factor="0.5 4.0 0.5"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube"/>
+	    </children>
+	</node>
+	<node id="table_leg2">
+	    <transforms>
+		<translate to="3.0 4.0 2.0"/>
+		<scale factor="0.5 4.0 0.5"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube"/>
+	    </children>
+	</node>
+	<node id="table_leg3">
+	    <transforms>
+		<translate to="3.0 4.0 -2.0"/>
+		<scale factor="0.5 4.0 0.5"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube"/>
+	    </children>
+	</node>
+	<node id="table_leg4">
+	    <transforms>
+		<translate to="-3.0 4.0 -2.0"/>
+		<scale factor="0.5 4.0 0.5"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube"/>
+	    </children>
+	</node>
+	<node id="side1">
+	    <transforms>
+		<rotate axis="y" angle="90" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="side2">
+	    <transforms>
+		<rotate axis="y" angle="90" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="side3">
+	    <transforms>
+		<rotate axis="y" angle="90" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="side4">
+	    <transforms>
+		<rotate axis="y" angle="90" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="side5">
+	    <transforms>
+		<rotate axis="y" angle="90" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="side6">
+	    <transforms>
+		<rotate axis="y" angle="90" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_rectangle" />
+	    </children>
+	</node>
+	<node id="unit_cube">
+	    <transforms>
+	    </transforms>
+	    <children>
+		<noderef id="side1" />
+		<noderef id="side2" />
+		<noderef id="side3" />
+		<noderef id="side4" />
+		<noderef id="side5" />
+		<noderef id="side6" />
+	    </children>
+	</node>
+	<node id="unit_rectangle">
+	    <transforms>
+	    </transforms>
+	    <children>
+		<rectangle xy1="0.0 0.0" xy2="1.0 1.0" />
+	    </children>
+	</node>
+	<node id="lamp">
+	    <transforms>
+		<translate to="11.0 0.0 10.0"/>
+		<scale factor="0.5 8.0 0.5"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cylinder"/>
+		<noderef id="lamp_head" />
+	    </children>
+	</node>
+	<node id="lamp_head">
+	    <transforms>
+		<scale factor="2.0 .125 2.0"/>
+		<translate to="0.0 7.5 0.0"/>
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube"/>
+	    </children>
+	</node>
+	<node id="unit_cylinder">
+	    <transforms>
+	    </transforms>
+	    <children>
+		<cylinder base="1.0" top="1.0" height="5.0" slices="6" stacks="6" /> 
+	    </children>
+	</node>
     </graph>
 </yaf>
