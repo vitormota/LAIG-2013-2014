@@ -34,7 +34,7 @@ namespace Parser {
     class YafParser {
     public:
 
-        YafParser(Scene *scene);
+        YafParser();
         YafParser(string filename);
         ~YafParser();
 
@@ -61,9 +61,20 @@ namespace Parser {
         bool loadAppearances(TiXmlElement* appearancesElement);
         bool loadGraph(TiXmlElement* graphElement);
 
+        // globals attributes
+        string drawmode;
+        string shading;
+        string cullface;
+        string cullorder;
+        float *background;
+        
+        // lightning 
+        bool doublesided;
+        bool local;
+        bool enabled;
+        float *ambient;
+        
     private:
-        Scene *scene;
-
 
         /* globals */
         //float[4] background;

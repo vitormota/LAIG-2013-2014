@@ -46,22 +46,6 @@
 class Scene : public CGFscene {
 private:
 
-    typedef struct {
-        bool doublesided;
-        bool local;
-        bool enabled;
-        float *ambient;
-    } Lightning_global_vars;
-
-    typedef struct {
-        string drawmode;
-        string shading;
-        string cullface;
-        string cullorder;
-        float *background;
-    } Globals__;
-
-
 public:
 
     void init();
@@ -84,9 +68,6 @@ public:
     Graph* sceneGraph;
 
     /* TESTING */
-
-    Lightning_global_vars light_global_vars;
-    Globals__ global_vars;
 
     vector<Light*> lights;
     std::map<string,Texture*> texture_mapping;

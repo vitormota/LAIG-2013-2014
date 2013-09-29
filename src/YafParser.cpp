@@ -24,9 +24,8 @@ namespace Parser {
 	"graph", "node", "transforms", "translate", "rotate", "scale", "appearanceref",
 	"children", "rectangle", "triangle", "cylinder", "sphere", "torus", "noderef"};
 
-    YafParser::YafParser(Scene *scene) {
+    YafParser::YafParser() {
 	this->_filename = "yaf.xml";
-	this->scene = scene;
     }
 
     YafParser::YafParser(string filename) {
@@ -111,7 +110,7 @@ namespace Parser {
 	//cout << attributeStr << endl;
 
 	StringParsing::FloatReader(attributeStr, backgroundFloatValues);
-	scene->global_vars.background = backgroundFloatValues;
+	//scene->global_vars.background = backgroundFloatValues;
 
 	// drawmode attribute
 	attributeStr = (char*) globalsElement->Attribute("drawmode");
@@ -120,7 +119,7 @@ namespace Parser {
 	    cout << "Invalid drawmode..." << endl;
 	    error = true;
 	} else {
-	    scene->global_vars.drawmode = attributeStr;
+	    //scene->global_vars.drawmode = attributeStr;
 	}
 
 	// shading attribute
@@ -130,7 +129,7 @@ namespace Parser {
 	    cout << "Invalid shading..." << endl;
 	    error = true;
 	} else {
-	    scene->global_vars.shading = attributeStr;
+	    //scene->global_vars.shading = attributeStr;
 	}
 
 	// cullface attribute
@@ -140,7 +139,7 @@ namespace Parser {
 	    cout << "Invalid cullface..." << endl;
 	    error = true;
 	} else {
-	    scene->global_vars.cullface = attributeStr;
+	    //scene->global_vars.cullface = attributeStr;
 	}
 
 	// cullorder attribute
@@ -149,7 +148,7 @@ namespace Parser {
 	    cout << "Invalid cullorder..." << endl;
 	    error = true;
 	} else {
-	    scene->global_vars.cullorder = attributeStr;
+	    //scene->global_vars.cullorder = attributeStr;
 	}
 
 	if (error) {
@@ -271,19 +270,19 @@ namespace Parser {
 	bool doublesided = false, local = false, enabled = false;
 	float ambient[4];
 	if (strcmp(lightingElement->Attribute("doublesided"), "true")) {
-	    scene->light_global_vars.doublesided = true;
+	    //scene->light_global_vars.doublesided = true;
 	}
 	if (strcmp(lightingElement->Attribute("enabled"), "true")) {
-	    scene->light_global_vars.enabled = true;
+	    //scene->light_global_vars.enabled = true;
 	}
 	if (strcmp(lightingElement->Attribute("local"), "true")) {
-	    scene->light_global_vars.local = true;
+	    //scene->light_global_vars.local = true;
 	}
 	if (StringParsing::FloatReader(lightingElement->Attribute("ambient"), ambient) != 4) {
 	    //error ambient attr does not have at least 4 values
 	    cout << "Bad ambient attribute\n";
 	} else {
-	    scene->light_global_vars.ambient = ambient;
+	    //scene->light_global_vars.ambient = ambient;
 	}
 
 	char *id;
@@ -315,11 +314,11 @@ namespace Parser {
 		    //bad spot camera
 		    error = true;
 		} else {
-		    scene->lights.push_back(new Spot(id, enabled, count, location, ambient, diffuse, specular, angle, exponent, direction));
+		    //scene->lights.push_back(new Spot(id, enabled, count, location, ambient, diffuse, specular, angle, exponent, direction));
 		}
 	    } else {
 		//save omni camera
-		scene->lights.push_back(new Omni(id, enabled, count, location, ambient, diffuse, specular));
+		//scene->lights.push_back(new Omni(id, enabled, count, location, ambient, diffuse, specular));
 	    }
 	    if (!error) {
 		//save camera
@@ -370,7 +369,7 @@ namespace Parser {
 			endl;
 		count++;
 		Texture *t = new Texture(id, file);
-		scene->texture_mapping.insert(std::pair<string, Texture*>(id, t));
+		//scene->texture_mapping.insert(std::pair<string, Texture*>(id, t));
 	    }
 	    //next texture
 	    textureElement = textureElement->NextSiblingElement();
@@ -577,7 +576,7 @@ namespace Parser {
 		Appearance *app = new Appearance(string(id), emissive, ambient, diffuse,
 			specular, shininess, string(textureref),
 			texlength_s, texlength_t);
-		scene->appearance_mapping.insert(pair<string, Appearance*>(id, app));
+		//scene->appearance_mapping.insert(pair<string, Appearance*>(id, app));
 		count++;
 
 	    }

@@ -17,12 +17,11 @@
 
 using namespace std;
 
-class Texture:public CGFtexture{
+class Texture {
 public:
     string id;
     
-    Texture(string id,string path)
-            :CGFtexture(path),id(id){}
+    Texture(string id,string path){}
     ~Texture(){}
 };
 

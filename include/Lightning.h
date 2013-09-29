@@ -18,7 +18,7 @@ typedef struct {
     float ambient[4];
 } global_lightning_vars;
 
-class Light : public CGFlight {
+class Light {
 public:
     Light(string id, bool enabled, unsigned int light_id,
             float *pos, float ambient[4],

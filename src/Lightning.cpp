@@ -5,7 +5,7 @@ using namespace std;
 
 Light::Light(string id, bool enabled, unsigned int light_id,
 	float *pos, float ambient[4], float difuse[4],
-	float specular[4], float *dir) : CGFlight(light_id, pos, dir) {
+	float specular[4], float *dir) {
     this->enabled = enabled;
     this->id = id;
     this->location = pos;
