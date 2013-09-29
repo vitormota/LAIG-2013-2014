@@ -2,7 +2,11 @@
 #define _CAMERAS_H
 
 #include <string>
+#if __APPLE__
 #include <CGFcamera.h>
+#elif __unix
+#include <CGF/CGFcamera.h>
+#endif
 
 namespace scene{
 

@@ -6,12 +6,12 @@
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
-#include <gl\glut.h>
+#include <GL/glut.h>
 #endif
 #ifdef __APPLE__
 #include <gl/glui.h>
 #else
-#include <gl\glui.h>
+#include <GL/glui.h>
 #endif
 
 

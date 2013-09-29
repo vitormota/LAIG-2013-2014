@@ -10,21 +10,31 @@
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
-#include <gl\glut.h>
+#include <GL/glut.h>
 #endif
 #ifdef __APPLE__
 #include <gl/glui.h>
 #else
-#include <gl\glui.h>
+#include <GL/glui.h>
 #endif
 
 #include <iostream>
+#if __APPLE__
 #include "CGFscene.h"
 #include "CGFappearance.h"
 #include "CGFscene.h"
 #include "CGFaxis.h"
 #include "CGFapplication.h"
 #include "CGFobject.h"
+#elif __unix
+#include "CGF/CGFscene.h"
+#include "CGF/CGFappearance.h"
+#include "CGF/CGFscene.h"
+#include "CGF/CGFaxis.h"
+#include "CGF/CGFapplication.h"
+#include "CGF/CGFobject.h"
+#endif
+
 #include "Primitive.h"
 #include "Graph.h"
 

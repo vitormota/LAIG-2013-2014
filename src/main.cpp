@@ -10,20 +10,23 @@
 #include <string>
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
+#include "CGFapplication.h"
 #else
-#include <gl\glut.h>
+#include <GL/glut.h>
 #endif
 #ifdef __APPLE__
 #include <gl/glui.h>
 #else
-#include <gl\glui.h>
+#include <GL/glui.h>
 #endif
 
 #include <string>
 #include <iostream>
 #include <exception>
 #include "YafParser.h"
-#include "CGFapplication.h"
+#if __unix
+#include <CGF/CGFapplication.h>
+#endif
 #include "Scene.h"
 
 using std::cout;
@@ -45,7 +48,7 @@ int main(int argc, char* argv[]) {
             cout << "File not found or ill formed xml.";
             break;
 	}
-	//cin.get();
+	cin.get();
     
     Graph* sceneGraph = f->getGraph();
     

@@ -5,7 +5,7 @@
 #ifdef __APPLE__
 #include "CGFlight.h"
 #else
-#include <CGFlight.h>
+#include <CGF/CGFlight.h>
 #endif
 
 
