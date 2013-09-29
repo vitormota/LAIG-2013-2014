@@ -17,9 +17,8 @@
     <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
     <cameras initial="one" >
         <!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
-        
-        <perspective id="one" near="4" far="2" angle="30" pos="4 2 1" target="3 3 2" />
-        <ortho id="two" near="2" far="5" left="4" right="2" top="3" bottom="4" />
+         <perspective id="one" near="4.0" far="2.0" angle="30.0" pos="4.0 2.0 1.0" target="3.0 3.0 2.0" />
+        <ortho id="two" near="2.0" far="5.0" left="4.0" right="2.0" top="3.0" bottom="4.0" />
         
     </cameras>
     

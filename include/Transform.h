@@ -31,10 +31,10 @@ class Translate: public Transform{
     
 private:
     float x, y, z; // to attribute
-    float translateMatrix[4][4] = {1.0, 0.0, 0.0, x,
-                                   0.0, 1.0, 0.0, y,
-                                   0.0, 0.0, 1.0, z,
-                                   0.0, 0.0, 0.0, 1.0};
+//    float translateMatrix[4][4] = {1.0, 0.0, 0.0, x,
+//                                   0.0, 1.0, 0.0, y,
+//                                   0.0, 0.0, 1.0, z,
+//                                   0.0, 0.0, 0.0, 1.0};
     
 public:
     Translate(float x, float y, float z);
@@ -65,11 +65,11 @@ class Scale: public Transform{
     
 private:
     float x, y, z; // factor attribute
-    float scaleMatrix[4][4] =
-      {   x, 0.0, 0.0, 0.0,
-        0.0,   y, 0.0, 0.0,
-        0.0, 0.0,   z, 0.0,
-        0.0, 0.0, 0.0, 1.0};
+//    float scaleMatrix[4][4] =
+//      {   x, 0.0, 0.0, 0.0,
+//        0.0,   y, 0.0, 0.0,
+//        0.0, 0.0,   z, 0.0,
+//        0.0, 0.0, 0.0, 0.0};
     
 public:
     Scale(float x, float y, float z);
