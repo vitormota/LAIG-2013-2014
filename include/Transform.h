@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <string>
+#include <math.h>
 using std::string;
 
 class Transform{
@@ -30,7 +31,10 @@ class Translate: public Transform{
     
 private:
     float x, y, z; // to attribute
-    // TODO: matrix
+    float translateMatrix[4][4] = {1.0, 0.0, 0.0, x,
+                                   0.0, 1.0, 0.0, y,
+                                   0.0, 0.0, 1.0, z,
+                                   0.0, 0.0, 0.0, 1.0};
     
 public:
     Translate(float x, float y, float z);
@@ -44,9 +48,16 @@ private:
     string axis;
     float angle;
     
+    float rotateMatrixX[4][4];
+    
+    float rotateMatrixY[4][4];
+    
+    float rotateMatrixZ[4][4];
+    
 public:
     Rotate(string axis, float angle);
     virtual void getMatrix();
+    
 };
 
 // SCALE
@@ -54,6 +65,11 @@ class Scale: public Transform{
     
 private:
     float x, y, z; // factor attribute
+    float scaleMatrix[4][4] =
+      {   x, 0.0, 0.0, 0.0,
+        0.0,   y, 0.0, 0.0,
+        0.0, 0.0,   z, 0.0,
+        0.0, 0.0, 0.0, 1.0};
     
 public:
     Scale(float x, float y, float z);

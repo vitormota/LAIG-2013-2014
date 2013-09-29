@@ -18,7 +18,6 @@
 #include <GL/glui.h>
 #endif
 
-#include <iostream>
 #if __APPLE__
 #include "CGFscene.h"
 #include "CGFappearance.h"
@@ -35,6 +34,7 @@
 #include "CGF/CGFobject.h"
 #endif
 
+#include <iostream>
 #include "Primitive.h"
 #include "Graph.h"
 

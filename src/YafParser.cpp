@@ -69,7 +69,7 @@ namespace Parser {
 		cout << "---------------\n";
 		cout << "- globals OK. -\n";
 		cout << "---------------\n\n";
-		//if(!loadCameras(camerasElement)) return cameras_error;
+		if(!loadCameras(camerasElement)) return cameras_error;
 		cout << "---------------\n";
 		cout << "- cameras OK. -\n";
 		cout << "---------------\n\n";

@@ -5,7 +5,6 @@
 
 #include "Scene.h"
 #if __APPLE__
-
 #include "CGFapplication.h"
 #elif __unix
 #include <CGF/CGFapplication.h>
