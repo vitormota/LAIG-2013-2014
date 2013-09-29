@@ -4,12 +4,14 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>include/Appearance.h</itemPath>
       <itemPath>include/Cameras.h</itemPath>
       <itemPath>include/Graph.h</itemPath>
       <itemPath>include/Lightning.h</itemPath>
       <itemPath>include/Node.h</itemPath>
       <itemPath>include/Primitive.h</itemPath>
       <itemPath>include/Scene.h</itemPath>
+      <itemPath>include/Texture.h</itemPath>
       <itemPath>include/Transform.h</itemPath>
       <itemPath>include/YafParser.h</itemPath>
       <itemPath>include/tinystr.h</itemPath>
@@ -75,6 +77,8 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="include/Appearance.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Cameras.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Graph.h" ex="false" tool="3" flavor2="0">
@@ -86,6 +90,8 @@
       <item path="include/Primitive.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Scene.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Texture.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Transform.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -137,6 +143,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="include/Appearance.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Cameras.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Graph.h" ex="false" tool="3" flavor2="0">
@@ -148,6 +156,8 @@
       <item path="include/Primitive.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Scene.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Texture.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Transform.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -14,66 +14,68 @@
 #include "Primitive.h"
 #include "Graph.h"
 #include "Node.h"
+#include "Scene.h"
 
 namespace Parser {
-    
-	using namespace std;
-    
-	enum ERRORS {
-		globals_error = 1, cameras_error, lightning_error, textures_error, 
-		appearances_error, graph_error, file_not_found
-	};
-	enum node_i {
-		GLOBALS, CAMERAS, LIGHTNING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCES,
-		APPEARANCE, GRAPH, NODE, TRANSFORMS, TRANSLATE, ROTATE, SCALE, APPEARANCEREF, CHILDREN, RECTANGLE, TRIANGLE, CYLINDER, SPHERE, TORUS, NODEREF
-	};
-    
-	class YafParser {
-	
+
+    using namespace std;
+
+    enum ERRORS {
+        globals_error = 1, cameras_error, lightning_error, textures_error,
+        appearances_error, graph_error, file_not_found
+    };
+
+    enum node_i {
+        GLOBALS, CAMERAS, LIGHTNING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCES,
+        APPEARANCE, GRAPH, NODE, TRANSFORMS, TRANSLATE, ROTATE, SCALE, APPEARANCEREF, CHILDREN,
+        RECTANGLE, TRIANGLE, CYLINDER, SPHERE, TORUS, NODEREF
+    };
+
+    class YafParser {
     public:
-        
-        YafParser();
+
+        YafParser(Scene *scene);
         YafParser(string filename);
         ~YafParser();
-       
+
         /* Initial method for parsing
          ** return 0 success, or above means error */
         int loadYaf();
         Graph* getGraph();
-        
-	private:
+
+    private:
         string _filename;
         TiXmlDocument* doc;
-        
+
         TiXmlElement* globalsElement;
         TiXmlElement* camerasElement;
         TiXmlElement* lightingElement;
         TiXmlElement* texturesElement;
         TiXmlElement* appearancesElement;
         TiXmlElement* graphElement;
-        
+
         bool loadGlobals(TiXmlElement* globalsElement);
         bool loadCameras(TiXmlElement* camerasElement);
         bool loadLightning(TiXmlElement* lightingElement);
         bool loadTextures(TiXmlElement* texturesElement);
         bool loadAppearances(TiXmlElement* appearancesElement);
         bool loadGraph(TiXmlElement* graphElement);
-        
-        
+
+    private:
+        Scene *scene;
+
+
         /* globals */
         //float[4] background;
-        string drawmode;
-        string shading;
-        string cullface;
-        string cullorder;
-        
+
+
         /* cameras */
         string initial; // id of the initial camera?
         //map<string, Camera*> camerasMap; // TODO : create Camera class (because it can be perspective or ortho)
-        
+
         /* lightning */
         //map<string, Lightning*> lightningMap; // TODO : create Lightning class
-        
+
         /* textures */
         //map<string, Texture*> texturesMap; // TODO : create Texture class
 
@@ -82,8 +84,8 @@ namespace Parser {
 
         /* graph */
         Graph* sceneGraph;
-        
-	};
+
+    };
 }
 
 
