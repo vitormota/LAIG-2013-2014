@@ -31,8 +31,12 @@ class Graph
         Graph(string rootid);
         ~Graph();
         void setRootId(string rootid);
-        string getRootId();
         void addNode(Node*);
+        void setNodes(map<string, Node*> nodesMap);
+        string getRootId();
+        Node* getNodeById(string id);
+        map<string, Node*> getNodes();
+    
         
 };
 

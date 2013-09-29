@@ -14,7 +14,7 @@ namespace scene{
 
 	Primitive::~Primitive()
 	{
-
+        
 	}
 
 	void Primitive::setId(string id)
@@ -26,7 +26,11 @@ namespace scene{
 	{
 		return this->id;
 	}
-
+    
+    Cylinder::~Cylinder()
+    {
+        gluDeleteQuadric(cylinderQuadric);
+    }
 	Rectangle::Rectangle(string id,float x1, float y1, float x2, float y2) : Primitive(id)
 	{
 		this->x1 = x1;
@@ -57,10 +61,10 @@ namespace scene{
 		this->stacks = stacks;
 
 		cylinderQuadric = gluNewQuadric();
-		gluQuadricTexture(cylinderQuadric, GL_TRUE);
-		gluQuadricDrawStyle(cylinderQuadric, GLU_FILL);
-		gluQuadricNormals(cylinderQuadric, GLU_SMOOTH);
-		gluQuadricOrientation(cylinderQuadric, GLU_OUTSIDE);
+		//gluQuadricTexture(cylinderQuadric, GL_TRUE);
+		//gluQuadricDrawStyle(cylinderQuadric, GLU_FILL);
+		//gluQuadricNormals(cylinderQuadric, GLU_SMOOTH);
+		//gluQuadricOrientation(cylinderQuadric, GLU_OUTSIDE);
 	}
 
 	Sphere::Sphere(string id, float radius, int slices, int stacks) : Primitive(id)
@@ -114,6 +118,7 @@ namespace scene{
 		// top of the cylinder
 		glPushMatrix();
 
+        cylinderQuadric = gluNewQuadric();
 		gluDisk(cylinderQuadric,0,base,slices,stacks);
 		glTranslated(0, 0, height);
 		gluDisk(cylinderQuadric, 0, top, slices, stacks);
@@ -121,6 +126,7 @@ namespace scene{
 		glPopMatrix();
 
 		glPushMatrix();
+        cylinderQuadric = gluNewQuadric();
 		gluCylinder(cylinderQuadric, base, top, height, slices, stacks);
 		glPopMatrix();
 

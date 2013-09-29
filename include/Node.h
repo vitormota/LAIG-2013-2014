@@ -22,6 +22,7 @@ using namespace std;
 	class Node{
 	
     public:
+        Node();
         Node(string id);
         ~Node();
         void setId(string id);

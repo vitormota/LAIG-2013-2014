@@ -34,11 +34,12 @@ namespace Parser {
         
         YafParser();
         YafParser(string filename);
-        ~YafParser(void);
+        ~YafParser();
        
         /* Initial method for parsing
          ** return 0 success, or above means error */
-        int loadYaf(void);
+        int loadYaf();
+        Graph* getGraph();
         
 	private:
         string _filename;

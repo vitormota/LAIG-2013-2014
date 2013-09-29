@@ -26,6 +26,7 @@
 #include "CGFapplication.h"
 #include "CGFobject.h"
 #include "Primitive.h"
+#include "Graph.h"
 
 class Scene : public CGFscene
 {
@@ -33,6 +34,10 @@ class Scene : public CGFscene
 public:
 	void init();
 	void display();
+    void setGraph(Graph* sceneGraph);
+    Graph* getGraph();
+    void processGraph(); // process all the nodes of the graph in order
+    void processNode(string id);
     
 	~Scene();
     
@@ -43,6 +48,8 @@ public:
     
     scene::Primitive* p;
     CGFappearance* pAppearance;
+    
+    Graph* sceneGraph;
     
     /* TESTING */
 };

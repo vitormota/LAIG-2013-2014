@@ -65,6 +65,7 @@ namespace scene{
 
 	public:
 		Cylinder(string id, float base, float top, float height, int slices, int stacks);
+        ~Cylinder();
 		virtual void draw();
 	};
 

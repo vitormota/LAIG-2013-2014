@@ -39,20 +39,25 @@ int main(int argc, char* argv[]) {
     
    cout << "\n--> Loading .yaf file <--\n\n";
     
-    Parser::YafParser f = Parser::YafParser();
-	switch(f.loadYaf()){
+    Parser::YafParser* f = new Parser::YafParser();
+	switch(f->loadYaf()){
         case Parser::file_not_found:
             cout << "File not found or ill formed xml.";
             break;
 	}
 	//cin.get();
     
+    Graph* sceneGraph = f->getGraph();
+    
 	CGFapplication app = CGFapplication();
     
 	try {
 		app.init(&argc, argv);
         
-		app.setScene(new Scene());
+        Scene* newScene = new Scene();
+        newScene->setGraph(sceneGraph);
+        
+		app.setScene(newScene);
 		app.setInterface(new CGFinterface());
 		
 		app.run();

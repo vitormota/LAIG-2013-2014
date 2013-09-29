@@ -66,29 +66,29 @@ namespace Parser {
 
 		if(!loadGlobals(globalsElement)) return globals_error;
 		//make output readable
-		cout << "----------------------\n";
-		cout << "- globals processed. -\n";
-		cout << "----------------------\n\n";
+		cout << "---------------\n";
+		cout << "- globals OK. -\n";
+		cout << "---------------\n\n";
 		if(!loadCameras(camerasElement)) return cameras_error;
-		cout << "----------------------\n";
-		cout << "- cameras processed. -\n";
-		cout << "----------------------\n\n";
+		cout << "---------------\n";
+		cout << "- cameras OK. -\n";
+		cout << "---------------\n\n";
 		if(!loadLightning(lightingElement)) return lightning_error;
-		cout << "------------------------\n";
-		cout << "- lightning processed. -\n";
-		cout << "------------------------\n\n";
+		cout << "-----------------\n";
+		cout << "- lightning OK. -\n";
+		cout << "-----------------\n\n";
 		if(!loadTextures(texturesElement)) return textures_error;
-		cout << "-----------------------\n";
-		cout << "- textures processed. -\n";
-		cout << "-----------------------\n\n";
+		cout << "----------------\n";
+		cout << "- textures OK. -\n";
+		cout << "----------------\n\n";
 		if(!loadAppearances(appearancesElement)) return appearances_error;
-		cout << "-----------------------\n";
-		cout << "- appearances processed. -\n";
-		cout << "-----------------------\n\n";
+		cout << "-------------------\n";
+		cout << "- appearances OK. -\n";
+		cout << "-------------------\n\n";
 		if(!loadGraph(graphElement)) return graph_error;
-		cout << "-----------------------\n";
-		cout << "-   graph processed.  -\n";
-		cout << "-----------------------\n\n";
+		cout << "----------------\n";
+		cout << "-   graph OK.  -\n";
+		cout << "----------------\n\n";
 
 		return 0;
 	}
@@ -200,12 +200,12 @@ namespace Parser {
 					StringParsing::FloatReader(perspectiveElement->Attribute("target"),target) != 3)
 				{
 					//bad perspective found
-					cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), ignoring.\n";
+					cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), FAIL.\n";
 				}
 				else
 				{
 					cout << node_names[PERSPECTIVE] <<
-						" id: " << id << ", processed." << endl;
+						" id: " << id << ", OK." << endl;
 					//pre-requesite, at least one so, flag off
 					if(error) error = false;
 				}
@@ -223,13 +223,13 @@ namespace Parser {
 					cout <<  node_names[ORTHO] <<
 						" id: " <<
 						id <<
-						" has invalid field(s), ignoring.\n";
+						" has invalid field(s), FAIL.\n";
 				}
 				else{
 					cout << node_names[ORTHO] <<
 						" id: " <<
 						id <<
-						", processed." <<
+						", OK." <<
 						endl;
 					//pre-requesite, at least one so, flag off
 					if(error) error = false;
@@ -309,13 +309,13 @@ namespace Parser {
 			}
 			if(!error){
 				//save camera
-				cout << child->Value() << " id: " << id << " processed.\n";
+				cout << child->Value() << " id: " << id << " OK.\n";
 				count ++;
 			}else{
 				cout <<  child->Value() <<
 					" id: " <<
 					id <<
-					" has invalid field(s), ignoring.\n";
+					" has invalid field(s), FAIL.\n";
 			}
 			child = child->NextSiblingElement();
 		}
@@ -344,7 +344,7 @@ namespace Parser {
 				//Bad texture
 				cout << node_names[TEXTURE] <<
 					" id: " <<
-					" has invalid field(s), ignoring.\n";
+					" has invalid field(s), FAIL.\n";
 			}else{
 				//valid texture
 				//this id must be saved, for cross-reference
@@ -352,7 +352,7 @@ namespace Parser {
 				cout << node_names[TEXTURE] <<
 					" id: " <<
 					id <<
-					", processed." <<
+					", OK." <<
 					endl;
 				count ++;
 			}
@@ -425,11 +425,11 @@ namespace Parser {
 			if(!id){
 
 				// invalid id
-				cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), FAIL.\n";
 			}
 			else{
 				// valid id
-				cout << node_names[APPEARANCE] << " id: " << id << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " id: " << id << ", OK." << endl;
 
 			}
 
@@ -440,13 +440,13 @@ namespace Parser {
 			{
 
 				// invalid emission
-				cout << node_names[APPEARANCE] << " emissive: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " emissive: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid emission
-				cout << node_names[APPEARANCE] << " emissive: " << emissiveStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " emissive: " << emissiveStr << ", OK." << endl;
 
 			}
 
@@ -456,13 +456,13 @@ namespace Parser {
 			{
 
 				// invalid ambient
-				cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid ambient
-				cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", OK." << endl;
 
 			}
 
@@ -472,13 +472,13 @@ namespace Parser {
 			{
 
 				// invalid diffuse
-				cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid diffuse
-				cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", OK." << endl;
 
 			}
 
@@ -488,13 +488,13 @@ namespace Parser {
 			{
 
 				// invalid specular
-				cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid specular
-				cout << node_names[APPEARANCE] << " specular: " << specularStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " specular: " << specularStr << ", OK." << endl;
 
 			}
 
@@ -504,13 +504,13 @@ namespace Parser {
 			{
 
 				// invalid shininess
-				cout << node_names[APPEARANCE] << " shininess: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " shininess: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid shininess
-				cout << node_names[APPEARANCE] << " shininess: " << shininessStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " shininess: " << shininessStr << ", OK." << endl;
 
 			}
 
@@ -519,13 +519,13 @@ namespace Parser {
 			if(!textureref){
 
 				// invalid textureref
-				cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid textureref
-				cout << node_names[APPEARANCE] << " textureref: " << textureref << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " textureref: " << textureref << ", OK." << endl;
 
 			}
 
@@ -536,13 +536,13 @@ namespace Parser {
 			{
 
 				// invalid texlength_s
-				cout << node_names[APPEARANCE] << " texlength_s: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " texlength_s: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid texlength_s
-				cout << node_names[APPEARANCE] << " texlength_s: " << texlength_sStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " texlength_s: " << texlength_sStr << ", OK." << endl;
 
 			}
 
@@ -552,13 +552,13 @@ namespace Parser {
 			{
 
 				// invalid texlength_t
-				cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), FAIL.\n";
 
 			}
 			else{
 
 				// valid texlength_t
-				cout << node_names[APPEARANCE] << " texlength_t: " << texlength_tStr << ", processed." << endl;
+				cout << node_names[APPEARANCE] << " texlength_t: " << texlength_tStr << ", OK." << endl;
 
 			}
 
@@ -591,11 +591,11 @@ namespace Parser {
 		if(!rootid){
 
 			// invalid rootid
-			cout << node_names[GRAPH] << " rootid: " << " has invalid field(s), ignoring.\n";
+			cout << node_names[GRAPH] << " rootid: " << " has invalid field(s), FAIL.\n";
 		}
 		else{
 			// valid rootid
-			cout << node_names[GRAPH] << " rootid: " << rootid << ", processed." << endl;
+			cout << node_names[GRAPH] << " rootid: " << rootid << ", OK." << endl;
 
 
 			// create graph with the rootid
@@ -638,11 +638,11 @@ namespace Parser {
 			if(!node_id){
 
 				// invalid id
-				cout << node_names[NODE] << " id: " << " has invalid field(s), ignoring.\n";
+				cout << node_names[NODE] << " id: " << " has invalid field(s), FAIL.\n";
 			}
 			else{
 				// valid id
-				cout << node_names[NODE] << " id: " << node_id << ", processed." << endl;
+				cout << node_names[NODE] << " id: " << node_id << ", OK." << endl;
 
 			}
 
@@ -697,13 +697,13 @@ namespace Parser {
 					{
 
 						// invalid to
-						cout << node_names[TRANSLATE] << " to: " << " has invalid field(s), ignoring.\n";
+						cout << node_names[TRANSLATE] << " to: " << " has invalid field(s), FAIL.\n";
 
 					}
 					else{
 
 						// valid to
-						cout << node_names[TRANSLATE] << " to: " << toStr << ", processed." << endl;
+						cout << node_names[TRANSLATE] << " to: " << toStr << ", OK." << endl;
 
 					}
 
@@ -730,13 +730,13 @@ namespace Parser {
 						{
 
 							// invalid axis
-							cout << node_names[ROTATE] << " axis: " << " has invalid field(s), ignoring.\n";
+							cout << node_names[ROTATE] << " axis: " << " has invalid field(s), FAIL.\n";
 
 						}
 						else{
 
 							// valid axis
-							cout << node_names[ROTATE] << " axis: " << axis << ", processed." << endl;
+							cout << node_names[ROTATE] << " axis: " << axis << ", OK." << endl;
 
 						}
 
@@ -751,13 +751,13 @@ namespace Parser {
 						{
 
 							// invalid angle
-							cout << node_names[ROTATE] << " angle: " << " has invalid field(s), ignoring.\n";
+							cout << node_names[ROTATE] << " angle: " << " has invalid field(s), FAIL.\n";
 
 						}
 						else{
 
 							// valid angle
-							cout << node_names[ROTATE] << " angle: " << angleStr << ", processed." << endl;
+							cout << node_names[ROTATE] << " angle: " << angleStr << ", OK." << endl;
 
 						}
                         
@@ -786,13 +786,13 @@ namespace Parser {
 							{
 
 								// invalid factor
-								cout << node_names[SCALE] << " factor: " << " has invalid field(s), ignoring.\n";
+								cout << node_names[SCALE] << " factor: " << " has invalid field(s), FAIL.\n";
 
 							}
 							else{
 
 								// valid factor
-								cout << node_names[SCALE] << " factor: " << factorStr << ", processed." << endl;
+								cout << node_names[SCALE] << " factor: " << factorStr << ", OK." << endl;
 
 							}
                             
@@ -826,11 +826,11 @@ namespace Parser {
 				if(!appearanceref_id){
 
 					// invalid appearanceref_id
-					cout << node_names[APPEARANCEREF] << " id: " << " has invalid field(s), ignoring.\n";
+					cout << node_names[APPEARANCEREF] << " id: " << " has invalid field(s), FAIL.\n";
 				}
 				else{
 					// valid appearanceref_id
-					cout << node_names[APPEARANCEREF] << " id: " << appearanceref_id << ", processed." << endl;
+					cout << node_names[APPEARANCEREF] << " id: " << appearanceref_id << ", OK." << endl;
                     
                     newNode->setAppearanceRef(appearanceref_id);
 
@@ -877,13 +877,13 @@ namespace Parser {
 					{
 
 						// invalid xy1
-						cout << node_names[RECTANGLE] << " xy1: " << " has invalid field(s), ignoring.\n";
+						cout << node_names[RECTANGLE] << " xy1: " << " has invalid field(s), FAIL.\n";
 
 					}
 					else{
 
 						// valid xy1
-						cout << node_names[RECTANGLE] << " xy1: " << xy1Str << ", processed." << endl;
+						cout << node_names[RECTANGLE] << " xy1: " << xy1Str << ", OK." << endl;
 
 					}
 
@@ -898,13 +898,13 @@ namespace Parser {
 					{
 
 						// invalid xy2
-						cout << node_names[RECTANGLE] << " xy2: " << " has invalid field(s), ignoring.\n";
+						cout << node_names[RECTANGLE] << " xy2: " << " has invalid field(s), FAIL.\n";
 
 					}
 					else{
 
 						// valid xy2
-						cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", processed." << endl;
+						cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", OK." << endl;
 
 					}
                     
@@ -932,13 +932,13 @@ namespace Parser {
 						{
 
 							// invalid xyz1
-							cout << node_names[TRIANGLE] << " xyz1: " << " has invalid field(s), ignoring.\n";
+							cout << node_names[TRIANGLE] << " xyz1: " << " has invalid field(s), FAIL.\n";
 
 						}
 						else{
 
 							// valid xyz1
-							cout << node_names[TRIANGLE] << " xyz1: " << xyz1Str << ", processed." << endl;
+							cout << node_names[TRIANGLE] << " xyz1: " << xyz1Str << ", OK." << endl;
 
 						}
 
@@ -953,13 +953,13 @@ namespace Parser {
 						{
 
 							// invalid xyz2
-							cout << node_names[TRIANGLE] << " xyz2: " << " has invalid field(s), ignoring.\n";
+							cout << node_names[TRIANGLE] << " xyz2: " << " has invalid field(s), FAIL.\n";
 
 						}
 						else{
 
 							// valid xyz2
-							cout << node_names[TRIANGLE] << " xyz2: " << xyz2Str << ", processed." << endl;
+							cout << node_names[TRIANGLE] << " xyz2: " << xyz2Str << ", OK." << endl;
 
 						}
 
@@ -974,13 +974,13 @@ namespace Parser {
 						{
 
 							// invalid xyz3
-							cout << node_names[TRIANGLE] << " xyz3: " << " has invalid field(s), ignoring.\n";
+							cout << node_names[TRIANGLE] << " xyz3: " << " has invalid field(s), FAIL.\n";
 
 						}
 						else{
 
 							// valid xyz3
-							cout << node_names[TRIANGLE] << " xyz3: " << xyz3Str << ", processed." << endl;
+							cout << node_names[TRIANGLE] << " xyz3: " << xyz3Str << ", OK." << endl;
 
 						}
                         
@@ -1007,13 +1007,13 @@ namespace Parser {
 							{
 
 								// invalid base
-								cout << node_names[CYLINDER] << " base: " << " has invalid field(s), ignoring.\n";
+								cout << node_names[CYLINDER] << " base: " << " has invalid field(s), FAIL.\n";
 
 							}
 							else{
 
 								// valid base
-								cout << node_names[CYLINDER] << " base: " << baseStr << ", processed." << endl;
+								cout << node_names[CYLINDER] << " base: " << baseStr << ", OK." << endl;
 
 							}
 
@@ -1028,13 +1028,13 @@ namespace Parser {
 							{
 
 								// invalid top
-								cout << node_names[CYLINDER] << " top: " << " has invalid field(s), ignoring.\n";
+								cout << node_names[CYLINDER] << " top: " << " has invalid field(s), FAIL.\n";
 
 							}
 							else{
 
 								// valid top
-								cout << node_names[CYLINDER] << " top: " << topStr << ", processed." << endl;
+								cout << node_names[CYLINDER] << " top: " << topStr << ", OK." << endl;
 
 							}
 
@@ -1049,13 +1049,13 @@ namespace Parser {
 							{
 
 								// invalid height
-								cout << node_names[CYLINDER] << " height: " << " has invalid field(s), ignoring.\n";
+								cout << node_names[CYLINDER] << " height: " << " has invalid field(s), FAIL.\n";
 
 							}
 							else{
 
 								// valid height
-								cout << node_names[CYLINDER] << " height: " << heightStr << ", processed." << endl;
+								cout << node_names[CYLINDER] << " height: " << heightStr << ", OK." << endl;
 
 							}
 
@@ -1070,13 +1070,13 @@ namespace Parser {
 							{
 
 								// invalid slices
-								cout << node_names[CYLINDER] << " slices: " << " has invalid field(s), ignoring.\n";
+								cout << node_names[CYLINDER] << " slices: " << " has invalid field(s), FAIL.\n";
 
 							}
 							else{
 
 								// valid slices
-								cout << node_names[CYLINDER] << " slices: " << slices << ", processed." << endl;
+								cout << node_names[CYLINDER] << " slices: " << slices << ", OK." << endl;
 
 							}
 
@@ -1091,13 +1091,13 @@ namespace Parser {
 							{
 
 								// invalid stacks
-								cout << node_names[CYLINDER] << " stacks: " << " has invalid field(s), ignoring.\n";
+								cout << node_names[CYLINDER] << " stacks: " << " has invalid field(s), FAIL.\n";
 
 							}
 							else{
 
 								// valid stacks
-								cout << node_names[CYLINDER] << " stacks: " << stacks << ", processed." << endl;
+								cout << node_names[CYLINDER] << " stacks: " << stacks << ", OK." << endl;
 
 							}
                             
@@ -1127,13 +1127,13 @@ namespace Parser {
 								{
 
 									// invalid radius
-									cout << node_names[SPHERE] << " radius: " << " has invalid field(s), ignoring.\n";
+									cout << node_names[SPHERE] << " radius: " << " has invalid field(s), FAIL.\n";
 
 								}
 								else{
 
 									// valid radius
-									cout << node_names[SPHERE] << " radius: " << radiusStr << ", processed." << endl;
+									cout << node_names[SPHERE] << " radius: " << radiusStr << ", OK." << endl;
 
 								}
 
@@ -1148,13 +1148,13 @@ namespace Parser {
 								{
 
 									// invalid slices
-									cout << node_names[SPHERE] << " slices: " << " has invalid field(s), ignoring.\n";
+									cout << node_names[SPHERE] << " slices: " << " has invalid field(s), FAIL.\n";
 
 								}
 								else{
 
 									// valid slices
-									cout << node_names[SPHERE] << " slices: " << slices << ", processed." << endl;
+									cout << node_names[SPHERE] << " slices: " << slices << ", OK." << endl;
 
 								}
 
@@ -1169,13 +1169,13 @@ namespace Parser {
 								{
 
 									// invalid stacks
-									cout << node_names[SPHERE] << " stacks: " << " has invalid field(s), ignoring.\n";
+									cout << node_names[SPHERE] << " stacks: " << " has invalid field(s), FAIL.\n";
 
 								}
 								else{
 
 									// valid stacks
-									cout << node_names[SPHERE] << " stacks: " << stacks << ", processed." << endl;
+									cout << node_names[SPHERE] << " stacks: " << stacks << ", OK." << endl;
 
 								}
 
@@ -1204,13 +1204,13 @@ namespace Parser {
 									{
 
 										// invalid inner
-										cout << node_names[TORUS] << " inner: " << " has invalid field(s), ignoring.\n";
+										cout << node_names[TORUS] << " inner: " << " has invalid field(s), FAIL.\n";
 
 									}
 									else{
 
 										// valid inner
-										cout << node_names[TORUS] << " inner: " << innerStr << ", processed." << endl;
+										cout << node_names[TORUS] << " inner: " << innerStr << ", OK." << endl;
 
 									}
 
@@ -1225,13 +1225,13 @@ namespace Parser {
 									{
 
 										// invalid outer
-										cout << node_names[TORUS] << " outer: " << " has invalid field(s), ignoring.\n";
+										cout << node_names[TORUS] << " outer: " << " has invalid field(s), FAIL.\n";
 
 									}
 									else{
 
 										// valid outer
-										cout << node_names[TORUS] << " outer: " << outerStr << ", processed." << endl;
+										cout << node_names[TORUS] << " outer: " << outerStr << ", OK." << endl;
 
 									}
 
@@ -1246,13 +1246,13 @@ namespace Parser {
 									{
 
 										// invalid slices
-										cout << node_names[TORUS] << " slices: " << " has invalid field(s), ignoring.\n";
+										cout << node_names[TORUS] << " slices: " << " has invalid field(s), FAIL.\n";
 
 									}
 									else{
 
 										// valid slices
-										cout << node_names[TORUS] << " slices: " << slices << ", processed." << endl;
+										cout << node_names[TORUS] << " slices: " << slices << ", OK." << endl;
 
 									}
 
@@ -1267,13 +1267,13 @@ namespace Parser {
 									{
 
 										// invalid loops
-										cout << node_names[TORUS] << " loops: " << " has invalid field(s), ignoring.\n";
+										cout << node_names[TORUS] << " loops: " << " has invalid field(s), FAIL.\n";
 
 									}
 									else{
 
 										// valid loops
-										cout << node_names[TORUS] << " loops: " << loops << ", processed." << endl;
+										cout << node_names[TORUS] << " loops: " << loops << ", OK." << endl;
 
 									}
                                     
@@ -1300,11 +1300,11 @@ namespace Parser {
 										if(!noderef_id){
 
 											// invalid noderef_id
-											cout << node_names[NODEREF] << " id: " << " has invalid field(s), ignoring.\n";
+											cout << node_names[NODEREF] << " id: " << " has invalid field(s), FAIL.\n";
 										}
 										else{
 											// valid noderef_id
-											cout << node_names[NODEREF] << " id: " << noderef_id << ", processed." << endl;
+											cout << node_names[NODEREF] << " id: " << noderef_id << ", OK." << endl;
 
 										}
                                         
@@ -1341,7 +1341,14 @@ namespace Parser {
 		return true;
 
 	}
+    
+    
+    Graph* YafParser::getGraph()
+    {
+        return this->sceneGraph;
+    }
 }
+
 
 /// <summary>
 /// Attemps to read multiple floats from a given char *
@@ -1356,7 +1363,7 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 	char f[15];
 	char value;
 	int i = 0, v = 0, n = 0;
-
+    bool negative=false;
 	for(;;){
 		value = text[i++];
 		if(value >=48 && value <=57){
@@ -1364,6 +1371,9 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 			f[v++]=value;
 			continue;
 		}
+        if(value==45){
+            negative=true;
+        }
 		if(value==46){
 			//found decimal marker
 			f[v++]=value;
@@ -1379,7 +1389,11 @@ int StringParsing::FloatReader(const char *text, float *floatNumbers) {
 			//reached end
 			f[v]=value;
 			floatNumbers[n++] = (float) atof(f);
-			return n;
+			if(negative){
+                return -n;
+            }else{
+                return n;
+            }
 		}
 		if((value < 48 || value > 57) && value != 32){
 			//not a valid character

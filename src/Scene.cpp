@@ -51,7 +51,7 @@ void Scene::init()
     light1->setKc(0.0);
     light1->setKl(1.0);
     light1->setKq(0.0);
-
+    
     
 	// Uncomment below to enable normalization of lighting normal vectors
 	glEnable (GL_NORMALIZE);
@@ -77,14 +77,14 @@ void Scene::display()
     // Draw lights
     light0->draw();
     light1->draw();
-
+    
     // Uncomment below to enable normalization of lighting normal vectors
 	glEnable (GL_NORMALIZE);
     
     /*TESTING*/
     
     // Declares scene elements
-    p = new scene::Torus("t1", 0.05, 0.1, 8, 8);
+    //p = new scene::Torus("t1", 0.05, 0.1, 8, 8);
     
     // Declares materials
     pAppearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
@@ -110,14 +110,16 @@ void Scene::display()
     //p = new scene::Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);
     //p->draw();
     
-    p = new scene::Rectangle("r1", 0.0, 0.0, 10.0, 10.0);
-    p->draw();
+    //p = new scene::Rectangle("r1", 0.0, 0.0, 10.0, 10.0);
+    //p->draw();
     
     //p = new scene::Sphere("s1", 3.0, 10, 10);
     //p->draw();
     
     //p = new scene::Cylinder("c1", 1.0, 1.0, 2.0, 10, 10);
     //p->draw();
+    
+    processGraph();
     
     
     // ---- END Primitive drawing section
@@ -128,7 +130,66 @@ void Scene::display()
     glutSwapBuffers();
 }
 
+void Scene::processGraph()
+{
+    string rootid = sceneGraph->getRootId();
+    
+    processNode(rootid);
+}
+
+void Scene::processNode(string id)
+{
+    //map<string, Node*> nodesMap = sceneGraph->getNodes();
+    
+    //map<string, Node*>::const_iterator nodesIterator = nodesMap.begin();
+    
+    // IR BUSCAR NÓ DE ROOT/ACTUAL (com o id = id)
+    Node* currentNode = sceneGraph->getNodeById(id);
+    
+    if(currentNode == NULL)
+    {
+        cout << "Invalid yaf??? The nome with the id '" << id << "' doesn't exist?" << endl;
+    }
+    else
+    {
+    
+    // Draw all the primitives of the current node
+    vector<scene::Primitive*> primitives = currentNode->getPrimitives();
+    
+    vector<scene::Primitive*>::const_iterator itP;
+    
+    for(itP = primitives.begin(); itP != primitives.end(); itP++)
+    {
+        p = (*itP);
+        p->draw();
+    }
+    
+    // CHAMAR ESTA FUNÇÃO ATÉ PERCORRER TODOS OS NÓS REFERENCIADOS NESTE NÓ
+    vector<string> childrenNodeRef = currentNode->getChildrenNodeRef();
+    
+    vector<string>::const_iterator itRef;
+    
+    for(itRef = childrenNodeRef.begin(); itRef != childrenNodeRef.end(); itRef++)
+    {
+        string childId = (*itRef);
+        processNode(childId);
+    }
+        
+    }
+    
+}
+
 Scene::~Scene()
 {
     
+}
+
+void Scene::setGraph(Graph* sceneGraph)
+{
+    this->sceneGraph = sceneGraph;
+}
+
+Graph* Scene::getGraph()
+{
+    return this->sceneGraph;
 }
