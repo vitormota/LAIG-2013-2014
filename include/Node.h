@@ -9,7 +9,6 @@
 #include <CGFobject.h>
 #endif
 
-#include "Transform.h"
 #include "Primitive.h"
 
 #include <string>
@@ -29,25 +28,21 @@ using namespace std;
         ~Node();
         void setId(string id);
         void setAppearanceRef(string appearanceref);
-        void setTransforms(vector<Transform*> transforms);
         void setPrimitives(vector<scene::Primitive*> primitives);
         void setChildrenNodeRef(vector<string> childrenNodeRef);
         string getId();
         string getAppearanceRef();
-        vector<Transform*> getTransforms();
         vector<string> getChildrenNodeRef();
         vector<scene::Primitive*> getPrimitives();
-        Transform* getTransform();
+        float matrix[16];
         
 		virtual void draw(){}
 	
 	private:
         string id;
         string appearanceref;
-        vector<Transform*> transforms; // transforms of the node
         vector<string> childrenNodeRef; // noderef's of the children
         vector<scene::Primitive*> primitives; // primitives of the node
-        
 		
 	};
 

@@ -35,16 +35,6 @@ string Node::getAppearanceRef()
     return this->appearanceref;
 }
 
-void Node::setTransforms(vector<Transform*> transforms)
-{
-    this->transforms = transforms;
-}
-
-vector<Transform*> Node::getTransforms()
-{
-    return this->transforms;
-}
-
 void Node::setChildrenNodeRef(vector<string> childrenNodeRef)
 {
     this->childrenNodeRef = childrenNodeRef;
@@ -64,4 +54,6 @@ vector<scene::Primitive*> Node::getPrimitives()
 {
     return this->primitives;
 }
+
+
 

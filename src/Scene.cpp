@@ -158,6 +158,9 @@ void Scene::processNode(string id) {
             p = (*itP);
             p->draw();
         }
+        
+        float *m = currentNode->matrix;
+        glMultMatrixf(m);
 
         // CHAMAR ESTA FUNÇÃO ATÉ PERCORRER TODOS OS NÓS REFERENCIADOS NESTE NÓ
         vector<string> childrenNodeRef = currentNode->getChildrenNodeRef();
@@ -166,7 +169,9 @@ void Scene::processNode(string id) {
 
         for (itRef = childrenNodeRef.begin(); itRef != childrenNodeRef.end(); itRef++) {
             string childId = (*itRef);
+            glPushMatrix();
             processNode(childId);
+            glPopMatrix();
         }
 
     }

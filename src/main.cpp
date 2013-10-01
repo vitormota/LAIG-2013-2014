@@ -42,22 +42,22 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     
-    cout << "\n--> Loading .yaf file <--\n\n";
-    
-    Parser::YafParser* f = new Parser::YafParser();
-	switch(f->loadYaf()){
-        case Parser::file_not_found:
-            cout << "File not found or ill formed xml.";
-            break;
-	}
-	//cin.get();
-    
-    Graph* sceneGraph = f->getGraph();
-    
 	CGFapplication app = CGFapplication();
     
 	try {
 		app.init(&argc, argv);
+        
+        cout << "\n--> Loading .yaf file <--\n\n";
+        
+        Parser::YafParser* f = new Parser::YafParser();
+        switch(f->loadYaf()){
+            case Parser::file_not_found:
+                cout << "File not found or ill formed xml.";
+                break;
+        }
+        //cin.get();
+        
+        Graph* sceneGraph = f->getGraph();
         
         Scene* newScene = new Scene();
         newScene->setGraph(sceneGraph);
