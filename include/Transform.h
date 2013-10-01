@@ -14,12 +14,12 @@ using std::string;
 class Transform{
     
 private:
-    string type;
     
 public:
-    Transform(string type);
+    Transform();
     ~Transform();
     virtual string getType(){ return this->type; }
+    string type;
     
 };
 
@@ -28,7 +28,6 @@ class Translate: public Transform {
     
 private:
     float x, y, z; // to attribute
-    const string type = "transform";
     
 public:
     Translate(float x, float y, float z);
@@ -41,7 +40,6 @@ class Rotate: public Transform{
 private:
     string axis;
     float angle;
-    const string type = "rotate";
     
 public:
     Rotate(string axis, float angle);
@@ -54,7 +52,6 @@ class Scale: public Transform{
     
 private:
     float x, y, z; // factor attribute
-    const string type = "scale";
     
 public:
     Scale(float x, float y, float z);

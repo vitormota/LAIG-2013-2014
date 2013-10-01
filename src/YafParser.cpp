@@ -539,9 +539,9 @@ namespace Parser {
 
 	    // texlength_s attribute
 
-	    int x = appearanceElement->QueryFloatAttribute("texlength_s", &texlength_s);
+	    int ret1 = appearanceElement->QueryFloatAttribute("texlength_s", &texlength_s);
 	    //if (!texlength_sStr || (StringParsing::FloatReader(texlength_sStr, texlength_s)) != 1) {
-	    if (x != TIXML_SUCCESS) {
+	    if (ret1 != TIXML_SUCCESS) {
 
 		error = true;
 		// invalid texlength_s
@@ -555,9 +555,9 @@ namespace Parser {
 	    }
 
 	    // texlength_t attribute
-	    x = appearancesElement->QueryFloatAttribute("texlength_t", &texlength_t);
+	    int ret2 = appearanceElement->QueryFloatAttribute("texlength_t", &texlength_t);
 	    //if (!texlength_tStr || (StringParsing::FloatReader(texlength_tStr, texlength_t)) != 1) {
-	    if (x != TIXML_SUCCESS) {
+	    if (ret2 != TIXML_SUCCESS) {
 		error = true;
 		// invalid texlength_t
 		cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), FAIL.\n";

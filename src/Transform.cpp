@@ -5,7 +5,7 @@
 
 #include "Transform.h"
 
-Transform::Transform(string type)
+Transform::Transform()
 {
     
 }
@@ -15,24 +15,27 @@ Transform::~Transform()
     
 }
 
-Translate::Translate(float x, float y, float z): Transform(type)
+Translate::Translate(float x, float y, float z)
 {
     this->x = x;
     this->y = y;
     this->z = z;
+    this->type = "translate";
 }
 
-Rotate::Rotate(string axis, float angle): Transform(type)
+Rotate::Rotate(string axis, float angle)
 {
     this->axis = axis;
     this->angle = angle;
+    this->type = "transform";
 }
 
-Scale::Scale(float x, float y, float z): Transform(type)
+Scale::Scale(float x, float y, float z)
 {
     this->x = x;
     this->y = y;
     this->z = z;
+    this->type = "scale";
 }
 
 string Translate::getType()
