@@ -4,8 +4,10 @@
 #include <string>
 #ifdef __APPLE__
 #include "CGFlight.h"
-#else
+#elif __unnix
 #include <CGF/CGFlight.h>
+#else 
+#include <CGFlight.h>
 #endif
 
 

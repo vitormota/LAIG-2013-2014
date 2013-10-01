@@ -32,6 +32,13 @@
 #include "CGF/CGFaxis.h"
 #include "CGF/CGFapplication.h"
 #include "CGF/CGFobject.h"
+#elif _WIN32
+#include "CGFscene.h"
+#include "CGFappearance.h"
+#include "CGFscene.h"
+#include "CGFaxis.h"
+#include "CGFapplication.h"
+#include "CGFobject.h"
 #endif
 
 #include <iostream>

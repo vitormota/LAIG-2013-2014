@@ -4,11 +4,11 @@
 //
 
 #include "Scene.h"
-#if __APPLE__
-#include "CGFapplication.h"
-#elif __unix
-#include <CGF/CGFapplication.h>
-#endif
+//#if __APPLE__
+//#include "CGFapplication.h"
+//#elif __unix
+//#include <CGF/CGFapplication.h>
+//#endif
 
 // Global ambient light (do not confuse with ambient component of individual lights)
 float globalAmbientLight[4] = {1.0, 1.0, 1.0, 1.0};

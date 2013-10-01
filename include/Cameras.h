@@ -6,6 +6,8 @@
 #include <CGFcamera.h>
 #elif __unix
 #include <CGF/CGFcamera.h>
+#elif _WIN32
+#include "CGFcamera.h"
 #endif
 
 namespace scene{

@@ -3,8 +3,10 @@
 
 #ifdef __APPLE__
 #include "CGFobject.h"
-#else
+#elif __unix
 #include <CGF/CGFobject.h>
+#else _WIN32
+#include <CGFobject.h>
 #endif
 
 #include "Transform.h"
