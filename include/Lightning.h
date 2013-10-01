@@ -4,9 +4,9 @@
 #include <string>
 #ifdef __APPLE__
 #include "CGFlight.h"
-#elif __unnix
+#elif __unix
 #include <CGF/CGFlight.h>
-#else 
+#else
 #include <CGFlight.h>
 #endif
 

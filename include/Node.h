@@ -37,9 +37,7 @@ using namespace std;
         vector<Transform*> getTransforms();
         vector<string> getChildrenNodeRef();
         vector<scene::Primitive*> getPrimitives();
-        
-        
-		// TODO: Transform* getSingleTransform(); // multiply the matrixes of all the transforms vector
+        Transform* getTransform();
         
 		virtual void draw(){}
 	

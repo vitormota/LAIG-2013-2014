@@ -10,6 +10,7 @@
 //#include <CGF/CGFapplication.h>
 //#endif
 
+
 // Global ambient light (do not confuse with ambient component of individual lights)
 float globalAmbientLight[4] = {1.0, 1.0, 1.0, 1.0};
 

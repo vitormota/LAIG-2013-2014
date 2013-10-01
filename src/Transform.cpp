@@ -5,7 +5,7 @@
 
 #include "Transform.h"
 
-Transform::Transform()
+Transform::Transform(string type)
 {
     
 }
@@ -15,65 +15,37 @@ Transform::~Transform()
     
 }
 
-Translate::Translate(float x, float y, float z)
+Translate::Translate(float x, float y, float z): Transform(type)
 {
     this->x = x;
     this->y = y;
     this->z = z;
 }
 
-Rotate::Rotate(string axis, float angle)
+Rotate::Rotate(string axis, float angle): Transform(type)
 {
     this->axis = axis;
     this->angle = angle;
 }
 
-Scale::Scale(float x, float y, float z)
+Scale::Scale(float x, float y, float z): Transform(type)
 {
     this->x = x;
     this->y = y;
     this->z = z;
 }
 
-void Translate::getMatrix()
+string Translate::getType()
 {
-    // TODO
+    return this->type;
 }
 
-void Rotate::getMatrix()
+string Rotate::getType()
 {
-    // TODO
-    
-    if(axis == "x")
-    {
-        /*rotateMatrixX =
-         {1.0, 0.0,        0.0,        0.0,
-         0.0, cos(angle),-sin(angle), 0.0,
-         0.0, sin(angle), cos(angle), 0.0,
-         0.0, 0.0,         0.0,       1.0};
-         }
-         elseb
-         if(axis == "y")
-         {
-         float rotateMatrixY =
-         {cos(angle), 0.0, sin(angle), 0.0,
-         0.0,        1.0, 0.0,        0.0,
-         -sin(angle), 0.0, cos(angle), 0.0,
-         0.0,        0.0,        0.0, 1.0};
-         }
-         else
-         if(axis == "z")
-         {
-         float rotateMatrixZ[4][4] =
-         {cos(angle),-sin(angle), 0.0, 0.0,
-         sin(angle), cos(angle), 0.0, 0.0,
-         0.0,        0.0,        1.0, 0.0,
-         0.0,        0.0,        0.0, 1.0};
-         }*/
-    }
+    return this->type;
 }
 
-void Scale::getMatrix()
+string Scale::getType()
 {
-    
+    return this->type;
 }

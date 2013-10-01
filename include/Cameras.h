@@ -3,7 +3,7 @@
 
 #include <string>
 #if __APPLE__
-#include <CGFcamera.h>
+#include "CGFcamera.h"
 #elif __unix
 #include <CGF/CGFcamera.h>
 #elif _WIN32

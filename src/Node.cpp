@@ -5,15 +5,15 @@ Node::Node()
     
 }
 
-    Node::Node(string id)
-    {
-        this->id = id;
-    }
-    
-    Node::~Node()
-    {
+Node::Node(string id)
+{
+    this->id = id;
+}
 
-    }
+Node::~Node()
+{
+    
+}
 
 void Node::setId(string id)
 {

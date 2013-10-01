@@ -1301,44 +1301,51 @@ namespace Parser {
 /// <returns>0 on error<p>1+ on success meaning how many where read</returns>
 
 int StringParsing::FloatReader(const char *text, float *floatNumbers) {
-	char f[15];
-	char value;
-	int i = 0, v = 0, n = 0;
-        bool negative=false;
-	for(;;){
-		value = text[i++];
-		if(value >=48 && value <=57){
-			//number
-			f[v++]=value;
-			continue;
-		}
-                if(value==45){
-                    negative=true;
-                }
-		if(value==46){
-			//found decimal marker
-			f[v++]=value;
-			continue;
-		}
-		if(value==32){
-			//space found
-			f[v]=value;
-			floatNumbers[n++] = (float) atof(f);
-			v = 0;
-		}
-		if(value == 0){
-			//reached end
-			f[v]=value;
-			floatNumbers[n++] = (float) atof(f);
-			if(negative){
-                            return -n;
-                        }else{
-                            return n;
-                        }
-		}
-		if((value < 48 || value > 57) && value != 32){
-			//not a valid character
-			return _ERROR;
-		}
-	}
+    char f[15];
+    char value;
+    int i = 0, v = 0, n = 0;
+    bool negative = false;
+    for (;;) {
+        value = text[i++];
+        if (value >= 48 && value <= 57) {
+            //number
+            f[v++] = value;
+            continue;
+        }
+        if (value == 45) {
+            f[v++] = value;
+            //negative = true;
+            continue;
+        }
+        if (value == 46) {
+            //found decimal marker
+            f[v++] = value;
+            continue;
+        }
+        if (value == 32) {
+            //space found
+            f[v] = value;
+            floatNumbers[n] = (float) atof(f);
+            if (negative) {
+                floatNumbers[n] = -1*floatNumbers[n];
+            }
+            negative = false;
+            n++;
+            v = 0;
+        }
+        if (value == 0) {
+            //reached end
+            f[v] = value;
+            floatNumbers[n] = (float) atof(f);
+            if (negative) {
+                floatNumbers[n] = -1*floatNumbers[n];
+            }
+            n++;
+            return n;
+        }
+        if ((value < 48 || value > 57) && value != 32) {
+            //not a valid character
+            return _ERROR;
+        }
+    }
 }
