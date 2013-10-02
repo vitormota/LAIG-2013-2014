@@ -5,7 +5,7 @@
 #include "CGFobject.h"
 #elif __unix
 #include <CGF/CGFobject.h>
-#else _WIN32
+#elif _WIN32
 #include <CGFobject.h>
 #endif
 

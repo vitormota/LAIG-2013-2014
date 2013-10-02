@@ -41,7 +41,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Node.o \
 	${OBJECTDIR}/src/Primitive.o \
 	${OBJECTDIR}/src/Scene.o \
-	${OBJECTDIR}/src/Transform.o \
 	${OBJECTDIR}/src/YafParser.o \
 	${OBJECTDIR}/src/main.o
 
@@ -99,11 +98,6 @@ ${OBJECTDIR}/src/Scene.o: src/Scene.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Scene.o src/Scene.cpp
-
-${OBJECTDIR}/src/Transform.o: src/Transform.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Transform.o src/Transform.cpp
 
 ${OBJECTDIR}/src/YafParser.o: src/YafParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

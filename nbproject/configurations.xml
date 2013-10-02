@@ -12,7 +12,6 @@
       <itemPath>include/Primitive.h</itemPath>
       <itemPath>include/Scene.h</itemPath>
       <itemPath>include/Texture.h</itemPath>
-      <itemPath>include/Transform.h</itemPath>
       <itemPath>include/YafParser.h</itemPath>
       <itemPath>include/tinystr.h</itemPath>
       <itemPath>include/tinyxml.h</itemPath>
@@ -31,7 +30,6 @@
       <itemPath>src/Node.cpp</itemPath>
       <itemPath>src/Primitive.cpp</itemPath>
       <itemPath>src/Scene.cpp</itemPath>
-      <itemPath>src/Transform.cpp</itemPath>
       <itemPath>src/YafParser.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
@@ -93,8 +91,6 @@
       </item>
       <item path="include/Texture.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Transform.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/YafParser.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/tinystr.h" ex="false" tool="3" flavor2="0">
@@ -112,8 +108,6 @@
       <item path="src/Primitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Scene.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Transform.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/YafParser.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -159,8 +153,6 @@
       </item>
       <item path="include/Texture.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Transform.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/YafParser.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/tinystr.h" ex="false" tool="3" flavor2="0">
@@ -178,8 +170,6 @@
       <item path="src/Primitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Scene.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Transform.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/YafParser.cpp" ex="false" tool="1" flavor2="0">
       </item>
