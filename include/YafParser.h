@@ -42,6 +42,7 @@ namespace Parser {
          ** return 0 success, or above means error */
         int loadYaf();
         Graph* getGraph();
+        map<string, Appearance*> getAppearances();
 
     private:
         string _filename;
@@ -88,11 +89,13 @@ namespace Parser {
         //map<string, Lightning*> lightningMap; // TODO : create Lightning class
 
         /* textures */
-        //map<string, Texture*> texturesMap; // TODO : create Texture class
+        //map<string, Texture*> texturesMap;
+        
+        
 
         /* appearances */
-        //map<string, Appearance*> appearancesMap; // TODO : create Appearance class
-
+        map<string, Appearance*> appearancesMap;
+        
         /* graph */
         Graph* sceneGraph;
 

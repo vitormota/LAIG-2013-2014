@@ -88,10 +88,10 @@ void Scene::display() {
     //p = new scene::Torus("t1", 0.05, 0.1, 8, 8);
 
     // Declares materials
-    pAppearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
+    //appearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
 
     // Sets texture's wrap
-    pAppearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
+    //appearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
 
     // Sets texture
     //slidesAppearance->setTexture("../data/slides.png");
@@ -105,7 +105,7 @@ void Scene::display() {
 
     // ---- BEGIN Primitive drawing section
 
-    pAppearance->apply();
+    //appearance->apply();
     //p->draw();
 
     //p = new scene::Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);
@@ -149,6 +149,33 @@ void Scene::processNode(string id) {
         cout << "Invalid yaf??? The nome with the id '" << id << "' doesn't exist?" << endl;
     } else {
 
+        // search and apply appearence
+        /*string appearanceref = currentNode->getAppearanceRef();
+        Appearance* nodeAppearance = new Appearance();
+        
+        
+        map<string, Appearance*>::const_iterator pos = appearancesMap.find(appearanceref);
+        
+        if (pos == appearancesMap.end()) {
+            // appearance not found
+            cout << "Appearance with the ref '" << appearanceref << "' not found" << endl;
+            
+        } else {
+            // appearance found
+            nodeAppearance = pos->second; // the appearance with the wanted ref
+        }
+
+        
+        appearance = new CGFappearance(CGFappearance(nodeAppearance->getAmbient(), nodeAppearance->getDiffuse(), nodeAppearance->getSpecular(), nodeAppearance->getShininess()));
+        
+                                       
+        appearance->apply();
+                                       
+        // emissive attribute of the appearance
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,
+                                                    nodeAppearance->getEmissive());
+        
+        */
         // Draw all the primitives of the current node
         vector<scene::Primitive*> primitives = currentNode->getPrimitives();
 
@@ -159,8 +186,10 @@ void Scene::processNode(string id) {
             p->draw();
         }
         
-        float *m = currentNode->matrix;
-        glMultMatrixf(m);
+        float m[4][4];
+        
+        memcpy(&m, currentNode->matrix, 4*4*sizeof(float));
+        glMultMatrixf(m[0]);
 
         // CHAMAR ESTA FUNÇÃO ATÉ PERCORRER TODOS OS NÓS REFERENCIADOS NESTE NÓ
         vector<string> childrenNodeRef = currentNode->getChildrenNodeRef();
@@ -188,4 +217,14 @@ void Scene::setGraph(Graph* sceneGraph) {
 
 Graph* Scene::getGraph() {
     return this->sceneGraph;
+}
+
+void Scene::setAppearances(map<string,Appearance*> appearancesMap)
+{
+    this->appearancesMap = appearancesMap;
+}
+
+map<string,Appearance*> Scene::getAppearances()
+{
+    return this->appearancesMap;
 }

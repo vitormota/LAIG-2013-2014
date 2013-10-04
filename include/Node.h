@@ -34,8 +34,8 @@ using namespace std;
         string getAppearanceRef();
         vector<string> getChildrenNodeRef();
         vector<scene::Primitive*> getPrimitives();
-        float matrix[16];
         
+        float matrix[4][4];
 		virtual void draw(){}
 	
 	private:

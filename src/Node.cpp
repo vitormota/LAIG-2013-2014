@@ -56,4 +56,3 @@ vector<scene::Primitive*> Node::getPrimitives()
 }
 
 
-

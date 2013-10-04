@@ -28,6 +28,7 @@ class Graph
         string rootid;
         map<string, Node*> nodesMap; // the graph is a set of nodes stored in a <map>
     
+    
     public:
         Graph(string rootid);
         ~Graph();

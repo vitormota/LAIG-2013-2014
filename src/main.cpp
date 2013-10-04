@@ -58,9 +58,11 @@ int main(int argc, char* argv[]) {
         //cin.get();
         
         Graph* sceneGraph = f->getGraph();
+        map<string, Appearance*> appearancesMap = f->getAppearances();
         
         Scene* newScene = new Scene();
         newScene->setGraph(sceneGraph);
+        newScene->setAppearances(appearancesMap);
         
 		app.setScene(newScene);
 		app.setInterface(new CGFinterface());

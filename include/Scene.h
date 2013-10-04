@@ -51,6 +51,10 @@
 #include "Texture.h"
 #include "Appearance.h"
 
+using std::map;
+using std::string;
+
+
 class Scene : public CGFscene {
 private:
 
@@ -59,7 +63,9 @@ public:
     void init();
     void display();
     void setGraph(Graph* sceneGraph);
+    void setAppearances(map<string,Appearance*> appearancesMap);
     Graph* getGraph();
+    map<string,Appearance*> getAppearances();
     void processGraph(); // process all the nodes of the graph in order
     void processNode(string id);
 
@@ -71,15 +77,15 @@ public:
     CGFlight* light2;
 
     scene::Primitive* p;
-    CGFappearance* pAppearance;
+    CGFappearance* appearance;
 
     Graph* sceneGraph;
 
     /* TESTING */
 
     vector<Light*> lights;
-    std::map<string,Texture*> texture_mapping;
-    std::map<string,Appearance*> appearance_mapping;
+    map<string,Texture*> texture_mapping;
+    map<string,Appearance*> appearancesMap;
 
 
 

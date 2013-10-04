@@ -20,9 +20,10 @@ using namespace std;
 class Texture {
 public:
     string id;
+    string file;
     
-    Texture(string id,string path){}
-    ~Texture(){}
+    Texture(string id,string file);
+    ~Texture();
 };
 
 #endif	/* TEXTURE_H */
