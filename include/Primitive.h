@@ -75,6 +75,7 @@ namespace scene{
 	private:
 		float radius;
 		int slices, stacks;
+        GLUquadric* sphereQuadric;
 
 	public:
 		Sphere(string id, float radius, int slices, int stacks);

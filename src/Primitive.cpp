@@ -72,6 +72,12 @@ namespace scene{
 		this->radius = radius;
 		this->slices = slices;
 		this->stacks = stacks;
+        
+        sphereQuadric = gluNewQuadric();
+        gluQuadricDrawStyle(sphereQuadric, GLU_FILL);
+        gluQuadricNormals(sphereQuadric, GLU_SMOOTH);
+        gluQuadricOrientation(sphereQuadric, GLU_OUTSIDE);
+        gluQuadricTexture(sphereQuadric, GL_TRUE);
 	}
 
 	Torus::Torus(string id, float inner, float outer, int slices, int loops) : Primitive(id)
@@ -106,6 +112,8 @@ namespace scene{
 	{
 		glPushMatrix();
 
+        //glEnable(GL_NORMALIZE);
+        
 		glBegin(GL_TRIANGLES);
 
         glTexCoord3d(x1, y1, z1);
@@ -122,6 +130,8 @@ namespace scene{
 
 	void Cylinder::draw()
 	{
+        glEnable(GL_NORMALIZE);
+        
 		// top of the cylinder
 		glPushMatrix();
 
@@ -147,14 +157,23 @@ namespace scene{
 	void Sphere::draw()
 	{
 		glPushMatrix();
-		glutSolidSphere(radius, slices, stacks);
+		gluSphere(sphereQuadric, radius, slices, stacks);
 		glPopMatrix();
 	}
 
 	void Torus::draw()
 	{
 		glPushMatrix();
+        
+        glEnable(GL_NORMALIZE);
+        glEnable(GL_TEXTURE_GEN_S);
+        glEnable(GL_TEXTURE_GEN_T);
+        
 		glutSolidTorus(inner, outer, slices, loops);
+        
+        glDisable(GL_TEXTURE_GEN_S);
+        glDisable(GL_TEXTURE_GEN_T);
+        
 		glPopMatrix();
 	}
 

@@ -66,25 +66,39 @@ public:
     void setAppearances(map<string,Appearance*> appearancesMap);
     void setTextures(map<string,Texture*> texturesMap);
     void setLights(map<string,Lightning*> lightningMap);
+    void setBackground(float* background);
+    void setDrawmode(string drawmode);
+    void setShading(string shading);
+    void setCullface(string cullface);
+    void setCullorder(string cullorder);
+    
     Graph* getGraph();
     map<string,Appearance*> getAppearances();
     map<string,Texture*> getTextures();
     map<string,Lightning*> getLights();
+    float* getBackground();
+    string getDrawmode();
+    string getShading();
+    string getCullface();
+    string getCullorder();
+    
+    
     void processGraph(); // process all the nodes of the graph in order
     void processNode(string id);
 
     ~Scene();
 
-    /* TESTING */
-    CGFlight* light0;
-    CGFlight* light1;
-    CGFlight* light2;
-
     scene::Primitive* p;
 
     Graph* sceneGraph;
 
-    /* TESTING */
+    /* globals */
+    float background[4];
+    string drawmode;
+    string shading;
+    string cullface;
+    string cullorder;
+    
     
     map<string,Texture*> texture_mapping;
     map<string,Appearance*> appearancesMap;

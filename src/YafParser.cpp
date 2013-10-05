@@ -107,10 +107,8 @@ namespace Parser {
 	bool error = false;
 	attributeStr = (char*) globalsElement->Attribute("background");
 
-	//cout << attributeStr << endl;
-
 	StringParsing::FloatReader(attributeStr, backgroundFloatValues);
-	//scene->global_vars.background = backgroundFloatValues;
+    memcpy(this->background, backgroundFloatValues, 4*sizeof(float));
 
 	// drawmode attribute
 	attributeStr = (char*) globalsElement->Attribute("drawmode");
@@ -119,7 +117,7 @@ namespace Parser {
 	    cout << "Invalid drawmode..." << endl;
 	    error = true;
 	} else {
-	    //scene->global_vars.drawmode = attributeStr;
+	    this->drawmode = attributeStr;
 	}
 
 	// shading attribute
@@ -129,7 +127,7 @@ namespace Parser {
 	    cout << "Invalid shading..." << endl;
 	    error = true;
 	} else {
-	    //scene->global_vars.shading = attributeStr;
+	    this->shading = attributeStr;
 	}
 
 	// cullface attribute
@@ -139,7 +137,7 @@ namespace Parser {
 	    cout << "Invalid cullface..." << endl;
 	    error = true;
 	} else {
-	    //scene->global_vars.cullface = attributeStr;
+	    this->cullface = attributeStr;
 	}
 
 	// cullorder attribute
@@ -148,7 +146,7 @@ namespace Parser {
 	    cout << "Invalid cullorder..." << endl;
 	    error = true;
 	} else {
-	    //scene->global_vars.cullorder = attributeStr;
+	    this->cullorder = attributeStr;
 	}
 
 	if (error) {
@@ -258,8 +256,8 @@ namespace Parser {
 		    endl;
 	    return false;
 	}
-	TiXmlElement *child = lightingElement->FirstChildElement();
-	if (!child) {
+	TiXmlElement *lightElement = lightingElement->FirstChildElement();
+	if (!lightElement) {
 	    cout << element_not_found <<
 		    node_names[OMNI] <<
 		    "," <<
@@ -270,88 +268,106 @@ namespace Parser {
         
     // initialize lightning map
     this->lightningMap = map<string,Lightning*>();
+       
         
-	bool doublesided = false, local = false, enabled = false;
+    // lightning element
+        this->doublesided = false;
+        this->local = false;
+        this->enabled = false;
         
 	float ambient[4];
 	if (strcmp(lightingElement->Attribute("doublesided"), "true")) {
-	    doublesided = true;
+	    this->doublesided = true;
 	}
+        
 	if (strcmp(lightingElement->Attribute("enabled"), "true")) {
-	    enabled = true;
+	    this->enabled = true;
 	}
+        
 	if (strcmp(lightingElement->Attribute("local"), "true")) {
-	    local = true;
+	    this->local = true;
 	}
+        
 	if (StringParsing::FloatReader(lightingElement->Attribute("ambient"), ambient) != 4) {
 	    //error ambient attr does not have at least 4 values
 	    cout << "Bad ambient attribute\n";
 	} else {
-	    //scene->light_global_vars.ambient = ambient;
+	    memcpy(this->ambient, ambient, 4*sizeof(float));
 	}
 
+    // omni/spot lights
+        
 	char *id;
-	bool enabled_child = false;
+	bool enabled_light = false;
 	float location[3], ambient_child[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
-        Lightning* newLightning;
+    Lightning* newLightning;
 	int count = 0;
-	while (child) {
+        
+	while (lightElement) {
 	    bool error = false, spot = false;
-	    id = (char*) child->Attribute("id");
-	    if (!strcmp(child->Attribute("enabled"), "true")) {
-		enabled_child = true;
+	    id = (char*) lightElement->Attribute("id");
+	    
+        if (!strcmp(lightElement->Attribute("enabled"), "true")) {
+		enabled_light = true;
 	    }
+        
 	    if (!id ||
-		    StringParsing::FloatReader(child->Attribute("location"), location) != 4 ||
-		    StringParsing::FloatReader(child->Attribute("ambient"), ambient_child) != 4 ||
-		    StringParsing::FloatReader(child->Attribute("diffuse"), diffuse) != 4 ||
-		    StringParsing::FloatReader(child->Attribute("specular"), specular) != 4) {
+		    StringParsing::FloatReader(lightElement->Attribute("location"), location) != 3 ||
+		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambient_child) != 4 ||
+		    StringParsing::FloatReader(lightElement->Attribute("diffuse"), diffuse) != 4 ||
+		    StringParsing::FloatReader(lightElement->Attribute("specular"), specular) != 4) {
 		//bad base attributes
 		error = true;
 	    }
         
-	    //char* s = (char*) child->Value();
-	    if (!error && !strcmp(child->Value(), node_names[SPOT])) {
-		//it is a spot camera
+	    char* type = (char*) lightElement->Value();
+    
+	    if (!error && !strcmp(type, node_names[SPOT])) {
+		
+        //it is a spot camera
 		//extra attr to parse
 		spot = true;
-		if (child->QueryFloatAttribute("angle", &angle) != TIXML_SUCCESS ||
-			child->QueryFloatAttribute("exponent", &exponent) != TIXML_SUCCESS ||
-			StringParsing::FloatReader(child->Attribute("direction"), direction) != 3) {
+		if (lightElement->QueryFloatAttribute("angle", &angle) != TIXML_SUCCESS ||
+			lightElement->QueryFloatAttribute("exponent", &exponent) != TIXML_SUCCESS ||
+			StringParsing::FloatReader(lightElement->Attribute("direction"), direction) != 3) {
 		    //bad spot light
 		    error = true;
 		} else {
 		    
+            // create spot light
+            newLightning = new Lightning("spot", id, enabled, location, ambient, diffuse, specular);
+            
             newLightning->setAngle(angle);
             newLightning->setExponent(exponent);
             newLightning->setDirection(direction);
-            
-            // create spot light
-            newLightning = new Lightning("spot", id, enabled, location, ambient, diffuse, specular);
 		}
         }
-        
-	    if (!error && !strcmp(child->Value(), node_names[OMNI])){
+        else
+	    if (!error && !strcmp(type, node_names[OMNI])){
 		//create omni light
 		
             newLightning = new Lightning("omni", id, enabled, location, ambient, diffuse, specular);
 	    }
+        
 	    if (!error) {
     
-		cout << child->Value() << " id: " << id << " OK.\n";
+		cout << type << " id: " << id << " OK.\n";
             
         //save light
         lightningMap.insert(std::pair<string,Lightning*>(newLightning->getId(),newLightning));
+        
+            count++;
             
-		count++;
 	    } else {
-		cout << child->Value() <<
+		cout << type <<
 			" id: " <<
 			id <<
 			" has invalid field(s), FAIL.\n";
 	    }
-	    child = child->NextSiblingElement();
+        
+	    lightElement = lightElement->NextSiblingElement();
 	}
+        
 	cout << "Found " <<
 		count <<
 		" light(s)\n\n";
@@ -748,23 +764,22 @@ namespace Parser {
                         // axis attribute
                         
                         bool error = false;
-                        char *axis;
                         
-                        axis = (char*) transformationElement->Attribute("axis");
+                        char* axis = (char*) transformationElement->Attribute("axis");
                         
                         // the axis has to be "x, y or z"
-                        if (!axis || (strcmp("x", axis) && strcmp("y", axis) && strcmp("x", axis))) {
+                        if (axis || (strcmp("x", axis) == 0) || (strcmp("y", axis) == 0) || (strcmp("z", axis) == 0)) {
+                            
+                            // valid axis
+                            cout << node_names[ROTATE] << " axis: " << axis << ", OK." << endl;
+                            
+                            
+                        } else {
                             
                             // invalid axis
                             cout << node_names[ROTATE] << " axis: " << " has invalid field(s), FAIL.\n";
                             
                             error = true;
-                            
-                        } else {
-                            
-                            // valid axis
-                            cout << node_names[ROTATE] << " axis: " << axis << ", OK." << endl;
-                            
                         }
                         
                         // angle attribute

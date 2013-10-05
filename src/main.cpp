@@ -67,6 +67,11 @@ int main(int argc, char* argv[]) {
         newScene->setAppearances(appearancesMap);
         newScene->setTextures(texturesMap);
         newScene->setLights(lightningMap);
+        newScene->setBackground(f->background);
+        newScene->setDrawmode(f->drawmode);
+        newScene->setShading(f->shading);
+        newScene->setCullface(f->cullface);
+        newScene->setCullorder(f->cullorder);
         
 		app.setScene(newScene);
 		app.setInterface(new CGFinterface());

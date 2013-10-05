@@ -45,6 +45,13 @@ namespace Parser {
         map<string, Appearance*> getAppearances();
         map<string, Texture*> getTextures();
         map<string, Lightning*> getLights();
+        
+        /* globals */
+        float background[4];
+        string drawmode;
+        string shading;
+        string cullface;
+        string cullorder;
 
     private:
         string _filename;
@@ -63,26 +70,15 @@ namespace Parser {
         bool loadTextures(TiXmlElement* texturesElement);
         bool loadAppearances(TiXmlElement* appearancesElement);
         bool loadGraph(TiXmlElement* graphElement);
-
-        // globals attributes
-        string drawmode;
-        string shading;
-        string cullface;
-        string cullorder;
-        float *background;
         
         // lightning 
         bool doublesided;
         bool local;
         bool enabled;
-        float *ambient;
+        float ambient[4];
         
     private:
-
-        /* globals */
-        //float[4] background;
-
-
+    
         /* cameras */
         string initial; // id of the initial camera?
         //map<string, Camera*> camerasMap; // TODO : create Camera class (because it can be perspective or ortho)
