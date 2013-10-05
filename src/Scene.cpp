@@ -88,7 +88,7 @@ void Scene::display() {
     //p = new scene::Torus("t1", 0.05, 0.1, 8, 8);
 
     // Declares materials
-    //appearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
+    appearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
 
     // Sets texture's wrap
     //appearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
@@ -105,7 +105,7 @@ void Scene::display() {
 
     // ---- BEGIN Primitive drawing section
 
-    //appearance->apply();
+    appearance->apply();
     //p->draw();
 
     //p = new scene::Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);

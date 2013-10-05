@@ -35,12 +35,14 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/Appearance.o \
 	${OBJECTDIR}/src/Cameras.o \
 	${OBJECTDIR}/src/Graph.o \
 	${OBJECTDIR}/src/Lightning.o \
 	${OBJECTDIR}/src/Node.o \
 	${OBJECTDIR}/src/Primitive.o \
 	${OBJECTDIR}/src/Scene.o \
+	${OBJECTDIR}/src/Texture.o \
 	${OBJECTDIR}/src/YafParser.o \
 	${OBJECTDIR}/src/main.o
 
@@ -68,6 +70,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014 ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/src/Appearance.o: src/Appearance.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Appearance.o src/Appearance.cpp
 
 ${OBJECTDIR}/src/Cameras.o: src/Cameras.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -98,6 +105,11 @@ ${OBJECTDIR}/src/Scene.o: src/Scene.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Scene.o src/Scene.cpp
+
+${OBJECTDIR}/src/Texture.o: src/Texture.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Texture.o src/Texture.cpp
 
 ${OBJECTDIR}/src/YafParser.o: src/YafParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
