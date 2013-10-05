@@ -7,6 +7,11 @@
 
 namespace scene{
 
+    Primitive::Primitive()
+    {
+        
+    }
+    
 	Primitive::Primitive(string id)
 	{
 		this->id = id;

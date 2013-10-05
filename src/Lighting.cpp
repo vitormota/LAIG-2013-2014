@@ -1,116 +1,123 @@
-#include "Lightning.h"
+#include "Lighting.h"
 
 
 using namespace std;
 
-Lightning::Lightning()
+Lighting::Lighting()
 {
     
 }
 
-Lightning::Lightning(string type, string id, bool enabled, float location[4],
+Lighting::Lighting(string type, string id, bool enabled, float location[3],
                      float ambient[4], float diffuse[4], float specular[4]) {
     this->id = id;
     this->enabled = enabled;
-    memcpy(this->location, location,4*sizeof(float));
+    memcpy(this->location, location,3*sizeof(float));
     memcpy(this->specular, specular,4*sizeof(float));
     memcpy(this->ambient, ambient,4*sizeof(float));
     memcpy(this->diffuse, diffuse,4*sizeof(float));
+    this->angle = 0;
+    this->exponent = 0;
 }
 
-Lightning::~Lightning() {
+Lighting::~Lighting() {
     delete [] & location;
     delete [] & ambient;
     delete [] & diffuse;
     delete [] & specular;
 }
 
-void Lightning::setId(string id)
+void Lighting::setId(string id)
 {
     this->id = id;
 }
 
-void Lightning::setEnabled(bool enabled)
+void Lighting::setType(string type)
+{
+    this->type = type;
+}
+
+void Lighting::setEnabled(bool enabled)
 {
     this->enabled = enabled;
 }
 
-void Lightning::setLocation(float* location)
+void Lighting::setLocation(float* location)
 {
-    memcpy(this->location, location, 4*sizeof(float));
+    memcpy(this->location, location, 3*sizeof(float));
 }
 
-void Lightning::setAmbient(float* ambient)
+void Lighting::setAmbient(float* ambient)
 {
     memcpy(this->ambient, ambient, 4*sizeof(float));
 }
 
-void Lightning::setDiffuse(float* diffuse)
+void Lighting::setDiffuse(float* diffuse)
 {
     memcpy(this->diffuse, diffuse, 4*sizeof(float));
 }
 
-void Lightning::setSpecular(float* specular)
+void Lighting::setSpecular(float* specular)
 {
     memcpy(this->specular, specular, 4*sizeof(float));
 }
 
-string Lightning::getId()
+string Lighting::getId()
 {
     return this->id;
 }
 
-float* Lightning::getLocation()
+float* Lighting::getLocation()
 {
     return this->location;
 }
 
-float* Lightning::getAmbient()
+float* Lighting::getAmbient()
 {
     return this->ambient;
 }
 
-float* Lightning::getDiffuse()
+float* Lighting::getDiffuse()
 {
     return this->diffuse;
 }
 
-float* Lightning::getSpecular()
+float* Lighting::getSpecular()
 {
     return this->specular;
 }
 
-string Lightning::getType()
+string Lighting::getType()
 {
     return this->type;
 }
 
-void Lightning::setAngle(float angle)
+void Lighting::setAngle(float angle)
 {
     this->angle = angle;
 }
 
-void Lightning::setExponent(float exponent)
+void Lighting::setExponent(float exponent)
 {
     this->exponent = exponent;
 }
 
-void Lightning::setDirection(float* direction)
+void Lighting::setDirection(float* direction)
 {
     memcpy(this->direction, direction, 3*sizeof(float));
 }
 
-float Lightning::getAngle()
+float Lighting::getAngle()
 {
     return this->angle;
 }
 
-float Lightning::getExponent()
+float Lighting::getExponent()
 {
     return this->exponent;
 }
 
-float* Lightning::getDirection()
+float* Lighting::getDirection()
 {
     return this->direction;
 }

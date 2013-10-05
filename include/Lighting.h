@@ -1,5 +1,5 @@
-#ifndef _LIGHTNING_H
-#define _LIGHTNING_H
+#ifndef _Lighting_H
+#define _Lighting_H
 
 #include <string>
 #ifdef __APPLE__
@@ -12,14 +12,15 @@
 
 using namespace std;
 
-class Lightning {
+class Lighting {
 public:
-    Lightning();
-    Lightning(string type, string id, bool enabled, float location[3],
+    Lighting();
+    Lighting(string type, string id, bool enabled, float location[3],
     float ambient[4], float difuse[4], float specular[4]);
-    ~Lightning();
+    ~Lighting();
 
     void setId(string id);
+    void setType(string type);
     void setEnabled(bool enabled);
     void setLocation(float* location);
     void setAmbient(float* ambient);
@@ -44,11 +45,10 @@ public:
     {
         return this->enabled;
     };
-
-    string type; // type of light (omni/spot)
    
 private:
     // omni and spot
+    string type; // type of light (omni/spot)
     string id;
     bool enabled;
     float location[3];

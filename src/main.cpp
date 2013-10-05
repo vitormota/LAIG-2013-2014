@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
         Graph* sceneGraph = f->getGraph();
         map<string, Appearance*> appearancesMap = f->getAppearances();
         map<string, Texture*> texturesMap = f->getTextures();
-        map<string, Lightning*> lightningMap = f->getLights();
+        map<string, Lighting*> lightningMap = f->getLights();
         
         Scene* newScene = new Scene();
         newScene->setGraph(sceneGraph);
@@ -72,6 +72,10 @@ int main(int argc, char* argv[]) {
         newScene->setShading(f->shading);
         newScene->setCullface(f->cullface);
         newScene->setCullorder(f->cullorder);
+        newScene->setDoublesided(f->doublesided);
+        newScene->setLocal(f->local);
+        newScene->setEnabled(f->enabled);
+        newScene->setAmbient(f->ambient);
         
 		app.setScene(newScene);
 		app.setInterface(new CGFinterface());

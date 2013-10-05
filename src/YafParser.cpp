@@ -19,7 +19,7 @@ namespace Parser {
 
     const char attribute_not_found[] = "No such attribute";
     const char element_not_found[] = "No such element";
-    const char *node_names[24] = {"globals", "cameras", "lightning", "omni",
+    const char *node_names[24] = {"globals", "cameras", "lighting", "omni",
 	"spot", "perspective", "ortho", "texture", "appearances", "appearance",
 	"graph", "node", "transforms", "translate", "rotate", "scale", "appearanceref",
 	"children", "rectangle", "triangle", "cylinder", "sphere", "torus", "noderef"};
@@ -71,9 +71,9 @@ namespace Parser {
 	cout << "---------------\n";
 	cout << "- cameras OK. -\n";
 	cout << "---------------\n\n";
-	if (!loadLightning(lightingElement)) return lightning_error;
+	if (!loadLighting(lightingElement)) return lighting_error;
 	cout << "-----------------\n";
-	cout << "- lightning OK. -\n";
+	cout << "- lighting OK. -\n";
 	cout << "-----------------\n\n";
 	if (!loadTextures(texturesElement)) return textures_error;
 	cout << "----------------\n";
@@ -248,11 +248,11 @@ namespace Parser {
 	return true;
     }
 
-    bool YafParser::loadLightning(TiXmlElement *lightningElement) {
+    bool YafParser::loadLighting(TiXmlElement *LightingElement) {
 	if (lightingElement == NULL) {
 	    cout <<
 		    element_not_found <<
-		    node_names[LIGHTNING] <<
+		    node_names[LIGHTING] <<
 		    endl;
 	    return false;
 	}
@@ -266,11 +266,11 @@ namespace Parser {
 	    return false;
 	}
         
-    // initialize lightning map
-    this->lightningMap = map<string,Lightning*>();
+    // initialize lighting map
+    this->lightingMap = map<string,Lighting*>();
        
         
-    // lightning element
+    // lighting element
         this->doublesided = false;
         this->local = false;
         this->enabled = false;
@@ -300,7 +300,7 @@ namespace Parser {
 	char *id;
 	bool enabled_light = false;
 	float location[3], ambient_child[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
-    Lightning* newLightning;
+    Lighting* newLighting;
 	int count = 0;
         
 	while (lightElement) {
@@ -335,18 +335,18 @@ namespace Parser {
 		} else {
 		    
             // create spot light
-            newLightning = new Lightning("spot", id, enabled, location, ambient, diffuse, specular);
+            newLighting = new Lighting("spot", id, enabled, location, ambient, diffuse, specular);
             
-            newLightning->setAngle(angle);
-            newLightning->setExponent(exponent);
-            newLightning->setDirection(direction);
+            newLighting->setAngle(angle);
+            newLighting->setExponent(exponent);
+            newLighting->setDirection(direction);
 		}
         }
         else
 	    if (!error && !strcmp(type, node_names[OMNI])){
 		//create omni light
 		
-            newLightning = new Lightning("omni", id, enabled, location, ambient, diffuse, specular);
+            newLighting = new Lighting("omni", id, enabled, location, ambient, diffuse, specular);
 	    }
         
 	    if (!error) {
@@ -354,7 +354,7 @@ namespace Parser {
 		cout << type << " id: " << id << " OK.\n";
             
         //save light
-        lightningMap.insert(std::pair<string,Lightning*>(newLightning->getId(),newLightning));
+        lightingMap.insert(std::pair<string,Lighting*>(newLighting->getId(),newLighting));
         
             count++;
             
@@ -859,7 +859,11 @@ namespace Parser {
             }
             
             // save transforms in the node
-            glGetFloatv(GL_MODELVIEW_MATRIX, &(newNode->matrix[0][0]));
+            float m[16];
+            
+            glGetFloatv(GL_MODELVIEW_MATRIX, m);
+            newNode->setMatrix(m);
+            
             cout << "Saving transform matrix OK." << endl;
             
             glPopMatrix();
@@ -1358,9 +1362,9 @@ namespace Parser {
         return this->texturesMap;
     }
     
-    map<string, Lightning*> YafParser::getLights()
+    map<string, Lighting*> YafParser::getLights()
     {
-        return this->lightningMap;
+        return this->lightingMap;
     }
 }
 

@@ -47,7 +47,7 @@
 #include <map>
 #include "Primitive.h"
 #include "Graph.h"
-#include "Lightning.h"
+#include "Lighting.h"
 #include "Texture.h"
 #include "Appearance.h"
 
@@ -65,22 +65,32 @@ public:
     void setGraph(Graph* sceneGraph);
     void setAppearances(map<string,Appearance*> appearancesMap);
     void setTextures(map<string,Texture*> texturesMap);
-    void setLights(map<string,Lightning*> lightningMap);
+    void setLights(map<string,Lighting*> lightningMap);
     void setBackground(float* background);
     void setDrawmode(string drawmode);
     void setShading(string shading);
     void setCullface(string cullface);
     void setCullorder(string cullorder);
     
+    void setDoublesided(bool doublesided);
+    void setLocal(bool local);
+    void setEnabled(bool enabled);
+    void setAmbient(float* ambient);
+    
     Graph* getGraph();
     map<string,Appearance*> getAppearances();
     map<string,Texture*> getTextures();
-    map<string,Lightning*> getLights();
+    map<string,Lighting*> getLights();
     float* getBackground();
     string getDrawmode();
     string getShading();
     string getCullface();
     string getCullorder();
+    
+    bool getDoublesided();
+    bool getLocal();
+    bool getEnabled();
+    float* getAmbient();
     
     
     void processGraph(); // process all the nodes of the graph in order
@@ -88,7 +98,7 @@ public:
 
     ~Scene();
 
-    scene::Primitive* p;
+    //scene::Primitive* p;
 
     Graph* sceneGraph;
 
@@ -99,11 +109,16 @@ public:
     string cullface;
     string cullorder;
     
+    /* lightning */
+    bool doublesided;
+    bool local;
+    bool enabled;
+    float ambient[4];
     
     map<string,Texture*> texture_mapping;
     map<string,Appearance*> appearancesMap;
     map<string,Texture*> texturesMap;
-    map<string,Lightning*> lightningMap;
+    map<string,Lighting*> lightingMap;
     
     map<string, CGFappearance*> appearances;
     vector<CGFlight*> lights;

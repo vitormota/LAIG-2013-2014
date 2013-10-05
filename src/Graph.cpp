@@ -1,20 +1,5 @@
 #include "Graph.h"
 
-/*Scene_graph::Scene_graph(string root){
- this->root_id = root;
- }
- 
- void Scene_graph::process_object(string id){
- Node *n = graph[id];
- glMultMatrixf(&(n->transforms[0]));
- n->draw();
- glPushMatrix();
- for(vector<string>::iterator it = n->children.begin();it!=n->children.end();it++){
- process_object(*it);
- }
- glPopMatrix();
- }*/
-
 Graph::Graph(string rootid)
 {
     this->rootid = rootid;
@@ -32,7 +17,8 @@ void Graph::setRootId(string rootid)
 
 void Graph::setNodes(map<string, Node*> nodesMap)
 {
-    this->nodesMap = nodesMap;
+    this->nodesMap = map<string,Node*>();
+    this->nodesMap.insert(nodesMap.begin(),nodesMap.end());
 }
 
 void Graph::addNode(Node* newNode)
@@ -51,7 +37,8 @@ Node* Graph::getNodeById(string id)
         
     } else {
         // node found
-        nodeFound = pos->second; // the node with the wanted id
+        //nodeFound = pos->second; // the node with the wanted id
+        nodeFound = nodesMap[id];
     }
     
     return nodeFound;

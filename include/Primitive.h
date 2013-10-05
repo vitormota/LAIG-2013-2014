@@ -25,6 +25,7 @@ namespace scene{
 		string id;
 
 	public:
+        Primitive();
 		Primitive(string id);
 		~Primitive();
 		void setId(string id);

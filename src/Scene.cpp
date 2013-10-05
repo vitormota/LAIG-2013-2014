@@ -5,27 +5,18 @@
 
 #include "Scene.h"
 
-// Global ambient light (do not confuse with ambient component of individual lights)
-float globalAmbientLight[4] = {1.0, 1.0, 1.0, 1.0};
-
 void Scene::init() {
-    // Enables lighting computations
-    glEnable(GL_LIGHTING);
-    
-    // Sets up some lighting parameters
-    // Computes lighting only using the front face normals and materials
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-    
-    // Define ambient light (do not confuse with ambient component of individual lights)
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientLight);
     
     // Uncomment below to enable normalization of lighting normal vectors
     glEnable(GL_NORMALIZE);
     
-    // ------- Initialization of variables -------
+    /* ------- Initialization of variables ------- */
     
-    // globals attributes
+    // --- globals attributes -------------------------------- BEGIN
     
+    // background attribute
+    glClearColor(this->background[0],this->background[1],this->background[2],this->background[3]);
+
     // drawmode attribute
     if(this->drawmode == "fill")
     {
@@ -82,17 +73,48 @@ void Scene::init() {
          glFrontFace(GL_CW);
     }
     
+    // --- globals attributes -------------------------------- END
+    
+    // --- lighting attributes ------------------------------ BEGIN
+    
+    // doublesided attribute
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, this->doublesided);
+    
+    // local attribute
+    glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, this->local);
+    
+    // enabled attribute
+    if(this->enabled == true)
+    {
+        // enables lighting computations
+        glEnable(GL_LIGHTING);
+    }
+    else
+    {
+        // disables lighting computations
+        glDisable(GL_LIGHTING);
+    }
+    
+    // ambient attribute
+    if(this->ambient != NULL)
+    {
+        // Define ambient light (do not confuse with ambient component of individual lights)
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, this->ambient);
+    }
+    
+    // --- lighting attributes ------------------------------ END
+    
     // create and save CGFLights
     
-    map<string, Lightning*>::const_iterator itL = lightningMap.begin();
+    map<string, Lighting*>::const_iterator itL = lightingMap.begin();
     
     CGFlight* newLight;
     
     GLenum light_id = GL_LIGHT0;
     
-    for(itL = lightningMap.begin(); itL != lightningMap.end(); itL++)
+    for(itL = lightingMap.begin(); itL != lightingMap.end(); itL++)
     {
-        Lightning* light = (itL)->second;
+        Lighting* light = (itL)->second;
         newLight = new CGFlight(light_id, light->getLocation());
         newLight->setAmbient(light->getAmbient());
         newLight->setDiffuse(light->getDiffuse());
@@ -220,7 +242,9 @@ void Scene::processGraph() {
     
     string rootid = sceneGraph->getRootId();
     
+    glPushMatrix();
     processNode(rootid);
+    glPopMatrix();
 }
 
 void Scene::processNode(string id) {
@@ -235,7 +259,8 @@ void Scene::processNode(string id) {
         // search appearance
         string appearanceref = currentNode->getAppearanceRef();
         
-        if(!appearanceref.empty()) // check if there is a appearanceref to apply
+        
+        if(appearancesMap.find(appearanceref) != appearancesMap.end()) // check if there is a appearanceref to apply
         {
             // apply appearance
             appearances[appearanceref]->apply();
@@ -247,14 +272,22 @@ void Scene::processNode(string id) {
         vector<scene::Primitive*>::const_iterator itP;
         
         for (itP = primitives.begin(); itP != primitives.end(); itP++) {
-            p = (*itP);
-            p->draw();
+            //p = new scene::Primitive();
+            //p =
+            (*itP)->draw();
+            //p->draw();
         }
         
-        float m[4][4];
+        float m[16];
         
-        memcpy(&m, currentNode->matrix, 4*4*sizeof(float));
-        glMultMatrixf(m[0]);
+        //memcpy(&m, currentNode->getMatrix(), 16*sizeof(float));
+        //glMultMatrixf(&m);
+        glMultMatrixf(currentNode->getMatrix());
+        
+        /*glGetFloatv(GL_MODELVIEW_MATRIX, m);
+        currentNode->setMatrix(m);*/
+        
+        
         
         // CHAMAR ESTA FUNÇÃO ATÉ PERCORRER TODOS OS NÓS REFERENCIADOS NESTE NÓ
         vector<string> childrenNodeRef = currentNode->getChildrenNodeRef();
@@ -267,6 +300,8 @@ void Scene::processNode(string id) {
             processNode(childId);
             glPopMatrix();
         }
+        
+        
     }
 }
 
@@ -290,10 +325,10 @@ void Scene::setTextures(map<string,Texture*> texturesMap)
     this->texturesMap.insert(texturesMap.begin(),texturesMap.end());
 }
 
-void Scene::setLights(map<string,Lightning*> lightningMap)
+void Scene::setLights(map<string,Lighting*> lightingMap)
 {
-    this->lightningMap = map<string,Lightning*>();
-    this->lightningMap.insert(lightningMap.begin(),lightningMap.end());
+    this->lightingMap = map<string,Lighting*>();
+    this->lightingMap.insert(lightingMap.begin(),lightingMap.end());
 }
 
 void Scene::setBackground(float* background)
@@ -321,6 +356,26 @@ void Scene::setCullorder(string cullorder)
     this->cullorder = cullorder;
 }
 
+void Scene::setDoublesided(bool doublesided)
+{
+    this->doublesided = doublesided;
+}
+
+void Scene::setLocal(bool local)
+{
+    this->local = local;
+}
+
+void Scene::setEnabled(bool enabled)
+{
+    this->enabled = enabled;
+}
+
+void Scene::setAmbient(float* ambient)
+{
+    memcpy(this->ambient, ambient,4*sizeof(float));
+}
+
 map<string,Appearance*> Scene::getAppearances()
 {
     return this->appearancesMap;
@@ -331,9 +386,9 @@ map<string,Texture*> Scene::getTextures()
     return this->texturesMap;
 }
 
-map<string,Lightning*> Scene::getLights()
+map<string,Lighting*> Scene::getLights()
 {
-    return this->lightningMap;
+    return this->lightingMap;
 }
 
 Graph* Scene::getGraph() {
@@ -364,3 +419,24 @@ string Scene::getCullorder()
 {
     return this->cullorder;
 }
+
+bool Scene::getDoublesided()
+{
+    return this->doublesided;
+}
+
+bool Scene::getLocal()
+{
+    return this->local;
+}
+
+bool Scene::getEnabled()
+{
+    return this->enabled;
+}
+
+float* Scene::getAmbient()
+{
+    return this->ambient;
+}
+

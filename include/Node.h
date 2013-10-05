@@ -30,12 +30,13 @@ using namespace std;
         void setAppearanceRef(string appearanceref);
         void setPrimitives(vector<scene::Primitive*> primitives);
         void setChildrenNodeRef(vector<string> childrenNodeRef);
+        void setMatrix(float* matrix);
         string getId();
         string getAppearanceRef();
         vector<string> getChildrenNodeRef();
         vector<scene::Primitive*> getPrimitives();
+        float* getMatrix();
         
-        float matrix[4][4];
 		virtual void draw(){}
 	
 	private:
@@ -43,6 +44,7 @@ using namespace std;
         string appearanceref;
         vector<string> childrenNodeRef; // noderef's of the children
         vector<scene::Primitive*> primitives; // primitives of the node
+        float matrix[16];
 		
 	};
 

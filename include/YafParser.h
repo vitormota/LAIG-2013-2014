@@ -10,7 +10,7 @@
 #include <string>
 #include <map>
 #include "tinyxml.h"
-#include "Lightning.h"
+#include "Lighting.h"
 #include "Primitive.h"
 #include "Graph.h"
 #include "Node.h"
@@ -21,12 +21,12 @@ namespace Parser {
     using namespace std;
 
     enum ERRORS {
-        globals_error = 1, cameras_error, lightning_error, textures_error,
+        globals_error = 1, cameras_error, lighting_error, textures_error,
         appearances_error, graph_error, file_not_found
     };
 
     enum node_i {
-        GLOBALS, CAMERAS, LIGHTNING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCES,
+        GLOBALS, CAMERAS, LIGHTING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCES,
         APPEARANCE, GRAPH, NODE, TRANSFORMS, TRANSLATE, ROTATE, SCALE, APPEARANCEREF, CHILDREN,
         RECTANGLE, TRIANGLE, CYLINDER, SPHERE, TORUS, NODEREF
     };
@@ -44,7 +44,7 @@ namespace Parser {
         Graph* getGraph();
         map<string, Appearance*> getAppearances();
         map<string, Texture*> getTextures();
-        map<string, Lightning*> getLights();
+        map<string, Lighting*> getLights();
         
         /* globals */
         float background[4];
@@ -52,6 +52,12 @@ namespace Parser {
         string shading;
         string cullface;
         string cullorder;
+        
+        /* lighting */
+        bool doublesided;
+        bool local;
+        bool enabled;
+        float ambient[4];
 
     private:
         string _filename;
@@ -66,16 +72,10 @@ namespace Parser {
 
         bool loadGlobals(TiXmlElement* globalsElement);
         bool loadCameras(TiXmlElement* camerasElement);
-        bool loadLightning(TiXmlElement* lightingElement);
+        bool loadLighting(TiXmlElement* lightingElement);
         bool loadTextures(TiXmlElement* texturesElement);
         bool loadAppearances(TiXmlElement* appearancesElement);
         bool loadGraph(TiXmlElement* graphElement);
-        
-        // lightning 
-        bool doublesided;
-        bool local;
-        bool enabled;
-        float ambient[4];
         
     private:
     
@@ -83,8 +83,8 @@ namespace Parser {
         string initial; // id of the initial camera?
         //map<string, Camera*> camerasMap; // TODO : create Camera class (because it can be perspective or ortho)
 
-        /* lightning */
-        map<string, Lightning*> lightningMap;
+        /* lighting */
+        map<string, Lighting*> lightingMap;
 
         /* textures */
         map<string, Texture*> texturesMap;
