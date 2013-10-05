@@ -37,24 +37,98 @@ void Scene::init() {
     // Define ambient light (do not confuse with ambient component of individual lights)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientLight);
 
-    // Define the shade model - Exercise 1
+    // Define the shade model
     //glShadeModel(GL_FLAT);
     glShadeModel(GL_SMOOTH);
 
     // Initialization of variables
-
-    // Declares two lights, with null ambient component
-    light0 = new CGFlight(GL_LIGHT0, light0_pos);
-    light0->setAmbient(ambientNull);
-
-    light1 = new CGFlight(GL_LIGHT1, light1_pos);
-    light1->setAmbient(ambientNull);
-
-    // light2 Attenuation
-    light1->setKc(0.0);
-    light1->setKl(1.0);
-    light1->setKq(0.0);
-
+    
+    // create and save CGFLights
+    
+    map<string, Lightning*>::const_iterator itL = lightningMap.begin();
+    
+    CGFlight* newLight;
+    
+    unsigned int light_id = GL_LIGHT0;
+    
+    for(itL = lightningMap.begin(); itL != lightningMap.end(); itL++)
+    {
+        Lightning* light = (itL)->second;
+        newLight = new CGFlight(light_id, light->getLocation());
+        newLight->setAmbient(light->getAmbient());
+        newLight->setDiffuse(light->getDiffuse());
+        newLight->setSpecular(light->getSpecular());
+        
+        if(light->getType() == "spot")
+        {
+            newLight->setAngle(light->getAngle());
+            glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
+            glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
+        }
+        
+        if(light->isEnabled())
+        {
+            newLight->enable();
+        }
+        else
+        {
+            newLight->disable();
+        }
+        
+        // save light
+        lights.push_back(newLight);
+        
+        light_id++;
+        
+    }
+    
+    // create and save CGFappearances
+    
+    map<string, Appearance*>::const_iterator itA = appearancesMap.begin();
+    
+    CGFappearance* newAppearance;
+    
+    for(itA = appearancesMap.begin(); itA != appearancesMap.end(); itA++)
+    {
+        Appearance* appearance = (itA)->second;
+        newAppearance = new CGFappearance(appearance->getAmbient(), appearance->getDiffuse(), appearance->getSpecular(), appearance->getShininess());
+                          
+                                          // emissive attribute of the appearance
+                                          glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,
+                                                       appearance->getEmissive());
+                
+                                          // find the texture with the textureref
+                                          string textureref = appearance->getTextureref();
+                                          
+                                          if(!textureref.empty()) // check if there is a textureref to apply
+                                          {
+                                              
+                                              Texture* textureFound = new Texture();
+                                              map<string, Texture*>::const_iterator itTex = texturesMap.find(textureref);
+                                              
+                                              if (itTex == texturesMap.end()) {
+                                                  // texture not found
+                                                  cout << "Texture with the textureref '" << textureref << "' not found" << endl;
+                                                  
+                                              } else {
+                                                  // texture found
+                                                  textureFound = itTex->second;
+                                                  
+                                                  // Sets texture's wrap
+                                                  newAppearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
+                                                  
+                                                  // set texture to appearance
+                                                  newAppearance->setTexture(textureFound->getFile());
+                                                  
+                                                  
+                                              }
+                                              
+                                          }
+                                          
+        // save appearance
+         appearances.insert(std::pair<string,CGFappearance*>(appearance->getId(),newAppearance));
+        
+    }
 
     // Uncomment below to enable normalization of lighting normal vectors
     glEnable(GL_NORMALIZE);
@@ -74,11 +148,6 @@ void Scene::display() {
     // Apply transformations corresponding to the camera position relative to the origin
     CGFscene::activeCamera->applyView();
 
-    // Draw
-    // Draw lights
-    light0->draw();
-    light1->draw();
-
     // Uncomment below to enable normalization of lighting normal vectors
     glEnable(GL_NORMALIZE);
 
@@ -88,7 +157,7 @@ void Scene::display() {
     //p = new scene::Torus("t1", 0.05, 0.1, 8, 8);
 
     // Declares materials
-    appearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
+    //appearance = new CGFappearance(ambSlides, difSlides, specSlides, shininessSlides);
 
     // Sets texture's wrap
     //appearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
@@ -105,21 +174,23 @@ void Scene::display() {
 
     // ---- BEGIN Primitive drawing section
 
-    appearance->apply();
-    //p->draw();
+    
 
-    //p = new scene::Triangle("t1", 0.0, 0.0, 0.0, 1.1, 1.1, 0.0, 1.1, 1.1, 1.1);
-    //p->draw();
+     // create and save CGFappearances
+    
+    /*appearance = new CGFappearance(CGFappearance(nodeAppearance->getAmbient(), nodeAppearance->getDiffuse(), nodeAppearance->getSpecular(), nodeAppearance->getShininess()));*/
 
-    //p = new scene::Rectangle("r1", 0.0, 0.0, 10.0, 10.0);
-    //p->draw();
-
-    //p = new scene::Sphere("s1", 3.0, 10, 10);
-    //p->draw();
-
-    //p = new scene::Cylinder("c1", 1.0, 1.0, 2.0, 10, 10);
-    //p->draw();
-
+    
+    // draw lights
+    
+    vector<CGFlight*>::const_iterator itL = lights.begin();
+    
+    for(itL = lights.begin(); itL != lights.end(); itL++)
+    {
+        (*itL)->draw();
+    }
+    
+    
     processGraph();
 
 
@@ -132,50 +203,60 @@ void Scene::display() {
 }
 
 void Scene::processGraph() {
+
+    
+    
+    // process graph
+    
     string rootid = sceneGraph->getRootId();
 
     processNode(rootid);
 }
 
 void Scene::processNode(string id) {
-    //map<string, Node*> nodesMap = sceneGraph->getNodes();
-
-    //map<string, Node*>::const_iterator nodesIterator = nodesMap.begin();
 
     // IR BUSCAR NÓ DE ROOT/ACTUAL (com o id = id)
     Node* currentNode = sceneGraph->getNodeById(id);
 
     if (currentNode == NULL) {
-        cout << "Invalid yaf??? The nome with the id '" << id << "' doesn't exist?" << endl;
+        cout << "Invalid yaf??? The node with the id '" << id << "' doesn't exist?" << endl;
     } else {
 
-        // search and apply appearence
-        /*string appearanceref = currentNode->getAppearanceRef();
-        Appearance* nodeAppearance = new Appearance();
         
         
-        map<string, Appearance*>::const_iterator pos = appearancesMap.find(appearanceref);
         
-        if (pos == appearancesMap.end()) {
+        // search appearance
+        string appearanceref = currentNode->getAppearanceRef();
+        
+        if(!appearanceref.empty()) // check if there is a appearanceref to apply
+        {
+        appearances[appearanceref]->apply();
+        }
+        
+        /*
+        if(!appearanceref.empty()) // check if there is a appearanceref to apply
+        {
+        map<string, Appearance*>::const_iterator itApp = appearancesMap.find(appearanceref);
+        
+        if (itApp == appearancesMap.end()) {
             // appearance not found
             cout << "Appearance with the ref '" << appearanceref << "' not found" << endl;
             
         } else {
             // appearance found
-            nodeAppearance = pos->second; // the appearance with the wanted ref
+            nodeAppearance = itApp->second; // the appearance with the wanted ref
         }
 
+ 
+            
+            }
+ 
+            
+            // apply appearance
+            appearance->apply();
+ 
+        }*/
         
-        appearance = new CGFappearance(CGFappearance(nodeAppearance->getAmbient(), nodeAppearance->getDiffuse(), nodeAppearance->getSpecular(), nodeAppearance->getShininess()));
-        
-                                       
-        appearance->apply();
-                                       
-        // emissive attribute of the appearance
-        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,
-                                                    nodeAppearance->getEmissive());
-        
-        */
         // Draw all the primitives of the current node
         vector<scene::Primitive*> primitives = currentNode->getPrimitives();
 
@@ -207,7 +288,7 @@ void Scene::processNode(string id) {
 
 }
 
-Scene::~Scene() {
+Scene::~Scene(){
 
 }
 
@@ -221,10 +302,33 @@ Graph* Scene::getGraph() {
 
 void Scene::setAppearances(map<string,Appearance*> appearancesMap)
 {
-    this->appearancesMap = appearancesMap;
+    this->appearancesMap = map<string,Appearance*>();
+    this->appearancesMap.insert(appearancesMap.begin(),appearancesMap.end());
+}
+
+void Scene::setTextures(map<string,Texture*> texturesMap)
+{
+    this->texturesMap = map<string,Texture*>();
+    this->texturesMap.insert(texturesMap.begin(),texturesMap.end());
+}
+
+void Scene::setLights(map<string,Lightning*> lightningMap)
+{
+    this->lightningMap = map<string,Lightning*>();
+    this->lightningMap.insert(lightningMap.begin(),lightningMap.end());
 }
 
 map<string,Appearance*> Scene::getAppearances()
 {
     return this->appearancesMap;
+}
+
+map<string,Texture*> Scene::getTextures()
+{
+    return this->texturesMap;
+}
+
+map<string,Lightning*> Scene::getLights()
+{
+    return this->lightningMap;
 }

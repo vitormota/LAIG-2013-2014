@@ -64,8 +64,12 @@ public:
     void display();
     void setGraph(Graph* sceneGraph);
     void setAppearances(map<string,Appearance*> appearancesMap);
+    void setTextures(map<string,Texture*> texturesMap);
+    void setLights(map<string,Lightning*> lightningMap);
     Graph* getGraph();
     map<string,Appearance*> getAppearances();
+    map<string,Texture*> getTextures();
+    map<string,Lightning*> getLights();
     void processGraph(); // process all the nodes of the graph in order
     void processNode(string id);
 
@@ -77,15 +81,19 @@ public:
     CGFlight* light2;
 
     scene::Primitive* p;
-    CGFappearance* appearance;
 
     Graph* sceneGraph;
 
     /* TESTING */
-
-    vector<Light*> lights;
+    
     map<string,Texture*> texture_mapping;
     map<string,Appearance*> appearancesMap;
+    map<string,Texture*> texturesMap;
+    map<string,Lightning*> lightningMap;
+    
+    map<string, CGFappearance*> appearances;
+    vector<CGFlight*> lights;
+    vector<CGFtexture*> textures;
 
 
 

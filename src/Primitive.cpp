@@ -61,10 +61,10 @@ namespace scene{
 		this->stacks = stacks;
 
 		cylinderQuadric = gluNewQuadric();
-		//gluQuadricTexture(cylinderQuadric, GL_TRUE);
-		//gluQuadricDrawStyle(cylinderQuadric, GLU_FILL);
-		//gluQuadricNormals(cylinderQuadric, GLU_SMOOTH);
-		//gluQuadricOrientation(cylinderQuadric, GLU_OUTSIDE);
+		gluQuadricTexture(cylinderQuadric, GL_TRUE);
+		gluQuadricDrawStyle(cylinderQuadric, GLU_FILL);
+		gluQuadricNormals(cylinderQuadric, GLU_SMOOTH);
+		gluQuadricOrientation(cylinderQuadric, GLU_OUTSIDE);
 	}
 
 	Sphere::Sphere(string id, float radius, int slices, int stacks) : Primitive(id)
@@ -88,9 +88,13 @@ namespace scene{
 
 		glBegin(GL_QUADS);
 
+        glTexCoord2d(x1, y1);
 		glVertex2f(x1, y1);
+        glTexCoord2d(x2, y1);
 		glVertex2f(x2, y1);
+        glTexCoord2d(x2, y2);
 		glVertex2f(x2, y2);
+        glTexCoord2d(x1, y2);
 		glVertex2f(x1, y2);
 
 		glEnd();
@@ -104,8 +108,11 @@ namespace scene{
 
 		glBegin(GL_TRIANGLES);
 
+        glTexCoord3d(x1, y1, z1);
 		glVertex3f(x1, y1, z1);
+        glTexCoord3d(x2, y2, z2);
 		glVertex3f(x2, y2, z2);
+        glTexCoord3d(x3, y3, z3);
 		glVertex3f(x3, y3, z3);
 
 		glEnd();

@@ -18,12 +18,17 @@
 using namespace std;
 
 class Texture {
-public:
+private:
     string id;
     string file;
-    
+public:
+    Texture();
     Texture(string id,string file);
     ~Texture();
+    string getId();
+    string getFile();
+    void setId(string id);
+    void setFile(string file);
 };
 
 #endif	/* TEXTURE_H */

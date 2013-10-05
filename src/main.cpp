@@ -59,10 +59,14 @@ int main(int argc, char* argv[]) {
         
         Graph* sceneGraph = f->getGraph();
         map<string, Appearance*> appearancesMap = f->getAppearances();
+        map<string, Texture*> texturesMap = f->getTextures();
+        map<string, Lightning*> lightningMap = f->getLights();
         
         Scene* newScene = new Scene();
         newScene->setGraph(sceneGraph);
         newScene->setAppearances(appearancesMap);
+        newScene->setTextures(texturesMap);
+        newScene->setLights(lightningMap);
         
 		app.setScene(newScene);
 		app.setInterface(new CGFinterface());

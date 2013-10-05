@@ -10,73 +10,56 @@
 #include <CGFlight.h>
 #endif
 
-
 using namespace std;
 
-typedef struct {
-    bool doublesided;
-    bool local;
-    bool enabled;
-    float ambient[4];
-} global_lightning_vars;
-
-class Light {
+class Lightning {
 public:
-    Light(string id, bool enabled, unsigned int light_id,
-            float *pos, float ambient[4],
-            float difuse[4], float specular[4], float *dir = NULL);
-    virtual ~Light();
+    Lightning();
+    Lightning(string type, string id, bool enabled, float location[3],
+    float ambient[4], float difuse[4], float specular[4]);
+    ~Lightning();
 
-    string getId()const {
-        return id;
-    }
+    void setId(string id);
+    void setEnabled(bool enabled);
+    void setLocation(float* location);
+    void setAmbient(float* ambient);
+    void setDiffuse(float* diffuse);
+    void setSpecular(float* specular);
+    string getId();
+    float* getLocation();
+    float* getAmbient();
+    float* getDiffuse();
+    float* getSpecular();
+    string getType();
+    
+    // spot only
+    void setAngle(float angle);
+    void setExponent(float exponent);
+    void setDirection(float* direction);
+    float getAngle();
+    float getExponent();
+    float* getDirection();
 
-    bool isEnabled()const {
-        return enabled;
-    }
+    virtual bool isEnabled()
+    {
+        return this->enabled;
+    };
 
-    //pure virtual makes class abstract
-    virtual float getVars()const = 0;
-protected:
+    string type; // type of light (omni/spot)
+   
+private:
+    // omni and spot
     string id;
     bool enabled;
-    float
-    *location,
-    *ambient,
-    *difuse,
-    *specular;
-};
-
-class Omni : public Light {
-public:
-    Omni(string id, bool enabled, unsigned int light_id,
-            float *pos, float ambient[4],
-            float difuse[4], float specular[4], float *dir = NULL);
-    ~Omni();
-
-    float getVars()const{return 0;}
-
-private:
-
-};
-
-class Spot : public Light {
-public:
-
-    Spot(string id, bool enabled, unsigned int light_id,
-            float *pos, float ambient[4],
-            float difuse[4], float specular[4], float angle,
-            float exponent, float direction[3], float *dir = NULL);
-
-    ~Spot();
+    float location[3];
+    float ambient[4];
+    float diffuse[4];
+    float specular[4];
     
-    float getVars()const{return 0;}
-
-private:
-    float
-    angle,
-    exponent,
-    *direction;
+    // spot only
+    float angle;
+    float exponent;
+    float direction[3];
 };
 
 #endif

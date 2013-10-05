@@ -10,7 +10,6 @@
 
 #if __unix
 #include <CGF/CGFappearance.h>
-#include <cstring>
 #elif __APPLE__
 #include "CGFappearance.h"
 #endif

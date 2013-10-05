@@ -18,6 +18,15 @@ Appearance::Appearance(string id,
            float specular[4], float shininess, string textureref,
            float texlength_s, float texlength_t)
 {
+    this->id = id;
+    memcpy(this->emissive, emissive,4*sizeof(float));
+    memcpy(this->ambient, ambient,4*sizeof(float));
+    memcpy(this->diffuse, diffuse,4*sizeof(float));
+    memcpy(this->specular, specular,4*sizeof(float));
+    this->shininess = shininess;
+    this->textureref = textureref;
+    this->texlength_s = texlength_s;
+    this->texlength_t = texlength_t;
 }
 
 Appearance::~Appearance() {

@@ -267,16 +267,21 @@ namespace Parser {
 		    endl;
 	    return false;
 	}
+        
+    // initialize lightning map
+    this->lightningMap = map<string,Lightning*>();
+        
 	bool doublesided = false, local = false, enabled = false;
+        
 	float ambient[4];
 	if (strcmp(lightingElement->Attribute("doublesided"), "true")) {
-	    //scene->light_global_vars.doublesided = true;
+	    doublesided = true;
 	}
 	if (strcmp(lightingElement->Attribute("enabled"), "true")) {
-	    //scene->light_global_vars.enabled = true;
+	    enabled = true;
 	}
 	if (strcmp(lightingElement->Attribute("local"), "true")) {
-	    //scene->light_global_vars.local = true;
+	    local = true;
 	}
 	if (StringParsing::FloatReader(lightingElement->Attribute("ambient"), ambient) != 4) {
 	    //error ambient attr does not have at least 4 values
@@ -287,7 +292,8 @@ namespace Parser {
 
 	char *id;
 	bool enabled_child = false;
-	float location[4], ambient_child[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
+	float location[3], ambient_child[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
+        Lightning* newLightning;
 	int count = 0;
 	while (child) {
 	    bool error = false, spot = false;
@@ -303,6 +309,7 @@ namespace Parser {
 		//bad base attributes
 		error = true;
 	    }
+        
 	    //char* s = (char*) child->Value();
 	    if (!error && !strcmp(child->Value(), node_names[SPOT])) {
 		//it is a spot camera
@@ -311,18 +318,31 @@ namespace Parser {
 		if (child->QueryFloatAttribute("angle", &angle) != TIXML_SUCCESS ||
 			child->QueryFloatAttribute("exponent", &exponent) != TIXML_SUCCESS ||
 			StringParsing::FloatReader(child->Attribute("direction"), direction) != 3) {
-		    //bad spot camera
+		    //bad spot light
 		    error = true;
 		} else {
-		    //scene->lights.push_back(new Spot(id, enabled, count, location, ambient, diffuse, specular, angle, exponent, direction));
+		    
+            newLightning->setAngle(angle);
+            newLightning->setExponent(exponent);
+            newLightning->setDirection(direction);
+            
+            // create spot light
+            newLightning = new Lightning("spot", id, enabled, location, ambient, diffuse, specular);
 		}
-	    } else {
-		//save omni camera
-		//scene->lights.push_back(new Omni(id, enabled, count, location, ambient, diffuse, specular));
+        }
+        
+	    if (!error && !strcmp(child->Value(), node_names[OMNI])){
+		//create omni light
+		
+            newLightning = new Lightning("omni", id, enabled, location, ambient, diffuse, specular);
 	    }
 	    if (!error) {
-		//save camera
+    
 		cout << child->Value() << " id: " << id << " OK.\n";
+            
+        //save light
+        lightningMap.insert(std::pair<string,Lightning*>(newLightning->getId(),newLightning));
+            
 		count++;
 	    } else {
 		cout << child->Value() <<
@@ -350,6 +370,9 @@ namespace Parser {
 	char *id, *file;
 	TiXmlElement* textureElement = texturesElement->FirstChildElement();
 
+        // initialize textures map
+        this->texturesMap = map<string,Texture*>();
+        
 	while (textureElement) {
 	    id = (char*) textureElement->Attribute("id");
 	    file = (char*) textureElement->Attribute("file");
@@ -369,9 +392,10 @@ namespace Parser {
 			endl;
 		count++;
             
-        // create and save texture
-		Texture *newTexture = new Texture(id, file);
-		
+            // create and save texture
+            Texture *newTexture = new Texture(id, file);
+            
+            texturesMap.insert(std::pair<string,Texture*>(newTexture->getId(),newTexture));
 
 	    }
 	    //next texture
@@ -395,6 +419,9 @@ namespace Parser {
 		    endl;
 	    return false;
 	}
+        
+        // initialize appearances map
+        this->appearancesMap = map<string,Appearance*>();
 
 	int count = 0; // number of appearance elements
 	char *id, *textureref;
@@ -575,13 +602,13 @@ namespace Parser {
 	    if (!error) {
 		
             // valid block
-		
+            
             // create and save appearance
-            Appearance *newAppearance = new Appearance(string(id), emissive, ambient, diffuse,
-			specular, shininess, string(textureref),
+            Appearance *newAppearance = new Appearance(id, emissive, ambient, diffuse,
+			specular, shininess, textureref,
 			texlength_s, texlength_t);
             
-            appearancesMap[newAppearance->getId()] = newAppearance; // add appearance to appearancesMap
+            appearancesMap.insert(std::pair<string,Appearance*>(newAppearance->getId(),newAppearance));
             
 		count++;
 
@@ -1309,6 +1336,16 @@ namespace Parser {
     map<string, Appearance*> YafParser::getAppearances()
     {
         return this->appearancesMap;
+    }
+    
+    map<string, Texture*> YafParser::getTextures()
+    {
+        return this->texturesMap;
+    }
+    
+    map<string, Lightning*> YafParser::getLights()
+    {
+        return this->lightningMap;
     }
 }
 

@@ -43,6 +43,8 @@ namespace Parser {
         int loadYaf();
         Graph* getGraph();
         map<string, Appearance*> getAppearances();
+        map<string, Texture*> getTextures();
+        map<string, Lightning*> getLights();
 
     private:
         string _filename;
@@ -86,12 +88,10 @@ namespace Parser {
         //map<string, Camera*> camerasMap; // TODO : create Camera class (because it can be perspective or ortho)
 
         /* lightning */
-        //map<string, Lightning*> lightningMap; // TODO : create Lightning class
+        map<string, Lightning*> lightningMap;
 
         /* textures */
-        //map<string, Texture*> texturesMap;
-        
-        
+        map<string, Texture*> texturesMap;
 
         /* appearances */
         map<string, Appearance*> appearancesMap;

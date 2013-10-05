@@ -3,44 +3,115 @@
 
 using namespace std;
 
-Light::Light(string id, bool enabled, unsigned int light_id,
-	float *pos, float ambient[4], float difuse[4],
-	float specular[4], float *dir) {
-    this->enabled = enabled;
-    this->id = id;
-    this->location = pos;
-    this->specular = specular;
-    this->ambient = ambient;
-    this->difuse = difuse;
-
+Lightning::Lightning()
+{
+    
 }
 
-Light::~Light() {
+Lightning::Lightning(string type, string id, bool enabled, float location[4],
+                     float ambient[4], float diffuse[4], float specular[4]) {
+    this->id = id;
+    this->enabled = enabled;
+    memcpy(this->location, location,4*sizeof(float));
+    memcpy(this->specular, specular,4*sizeof(float));
+    memcpy(this->ambient, ambient,4*sizeof(float));
+    memcpy(this->diffuse, diffuse,4*sizeof(float));
+}
+
+Lightning::~Lightning() {
     delete [] & location;
     delete [] & ambient;
-    delete [] & difuse;
+    delete [] & diffuse;
     delete [] & specular;
 }
 
-Omni::Omni(string id, bool enabled, unsigned int light_id,
-	float *pos, float ambient[4], float difuse[4],
-	float specular[4], float *dir)
-: Light(id, enabled, light_id, pos, ambient, difuse, specular, dir) {
+void Lightning::setId(string id)
+{
+    this->id = id;
 }
 
-Omni::~Omni() {
+void Lightning::setEnabled(bool enabled)
+{
+    this->enabled = enabled;
 }
 
-Spot::Spot(string id, bool enabled, unsigned int light_id,
-	float *pos, float ambient[4],
-	float difuse[4], float specular[4], float angle,
-	float exponent, float direction[4], float *dir)
-: Light(id, enabled, light_id, pos, ambient, difuse, specular, dir) {
+void Lightning::setLocation(float* location)
+{
+    memcpy(this->location, location, 4*sizeof(float));
+}
+
+void Lightning::setAmbient(float* ambient)
+{
+    memcpy(this->ambient, ambient, 4*sizeof(float));
+}
+
+void Lightning::setDiffuse(float* diffuse)
+{
+    memcpy(this->diffuse, diffuse, 4*sizeof(float));
+}
+
+void Lightning::setSpecular(float* specular)
+{
+    memcpy(this->specular, specular, 4*sizeof(float));
+}
+
+string Lightning::getId()
+{
+    return this->id;
+}
+
+float* Lightning::getLocation()
+{
+    return this->location;
+}
+
+float* Lightning::getAmbient()
+{
+    return this->ambient;
+}
+
+float* Lightning::getDiffuse()
+{
+    return this->diffuse;
+}
+
+float* Lightning::getSpecular()
+{
+    return this->specular;
+}
+
+string Lightning::getType()
+{
+    return this->type;
+}
+
+void Lightning::setAngle(float angle)
+{
     this->angle = angle;
-    this->exponent = exponent;
-    this->direction = direction;
 }
 
-Spot::~Spot() {
-    delete [] & direction;
+void Lightning::setExponent(float exponent)
+{
+    this->exponent = exponent;
 }
+
+void Lightning::setDirection(float* direction)
+{
+    memcpy(this->direction, direction, 3*sizeof(float));
+}
+
+float Lightning::getAngle()
+{
+    return this->angle;
+}
+
+float Lightning::getExponent()
+{
+    return this->exponent;
+}
+
+float* Lightning::getDirection()
+{
+    return this->direction;
+}
+
