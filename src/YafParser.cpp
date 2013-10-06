@@ -730,7 +730,10 @@ namespace Parser {
             
             TiXmlElement* transformationElement = transformsElement->FirstChildElement();
             
+            glMatrixMode(GL_MODELVIEW);
+            
             glPushMatrix();
+            //glLoadIdentity();
             
             while (transformationElement) {
                 
@@ -859,8 +862,6 @@ namespace Parser {
             }
             
             // save transforms in the node
-            float m[16];
-            
             glGetFloatv(GL_MODELVIEW_MATRIX, m);
             newNode->setMatrix(m);
             

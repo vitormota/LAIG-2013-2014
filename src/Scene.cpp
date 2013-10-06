@@ -181,6 +181,7 @@ void Scene::init() {
                 
                 // set texture to appearance
                 newAppearance->setTexture(textureFound->getFile());
+                
             }
         }
         
@@ -256,6 +257,9 @@ void Scene::processNode(string id) {
         cout << "Invalid yaf??? The node with the id '" << id << "' doesn't exist?" << endl;
     } else {
         
+        // 
+        glMultMatrixf(currentNode->getMatrix());
+        
         // search appearance
         string appearanceref = currentNode->getAppearanceRef();
         
@@ -272,22 +276,8 @@ void Scene::processNode(string id) {
         vector<scene::Primitive*>::const_iterator itP;
         
         for (itP = primitives.begin(); itP != primitives.end(); itP++) {
-            //p = new scene::Primitive();
-            //p =
             (*itP)->draw();
-            //p->draw();
         }
-        
-        float m[16];
-        
-        //memcpy(&m, currentNode->getMatrix(), 16*sizeof(float));
-        //glMultMatrixf(&m);
-        glMultMatrixf(currentNode->getMatrix());
-        
-        /*glGetFloatv(GL_MODELVIEW_MATRIX, m);
-        currentNode->setMatrix(m);*/
-        
-        
         
         // CHAMAR ESTA FUNÇÃO ATÉ PERCORRER TODOS OS NÓS REFERENCIADOS NESTE NÓ
         vector<string> childrenNodeRef = currentNode->getChildrenNodeRef();
@@ -300,7 +290,6 @@ void Scene::processNode(string id) {
             processNode(childId);
             glPopMatrix();
         }
-        
         
     }
 }

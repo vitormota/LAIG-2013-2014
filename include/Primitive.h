@@ -23,13 +23,19 @@ namespace scene{
 	{
 	private:
 		string id;
+        float texlength_s;
+        float texlength_t;
 
 	public:
         Primitive();
 		Primitive(string id);
 		~Primitive();
 		void setId(string id);
+        void setTexlength_s(float texlength_s);
+        void setTexlength_t(float texlength_t);
 		string getId();
+        float getTexlength_s();
+        float getTexlength_t();
 		virtual void draw(){}
 
 	};

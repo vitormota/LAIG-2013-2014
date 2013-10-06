@@ -27,10 +27,30 @@ namespace scene{
 		this->id = id;
 	}
 
+    void Primitive::setTexlength_s(float texlength_s)
+    {
+        this->texlength_s = texlength_s;
+    }
+    
+    void Primitive::setTexlength_t(float texlength_t)
+    {
+        this->texlength_t = texlength_t;
+    }
+    
 	string Primitive::getId()
 	{
 		return this->id;
 	}
+    
+    float Primitive::getTexlength_s()
+    {
+        return this->texlength_s;
+    }
+    
+    float Primitive::getTexlength_t()
+    {
+        return this->texlength_t;
+    }
     
     Cylinder::~Cylinder()
     {
@@ -66,10 +86,10 @@ namespace scene{
 		this->stacks = stacks;
 
 		cylinderQuadric = gluNewQuadric();
-		gluQuadricTexture(cylinderQuadric, GL_TRUE);
 		gluQuadricDrawStyle(cylinderQuadric, GLU_FILL);
 		gluQuadricNormals(cylinderQuadric, GLU_SMOOTH);
 		gluQuadricOrientation(cylinderQuadric, GLU_OUTSIDE);
+        gluQuadricTexture(cylinderQuadric, GL_TRUE);
 	}
 
 	Sphere::Sphere(string id, float radius, int slices, int stacks) : Primitive(id)
@@ -91,6 +111,8 @@ namespace scene{
 		this->outer = outer;
 		this->slices = slices;
 		this->loops = loops;
+        glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR );
+        glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR );
 	}
 
 	void Rectangle::draw()
@@ -131,16 +153,44 @@ namespace scene{
 		glEnd();
 
 		glPopMatrix();
+        
+        /*
+        // p1, p2, p3: triangle vertexes p2
+        e1 = p2-p1;
+        e2 = p3-p1;
+        n = cross(edge1, edge2).normalize();
+        
+        // vector supports: x,y,z or type float
+        
+        struct vector e1, e2, n;
+        float l;
+        e1.x = p2.x - p1.x;
+        e1.y = p2.y - p1.y;
+        e1.z = p2.z - p1.z;
+        e2.x = p3.x - p1.x;
+        e2.y = p3.y - p1.y;
+        e3.z = p3.z - p1.z;
+        n e1
+        n.x = (e1.y * e2.z)
+        n.y = (e1.z * e2.x)
+        n.z = (e1.x * e2.y)
+        - (e1.z * e2.y);
+        - (e1.x * e2.z);
+        - (e1.y * e2.x);
+        
+        // Normalize (divide by root of dot product)
+        l = sqrt(n.x * n.x + n.y * n.y + n.z * n.z); n.x /= l;
+        n.y /= l;
+        n.z /= l;*/
 	}
 
 	void Cylinder::draw()
 	{
-        glEnable(GL_NORMALIZE);
+        //glEnable(GL_NORMALIZE);
         
 		// top of the cylinder
 		glPushMatrix();
 
-        cylinderQuadric = gluNewQuadric();
 		gluDisk(cylinderQuadric,0,base,slices,stacks);
 		glTranslated(0, 0, height);
 		gluDisk(cylinderQuadric, 0, top, slices, stacks);
@@ -148,7 +198,6 @@ namespace scene{
 		glPopMatrix();
 
 		glPushMatrix();
-        cylinderQuadric = gluNewQuadric();
 		gluCylinder(cylinderQuadric, base, top, height, slices, stacks);
 		glPopMatrix();
 
@@ -180,6 +229,7 @@ namespace scene{
         glDisable(GL_TEXTURE_GEN_T);
         
 		glPopMatrix();
+        
 	}
 
 

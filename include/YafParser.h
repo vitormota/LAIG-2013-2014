@@ -58,6 +58,8 @@ namespace Parser {
         bool local;
         bool enabled;
         float ambient[4];
+        
+        float m[16];
 
     private:
         string _filename;
