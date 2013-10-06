@@ -127,8 +127,7 @@ public:
     map<string, CGFappearance*> appearances;
     vector<CGFlight*> lights;
     vector<CGFtexture*> textures;
-
-
+    
 
 };
 

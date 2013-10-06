@@ -24,6 +24,11 @@ Lighting::Lighting(string type, string id, bool enabled, float location[3],
     memcpy(this->diffuse, diffuse,4*sizeof(float));
     this->angle = 0;
     this->exponent = 0;
+    
+    for(unsigned int i = 0; i < 3; i++)
+    {
+        this->direction[i] = 0;
+    }
 }
 
 Lighting::~Lighting() {
@@ -110,7 +115,11 @@ void Lighting::setExponent(float exponent)
 
 void Lighting::setDirection(float* direction)
 {
-    memcpy(this->direction, direction, 3*sizeof(float));
+    //memcpy(this->direction, direction, 3*sizeof(float));
+    for(unsigned int i = 0; i < 3; i++)
+    {
+        this->direction[i] = direction[i];
+    }
 }
 
 float Lighting::getAngle()

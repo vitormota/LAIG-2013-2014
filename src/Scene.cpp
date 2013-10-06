@@ -84,6 +84,7 @@ void Scene::init() {
     map<string, Lighting*>::const_iterator itL = lightingMap.begin();
 
     CGFlight* newLight;
+    float direction[3];
 
     GLenum light_id = GL_LIGHT0;
 
@@ -99,12 +100,23 @@ void Scene::init() {
 	    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
 	    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
 	}
+    else{
+        
+        for(unsigned int i = 0; i < 3; i++)
+        {
+            direction[i] = 0;
+        }
+        
+        glLightfv(light_id, GL_SPOT_DIRECTION, direction);
+    }
 
 	if (light->isEnabled()) {
 	    newLight->enable();
 	} else {
 	    newLight->disable();
 	}
+        
+        
 
 	// save light
 	lights.push_back(newLight);
@@ -205,7 +217,7 @@ void Scene::display() {
 
     for (itL = lights.begin(); itL != lights.end(); itL++) {
 	(*itL)->draw();
-	//(*itL)->enable();
+	//(*itL)->disable();
     }
 
 
@@ -248,7 +260,7 @@ void Scene::processNode(string id) {
 	if (appearancesMap.find(appearanceref) != appearancesMap.end()) // check if there is a appearanceref to apply
 	{
 	    // apply appearance
-	    //appearances[appearanceref]->apply();
+	    appearances[appearanceref]->apply();
 	}
 
 	// Draw all the primitives of the current node

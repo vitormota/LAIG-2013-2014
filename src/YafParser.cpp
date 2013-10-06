@@ -248,7 +248,7 @@ namespace Parser {
 	return true;
     }
 
-    bool YafParser::loadLighting(TiXmlElement *LightingElement) {
+    bool YafParser::loadLighting(TiXmlElement *lightingElement) {
 	if (lightingElement == NULL) {
 	    cout <<
 		    element_not_found <<
@@ -277,15 +277,15 @@ namespace Parser {
 
 	float ambient[4];
         
-	if (strcmp(lightingElement->Attribute("doublesided"), "true")) {
+	if (!strcmp(lightingElement->Attribute("doublesided"), "true")) {
 	    this->doublesided = true;
 	}
 
-	if (strcmp(lightingElement->Attribute("enabled"), "true")) {
+	if (!strcmp(lightingElement->Attribute("enabled"), "true")) {
 	    this->enabled = true;
 	}
 
-	if (strcmp(lightingElement->Attribute("local"), "true")) {
+	if (!strcmp(lightingElement->Attribute("local"), "true")) {
 	    this->local = true;
 	}
 
@@ -302,23 +302,30 @@ namespace Parser {
 
 	// omni/spot lights
 
-	char *id;
-	bool enabled_light = false;
-	float location[3], ambient_child[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
-	Lighting* newLighting;
+	Lighting* newLighting = new Lighting();
 	int count = 0;
 
 	while (lightElement) {
+        
+        char *id;
+        bool enabledLight = false;
+        float location[3], ambientLight[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
+        
+        for(unsigned int i = 0; i < 3; i++)
+        {
+            direction[i] = 0;
+        }
+        
 	    bool error = false, spot = false;
 	    id = (char*) lightElement->Attribute("id");
 
 	    if (!strcmp(lightElement->Attribute("enabled"), "true")) {
-		enabled_light = true;
+		enabledLight = true;
 	    }
 
 	    if (!id ||
 		    StringParsing::FloatReader(lightElement->Attribute("location"), location) != 3 ||
-		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambient_child) != 4 ||
+		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambientLight) != 4 ||
 		    StringParsing::FloatReader(lightElement->Attribute("diffuse"), diffuse) != 4 ||
 		    StringParsing::FloatReader(lightElement->Attribute("specular"), specular) != 4) {
 		//bad base attributes
@@ -340,7 +347,7 @@ namespace Parser {
 		} else {
 
 		    // create spot light
-		    newLighting = new Lighting("spot", id, enabled, location, ambient_child, diffuse, specular);
+		    newLighting = new Lighting("spot", id, enabledLight, location, ambientLight, diffuse, specular);
 
 		    newLighting->setAngle(angle);
 		    newLighting->setExponent(exponent);
@@ -350,7 +357,9 @@ namespace Parser {
 		if (!error && !strcmp(type, node_names[OMNI])) {
 		//create omni light
 
-		newLighting = new Lighting("omni", id, enabled, location, ambient_child, diffuse, specular);
+		newLighting = new Lighting("omni", id, enabledLight, location, ambientLight, diffuse, specular);
+            
+            newLighting->setDirection(direction);
 	    }
 
 	    if (!error) {
@@ -624,7 +633,7 @@ namespace Parser {
 		// valid block
 
 		// create and save appearance
-		Appearance *newAppearance = new Appearance(id, emissive, ambient, diffuse,
+		Appearance *newAppearance = new Appearance(id, emissive, ambientApp, diffuse,
 			specular, shininess, textureref,
 			texlength_s, texlength_t);
 
