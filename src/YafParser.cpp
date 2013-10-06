@@ -276,6 +276,7 @@ namespace Parser {
         this->enabled = false;
         
 	float ambient[4];
+        
 	if (strcmp(lightingElement->Attribute("doublesided"), "true")) {
 	    this->doublesided = true;
 	}
@@ -292,15 +293,19 @@ namespace Parser {
 	    //error ambient attr does not have at least 4 values
 	    cout << "Bad ambient attribute\n";
 	} else {
-	    memcpy(this->ambient, ambient, 4*sizeof(float));
+	    //memcpy(this->ambient, ambient, 4*sizeof(float));
+        for(unsigned int i = 0; i < 4; i++)
+        {
+            this->ambient[i] = ambient[i];
+        }
 	}
 
     // omni/spot lights
         
 	char *id;
-	bool enabled_light = false;
-	float location[3], ambient_child[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
-    Lighting* newLighting;
+	bool enabledLight = false;
+	float location[3], ambientLight[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
+    Lighting* newLighting = new Lighting();
 	int count = 0;
         
 	while (lightElement) {
@@ -308,12 +313,12 @@ namespace Parser {
 	    id = (char*) lightElement->Attribute("id");
 	    
         if (!strcmp(lightElement->Attribute("enabled"), "true")) {
-		enabled_light = true;
+		enabledLight = true;
 	    }
         
 	    if (!id ||
 		    StringParsing::FloatReader(lightElement->Attribute("location"), location) != 3 ||
-		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambient_child) != 4 ||
+		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambientLight) != 4 ||
 		    StringParsing::FloatReader(lightElement->Attribute("diffuse"), diffuse) != 4 ||
 		    StringParsing::FloatReader(lightElement->Attribute("specular"), specular) != 4) {
 		//bad base attributes
@@ -335,7 +340,7 @@ namespace Parser {
 		} else {
 		    
             // create spot light
-            newLighting = new Lighting("spot", id, enabled, location, ambient, diffuse, specular);
+            newLighting = new Lighting("spot", id, enabledLight, location, ambientLight, diffuse, specular);
             
             newLighting->setAngle(angle);
             newLighting->setExponent(exponent);
@@ -346,7 +351,7 @@ namespace Parser {
 	    if (!error && !strcmp(type, node_names[OMNI])){
 		//create omni light
 		
-            newLighting = new Lighting("omni", id, enabled, location, ambient, diffuse, specular);
+            newLighting = new Lighting("omni", id, enabledLight, location, ambientLight, diffuse, specular);
 	    }
         
 	    if (!error) {
@@ -442,7 +447,7 @@ namespace Parser {
 	int count = 0; // number of appearance elements
 	char *id, *textureref;
 	float emissive[4];
-	float ambient[4];
+	float ambientApp[4];
 	float diffuse[4];
 	float specular[4];
 	char *emissiveStr;
@@ -510,7 +515,7 @@ namespace Parser {
 
 	    // ambient attribute
 
-	    if (!ambientStr || (StringParsing::FloatReader(ambientStr, ambient)) != 4) {
+	    if (!ambientStr || (StringParsing::FloatReader(ambientStr, ambientApp)) != 4) {
 		error = true;
 		// invalid ambient
 		cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), FAIL.\n";
@@ -620,7 +625,7 @@ namespace Parser {
             // valid block
             
             // create and save appearance
-            Appearance *newAppearance = new Appearance(id, emissive, ambient, diffuse,
+            Appearance *newAppearance = new Appearance(id, emissive, ambientApp, diffuse,
 			specular, shininess, textureref,
 			texlength_s, texlength_t);
             

@@ -15,6 +15,7 @@ Lighting::Lighting()
 Lighting::Lighting(string type, string id, bool enabled, float location[3],
                      float ambient[4], float diffuse[4], float specular[4]) {
     this->id = id;
+    this->type = type;
     this->enabled = enabled;
     memcpy(this->location, location,3*sizeof(float));
     memcpy(this->specular, specular,4*sizeof(float));

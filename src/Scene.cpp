@@ -105,10 +105,8 @@ void Scene::init() {
 //    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
 
     // ambient attribute
-    if (this->ambient != NULL) {
 	// Define ambient light (do not confuse with ambient component of individual lights)
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, this->ambient);
-    }
 
     // --- lighting attributes ------------------------------ END
 
