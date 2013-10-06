@@ -7,6 +7,9 @@
 //
 
 #include "Appearance.h"
+#if __unix
+#include <cstring>
+#endif
 
 Appearance::Appearance()
 {

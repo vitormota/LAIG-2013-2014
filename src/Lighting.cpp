@@ -1,5 +1,9 @@
 #include "Lighting.h"
 
+#if __unix
+#include <cstring>
+#endif
+
 
 using namespace std;
 

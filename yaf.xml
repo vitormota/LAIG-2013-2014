@@ -12,7 +12,7 @@
     <!-- Valores para shading: "flat", "gouraud" ) -->
     <!-- Valores para cullface: "none", "back" , "front" ou "both" -->
     <!-- Valores para cullorder : "CCW" ou "CW" -->
-    <globals background="2.0 1.0 3.4 5.5" drawmode="fill" shading="flat" cullface="none" cullorder="CW" />
+    <globals background="0.0 0.0 0.0 0.0" drawmode="fill" shading="flat" cullface="none" cullorder="CCW" />
     
     <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
     <cameras initial="one" >
@@ -24,25 +24,28 @@
     
     
     <!-- bloco de iluminacao; segue os parametros do OpenGL -->
-    <lighting doublesided="true" local="false" enabled="true" ambient="10.0 5.0 2.0 3.0" >
+    <lighting doublesided="true" local="false" enabled="true" ambient="0.0 0.0 0.0 1" >
 	<!-- Deve existir pelo menos um dos seguintes blocos: omin ou spot -->
 	<!-- Os identificadores "id" nao podem ser repetidos -->
-	<omni id="s0" enabled="true"
-	      location="-10 5 2 3"
-	      ambient="10 54 2 3"
-	      diffuse="10 5 2 3"
-	      specular="10 5 2 3"
+	<spot id="s0" enabled="true"
+	      location="5 5 5"
+	      ambient="0 0 0 0"
+	      diffuse="0 0 0 0"
+	      specular="0 0 0 0"
+	      angle="10"
+	      exponent="12"
+	      direction="0 0 0"
 	/>
-        
-	<spot id="s1" enabled="true"
-	      location="10 5 2 5"
-	      ambient="10 5 2 3"
-	      diffuse="10 5 2 3"
-	      specular="10 5 2 3"
+
+	<!-- <spot id="s1" enabled="true"
+	      location="5 5 7"
+	      ambient="0 0 0 0.2"
+	      diffuse="0 0 0 0"
+	      specular="0 0 0 0"
 	      angle="10"
 	      exponent="12"
 	      direction="10 5 2"
-	/>
+		      /> -->
         
     </lighting>
     
@@ -62,26 +65,22 @@
 	<!--   opcionais se for usada uma textura. -->
 	<!--   ver topico 'Notas finais' no enunciado sobre os -->
 	<!--   parametros texlength_...) -->
-	<appearance id="app_floor" emissive="1.0 1.0 1.0 1.0" ambient="1.0 1.0 1.0 1.0" 
-		    diffuse="1.0 1.0 1.0 1.0" specular="1.0 1.0 1.0 1.0" 
-		    shininess="1.0" textureref="floor1" texlength_s="1.0" texlength_t="2.0"/>
-	<appearance id="app_wall" emissive="15.0 120.0 10.0 40.0" ambient="5.0 5.0 6.0 10.0" 
-		    diffuse="1.0 1.0 1.0 1.0" specular="1.0 1.0 1.0 1.0" 
-		    shininess="1.0" textureref="wall_wood" texlength_s="1.0" texlength_t="1.0"/>
-	<appearance id="app_wood" emissive="15.0 120.0 10.0 40.0" ambient="5.0 5.0 6.0 10.0" 
-		    diffuse="1.0 1.0 1.0 1.0" specular="1.0 1.0 1.0 1.0" 
-		    shininess="1.0" textureref="floor_wood" texlength_s="1.0" texlength_t="1.0"/>
+	<appearance id="app_floor" emissive="0 0 0 0" ambient="0.0 0.05 0.05 1.0" 
+		    diffuse="0.4 0.5 0.5 1.0" specular="0.4 0.7 0.7 1.0" 
+		    shininess="10" textureref="floor1" texlength_s="1.0" texlength_t="1.0"/>
+	<appearance id="app_wall" emissive="0 0 0 0" ambient="0.54 0.52 0.52" 
+		    diffuse="0.54 0.52 0.52" specular="0.1 0.1 0.1" 
+		    shininess="0"/>
     </appearances>
     
     <graph rootid="root">
 	<node id="root">
 	    <transforms>
-		    
-	    </transforms>
-	    <children>
-		<noderef id="floor" />
 		<noderef id="walls" />
 		<noderef id="objects" />
+	    </transforms>
+	    <children>
+		<noderef id="unit_cube" />
 	    </children>
 	</node>
 	<node id="floor">
@@ -90,6 +89,7 @@
 		<scale factor="30.0 1.0 35.0"/>
 		<rotate axis="x" angle="-90"/>
 	    </transforms>
+	    <appearanceref id="app_floor" />
 	    <children>
 		<noderef id="unit_rectangle" />
 	    </children>
