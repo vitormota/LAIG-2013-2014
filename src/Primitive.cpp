@@ -103,22 +103,22 @@ namespace scene {
     }
 
     void Rectangle::draw() {
-
-	glBegin(GL_QUADS);
-	if(abs(x1) < abs(x2)){
-	    glNormal3f(0,0,1);
-	}else{
-	    glNormal3f(0,0,-1);
+	if (abs(x1) < abs(x2)) {
+	    glNormal3f(0, 0, 1);
+	} else {
+	    glNormal3f(0, 0, -1);
 	}
-	glTexCoord2d(x1, y1);
-	glVertex2f(x1, y1);
-	glTexCoord2d(x2, y1);
-	glVertex2f(x2, y1);
-	glTexCoord2d(x2, y2);
-	glVertex2f(x2, y2);
-	glTexCoord2d(x1, y2);
-	glVertex2f(x1, y2);
-
+	
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(x1, y1, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(x2, y1, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(x2, y2, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(x1, y2, 0);
+	
 	glEnd();
     }
 

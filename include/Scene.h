@@ -92,6 +92,8 @@ public:
     bool getEnabled();
     float* getAmbient();
     
+    CGFappearance *mat_wall;
+    
     
     void processGraph(); // process all the nodes of the graph in order
     void processNode(string id);
@@ -114,6 +116,8 @@ public:
     bool local;
     bool enabled;
     float ambient[4];
+    
+    CGFlight *light2;
     
     map<string,Texture*> texture_mapping;
     map<string,Appearance*> appearancesMap;

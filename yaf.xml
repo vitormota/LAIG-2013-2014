@@ -12,7 +12,7 @@
     <!-- Valores para shading: "flat", "gouraud" ) -->
     <!-- Valores para cullface: "none", "back" , "front" ou "both" -->
     <!-- Valores para cullorder : "CCW" ou "CW" -->
-    <globals background="0.0 0.0 0.0 0.0" drawmode="fill" shading="flat" cullface="none" cullorder="CCW" />
+    <globals background="0.0 0.0 0.0 0.0" drawmode="fill" shading="flat" cullface="front" cullorder="CW" />
     
     <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
     <cameras initial="one" >
@@ -24,11 +24,29 @@
     
     
     <!-- bloco de iluminacao; segue os parametros do OpenGL -->
-    <lighting doublesided="true" local="false" enabled="true" ambient="0.0 0.0 0.0 1" >
+    <lighting doublesided="false" local="false" enabled="true" ambient="0.0 0.0 0.0 0.0" >
 	<!-- Deve existir pelo menos um dos seguintes blocos: omin ou spot -->
 	<!-- Os identificadores "id" nao podem ser repetidos -->
 	<spot id="s0" enabled="true"
 	      location="5 5 5"
+	      ambient="0.2 0.07 0.4 1.0"
+	      diffuse="0.5 0.5 0.5 1.0"
+	      specular="0.2 0.2 0.2 1.0"
+	      angle="10"
+	      exponent="12"
+	      direction="0 0 0"
+	/>
+	<spot id="s1" enabled="false"
+	      location="7 5 5"
+	      ambient="0 0 0 0"
+	      diffuse="0 0 0 0"
+	      specular="0 0 0 0"
+	      angle="10"
+	      exponent="12"
+	      direction="0 0 0"
+	/>
+	<spot id="s2" enabled="false"
+	      location="7 7 5"
 	      ambient="0 0 0 0"
 	      diffuse="0 0 0 0"
 	      specular="0 0 0 0"
@@ -68,9 +86,9 @@
 	<appearance id="app_floor" emissive="0 0 0 0" ambient="0.0 0.05 0.05 1.0" 
 		    diffuse="0.4 0.5 0.5 1.0" specular="0.4 0.7 0.7 1.0" 
 		    shininess="10" textureref="floor1" texlength_s="1.0" texlength_t="1.0"/>
-	<appearance id="app_wall" emissive="0 0 0 0" ambient="0.54 0.52 0.52" 
-		    diffuse="0.54 0.52 0.52" specular="0.1 0.1 0.1" 
-		    shininess="0"/>
+	<appearance id="app_wall" emissive="0 0 0 0" ambient="0.54 0.52 0.52 1.0" 
+		    diffuse="0.54 0.52 0.52 1.0" specular="0.1 0.1 0.1 1.0" 
+		    shininess="10"/>
     </appearances>
     
     <graph rootid="root">
@@ -80,6 +98,7 @@
 		<noderef id="objects" />
 	    </transforms>
 	    <children>
+		<noderef id="floor" />
 		<noderef id="unit_cube" />
 	    </children>
 	</node>
@@ -97,6 +116,7 @@
 	<node id="walls">
 	    <transforms>
 	    </transforms>
+	    <appearanceref id="app_wall" />
 	    <children>
 		<noderef id="west_wall" />
 		<noderef id="north_wall" />

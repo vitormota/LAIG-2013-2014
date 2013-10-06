@@ -47,7 +47,6 @@ void Scene::init() {
     }
 
     // cullorder attribute
-    glEnable(GL_CULL_FACE);
 
     if (this->cullorder == "CCW") {
 	glFrontFace(GL_CCW);
@@ -74,36 +73,6 @@ void Scene::init() {
 	glDisable(GL_LIGHTING);
     }
 
-//    GLfloat light_ambient[] = {0.0, 0.0, 0.0, 1.0};
-//    GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-//    GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
-//    GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
-//
-//    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-//    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-//    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-//    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-//
-//    glEnable(GL_LIGHT0);
-
-//    GLfloat light1_ambient[] = {0.2, 0.2, 0.2, 1.0};
-//    GLfloat light1_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-//    GLfloat light1_specular[] = {1.0, 1.0, 1.0, 1.0};
-//    GLfloat light1_position[] = {-2.0, 2.0, 1.0, 1.0};
-//    GLfloat spot_direction[] = {-1.0, -1.0, 0.0};
-//
-//    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
-//    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-//    glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
-//    glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
-//    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.5);
-//    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5);
-//    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.2);
-//
-//    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0);
-//    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
-//    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
-
     // ambient attribute
     if (this->ambient != NULL) {
 	// Define ambient light (do not confuse with ambient component of individual lights)
@@ -120,31 +89,31 @@ void Scene::init() {
 
     GLenum light_id = GL_LIGHT0;
 
-        for (itL = lightingMap.begin(); itL != lightingMap.end(); itL++) {
-    	Lighting* light = (itL)->second;
-    	newLight = new CGFlight(light_id, light->getLocation());
-    	newLight->setAmbient(light->getAmbient());
-    	newLight->setDiffuse(light->getDiffuse());
-    	newLight->setSpecular(light->getSpecular());
-    
-    	if (light->getType() == "spot") {
-    	    newLight->setAngle(light->getAngle());
-    	    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
-    	    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
-    	}
-    
-    	if (light->isEnabled()) {
-    	    newLight->enable();
-    	} else {
-    	    newLight->disable();
-    	}
-    
-    	// save light
-    	lights.push_back(newLight);
-    
-    	light_id++;
-    
-        }
+    for (itL = lightingMap.begin(); itL != lightingMap.end(); itL++) {
+	Lighting* light = (itL)->second;
+	newLight = new CGFlight(light_id, light->getLocation());
+	newLight->setAmbient(light->getAmbient());
+	newLight->setDiffuse(light->getDiffuse());
+	newLight->setSpecular(light->getSpecular());
+
+	if (light->getType() == "spot") {
+	    newLight->setAngle(light->getAngle());
+	    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
+	    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
+	}
+
+	if (light->isEnabled()) {
+	    newLight->enable();
+	} else {
+	    newLight->disable();
+	}
+
+	// save light
+	lights.push_back(newLight);
+
+	light_id++;
+
+    }
 
     // create and save CGFappearances
 
@@ -191,6 +160,19 @@ void Scene::init() {
 
     }
 
+
+//    float amb[3] = {0.0, 0.05, 0.05};
+//    float dif[3] = {0.4, 0.5, 0.5};
+//    float spec[3] = {0.01, 0.1, 0.1};
+//    float shininess = 100.f;
+//    mat_wall = new CGFappearance(amb, dif, spec, shininess);
+//
+//    float light2_pos[4] = {5, 5, 5, 1.0};
+//    light2 = new CGFlight(GL_LIGHT1, light2_pos);
+//    float ambNull[4] = {0, 0, 0, 1};
+//    light2->setAmbient(ambNull);
+//    light2->enable();
+
     // ------- Initialization of variables ------- END
 
 }
@@ -225,8 +207,9 @@ void Scene::display() {
 
     for (itL = lights.begin(); itL != lights.end(); itL++) {
 	(*itL)->draw();
-	(*itL)->enable();
+	//(*itL)->enable();
     }
+
 
     processGraph();
 
@@ -264,11 +247,10 @@ void Scene::processNode(string id) {
 	// search appearance
 	string appearanceref = currentNode->getAppearanceRef();
 
-
 	if (appearancesMap.find(appearanceref) != appearancesMap.end()) // check if there is a appearanceref to apply
 	{
 	    // apply appearance
-	    appearances[appearanceref]->apply();
+	    //appearances[appearanceref]->apply();
 	}
 
 	// Draw all the primitives of the current node
