@@ -318,7 +318,7 @@ namespace Parser {
 
 	    if (!id ||
 		    StringParsing::FloatReader(lightElement->Attribute("location"), location) != 3 ||
-		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambientLight) != 4 ||
+		    StringParsing::FloatReader(lightElement->Attribute("ambient"), ambient_child) != 4 ||
 		    StringParsing::FloatReader(lightElement->Attribute("diffuse"), diffuse) != 4 ||
 		    StringParsing::FloatReader(lightElement->Attribute("specular"), specular) != 4) {
 		//bad base attributes
