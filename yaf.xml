@@ -6,100 +6,159 @@
 
 <yaf>
     
-    <!-- bloco de configuracoes globais -->
-    <!-- a declaracao dos atributos deste bloco e' obrigatoria -->
-    <!-- Valores para draw mode: "fill" , "line", "point" -->
-    <!-- Valores para shading: "flat", "gouraud" ) -->
-    <!-- Valores para cullface: "none", "back" , "front" ou "both" -->
-    <!-- Valores para cullorder : "CCW" ou "CW" -->
-    <globals background="0.0 0.0 0.0 0.0" drawmode="fill" shading="flat" cullface="front" cullorder="CW" />
-    
-    <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial -->
-    <cameras initial="one" >
-	<!-- tem de existir, pelo menos uma camara dos tipos seguintes (perspective ou ortho) -->
-	<perspective id="one" near="4.0" far="2.0" angle="30.0" pos="4.0 2.0 1.0" target="3.0 3.0 2.0" />
-	<ortho id="two" near="2.0" far="5.0" left="4.0" right="2.0" top="3.0" bottom="4.0" />
-        
-    </cameras>
-    
-    
-    <!-- bloco de iluminacao; segue os parametros do OpenGL -->
-    <lighting doublesided="false" local="false" enabled="true" ambient="0.0 0.0 0.0 0.0" >
-	<!-- Deve existir pelo menos um dos seguintes blocos: omin ou spot -->
-	<!-- Os identificadores "id" nao podem ser repetidos -->
-	<spot id="s0" enabled="true"
-	      location="5 5 5"
-	      ambient="0.2 0.07 0.4 1.0"
-	      diffuse="0.5 0.5 0.5 1.0"
-	      specular="0.2 0.2 0.2 1.0"
-	      angle="10"
-	      exponent="12"
-	      direction="0 0 0"
-	/>
-	<spot id="s1" enabled="false"
-	      location="7 5 5"
-	      ambient="0 0 0 0"
-	      diffuse="0 0 0 0"
-	      specular="0 0 0 0"
-	      angle="10"
-	      exponent="12"
-	      direction="0 0 0"
-	/>
-	<spot id="s2" enabled="false"
-	      location="7 7 5"
-	      ambient="0 0 0 0"
-	      diffuse="0 0 0 0"
-	      specular="0 0 0 0"
-	      angle="10"
-	      exponent="12"
-	      direction="0 0 0"
-	/>
+    <globals background="0 0 0 1" drawmode="fill" shading="gouraud" cullface="none" cullorder="CCW" /> 
 
-	<!-- <spot id="s1" enabled="true"
-	      location="5 5 7"
-	      ambient="0 0 0 0.2"
-	      diffuse="0 0 0 0"
-	      specular="0 0 0 0"
-	      angle="10"
-	      exponent="12"
-	      direction="10 5 2"
-		      /> -->
-        
-    </lighting>
-    
-    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas -->
-    <textures>
-	<texture id="floor1" file="data/floor1.JPG" />
-	<texture id="wall_wood" file="data/wood_wall.jpg" />
-	<texture id="floor_wood" file="data/wood.jpg" />
-	<texture id="ceiling1" file="data/ceiling1.jpg" />
-    </textures>
-    
-    <!-- bloco de materiais; -->
-    <appearances>
-	<!-- deve existir um ou mais blocos "appearance" -->
-	<!-- IMPORTANTE: -->
-	<!--   textureref, texlength_s e textlength_t sao atributos -->
-	<!--   opcionais se for usada uma textura. -->
-	<!--   ver topico 'Notas finais' no enunciado sobre os -->
-	<!--   parametros texlength_...) -->
-	<appearance id="app_floor" emissive="0 0 0 0" ambient="0.0 0.05 0.05 1.0" 
-		    diffuse="0.4 0.5 0.5 1.0" specular="0.4 0.7 0.7 1.0" 
-		    shininess="10" textureref="floor1" texlength_s="1.0" texlength_t="1.0"/>
-	<appearance id="app_wall" emissive="0 0 0 0" ambient="0.54 0.52 0.52 1.0" 
-		    diffuse="0.54 0.52 0.52 1.0" specular="0.1 0.1 0.1 1.0" 
-		    shininess="10"/>
-    </appearances>
+    <cameras initial="cam1" > 
+
+        <perspective id="cam1" near="0.1" far="1000" angle="60" pos="15 15 15" target="0 0.0 0" /> 
+
+    </cameras> 
+   
+    <lighting doublesided="true" local="true" enabled="true" ambient="1.0 1.0 1.0 1" > 
+	
+            <omni id="light1" enabled="true" 
+                location="3.75 7.3 3.75" 
+                ambient="0.1 0.03 0.03 0.03" 
+                diffuse="0.5 0.6 0.8 1" 
+                specular="0.2 0.2 0.3 1" 
+            /> 
+
+            <omni id="light2" enabled="true" 
+                location="11.25 7.3 3.75" 
+                ambient="0.1 0.03 0.03 0.03" 
+                diffuse="0.5 0.6 0.8 1" 
+                specular="0.2 0.2 0.3 1" 
+            /> 
+			
+			<omni id="light3" enabled="false" 
+                location="11.25 7.3 3.75" 
+                ambient="0.1 0.03 0.03 0.03" 
+                diffuse="0.5 0.6 0.8 1" 
+                specular="0.2 0.2 0.3 1" 
+            /> 
+			
+			<spot id="light4" enabled="false" 
+                location="2 2 4" 
+                ambient="0.1 0.2 0.3 0.5" 
+                diffuse="0.5 0.6 0.8 1" 
+                specular="0.2 0.2 0.3 1" 
+                angle="4" 
+                exponent="2" 
+                direction="5 0.2 1" 
+            /> 
+
+    </lighting> 
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>        
+	<texture id="wood_text" file="data/wood.jpg" />
+	<texture id="wood_wall" file="data/wood_wall.jpg" />
+	<texture id="floor" file="data/ceiling1.jpg" />
+    </textures> 
+
+    <appearances> 
+
+        <appearance id="tableApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0" 
+            specular="0 0 0 0" 
+            shininess="10" 
+            textureref="wood_text" 
+            texlength_s="0.5" 
+            texlength_t="0.5" />
+			
+		<appearance id="app_wall" 
+            emissive="0 0 0 1" 
+	    ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0" 
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="wood_wall" 
+            texlength_s="1" 
+            texlength_t="1" />
+		
+		<appearance id="rightWallApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0" 
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="rightWallTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+		
+		<appearance id="app_floor" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="floor" 
+            texlength_s="1" 
+            texlength_t="1" />
+		
+		<appearance id="crimeWeaponApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="crimeWeaponTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+			
+		<appearance id="tapeApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="tapeTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+			
+		<appearance id="tapeSupportApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="tapeSupportTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+		
+		<appearance id="pineApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="pineTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+			
+		<appearance id="vaseApp" 
+            emissive="0.5 0.5 0.5 1" 
+            ambient="0.1 0.03 0.03 0.03" 
+            diffuse="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="vaseTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+			
+    </appearances> 
     
     <graph rootid="root">
 	<node id="root">
 	    <transforms>
-		<noderef id="walls" />
-		<noderef id="objects" />
+		
 	    </transforms>
 	    <children>
 		<noderef id="floor" />
-		<noderef id="unit_cube" />
+		<noderef id="walls" />
+		<noderef id="objects" />
 	    </children>
 	</node>
 	<node id="floor">
@@ -244,6 +303,7 @@
 	    <transforms>
 		<translate to="0.0 0.0 16.0"/>
 	    </transforms>
+	    
 	    <children>
 		<noderef id="dinner_table"/>
 	    </children>
@@ -402,6 +462,7 @@
 	<node id="dinner_table">
 	    <transforms>
 	    </transforms>
+	    <appearanceref id="tableApp" /> 
 	    <children>
 		<noderef id="dinner_table_top"/>
 		<noderef id="dinner_table_leg1"/>

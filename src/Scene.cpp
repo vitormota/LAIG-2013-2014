@@ -8,7 +8,7 @@
 void Scene::init() {
 
     // Uncomment below to enable normalization of lighting normal vectors
-    //glEnable(GL_NORMALIZE);
+    glEnable(GL_NORMALIZE);
 
     /* ------- Initialization of variables ------- */
 
@@ -74,8 +74,8 @@ void Scene::init() {
     }
 
     // ambient attribute
-	// Define ambient light (do not confuse with ambient component of individual lights)
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, this->ambient);
+    // Define ambient light (do not confuse with ambient component of individual lights)
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, this->ambient);
 
     // --- lighting attributes ------------------------------ END
 
@@ -84,62 +84,47 @@ void Scene::init() {
     map<string, Lighting*>::const_iterator itL = lightingMap.begin();
 
     GLenum light_id = GL_LIGHT0;
-    
+
     unsigned int lightCount = 0;
 
     for (itL = lightingMap.begin(); itL != lightingMap.end(); itL++) {
-        
-        // OpenGL allows a maximum of 8 light sources in a scene at once
-        if(lightCount == 0)
-        {
-            light_id = GL_LIGHT0;
-        }
-        else
-            if(lightCount == 1)
-            {
-                light_id = GL_LIGHT1;
-            }
-            else
-                if(lightCount == 2)
-                {
-                    light_id = GL_LIGHT2;
-                }
-                else
-                    if(lightCount == 3)
-                    {
-                        light_id = GL_LIGHT3;
-                    }
-                    else
-                        if(lightCount == 4)
-                        {
-                            light_id = GL_LIGHT4;
-                        }
-                        else
-                            if(lightCount == 5)
-                            {
-                                light_id = GL_LIGHT5;
-                            }
-                            else
-                                if(lightCount == 6)
-                                {
-                                    light_id = GL_LIGHT6;
-                                }
-                                else
-                                    if(lightCount == 7)
-                                    {
-                                        light_id = GL_LIGHT7;
-                                    }
-                                        
+
+	// OpenGL allows a maximum of 8 light sources in a scene at once
+	if (lightCount == 0) {
+	    light_id = GL_LIGHT0;
+	} else
+	    if (lightCount == 1) {
+	    light_id = GL_LIGHT1;
+	} else
+	    if (lightCount == 2) {
+	    light_id = GL_LIGHT2;
+	} else
+	    if (lightCount == 3) {
+	    light_id = GL_LIGHT3;
+	} else
+	    if (lightCount == 4) {
+	    light_id = GL_LIGHT4;
+	} else
+	    if (lightCount == 5) {
+	    light_id = GL_LIGHT5;
+	} else
+	    if (lightCount == 6) {
+	    light_id = GL_LIGHT6;
+	} else
+	    if (lightCount == 7) {
+	    light_id = GL_LIGHT7;
+	}
+
 	Lighting* light = (itL)->second;
-        
-    // light values
-    glLightfv(light_id, GL_POSITION, light->getLocation()); // position
-    glLightfv(light_id, GL_AMBIENT, light->getAmbient()); // ambient
-    glLightfv(light_id, GL_DIFFUSE, light->getDiffuse()); // diffuse
-    glLightfv(light_id, GL_SPECULAR, light->getSpecular()); // specular
+
+	// light values
+	glLightfv(light_id, GL_POSITION, light->getLocation()); // position
+	glLightfv(light_id, GL_AMBIENT, light->getAmbient()); // ambient
+	glLightfv(light_id, GL_DIFFUSE, light->getDiffuse()); // diffuse
+	glLightfv(light_id, GL_SPECULAR, light->getSpecular()); // specular
 
 	if (light->getType() == "spot") {
-        glLightf(light_id, GL_SPOT_CUTOFF, light->getAngle()); // angle
+	    glLightf(light_id, GL_SPOT_CUTOFF, light->getAngle()); // angle
 	    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection()); // direction
 	    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent()); // exponent
 	}
@@ -155,52 +140,52 @@ void Scene::init() {
     }
 
     // create and save CGFappearances
-    
+
     map<string, Appearance*>::const_iterator itA = appearancesMap.begin();
-    
+
     CGFappearance* newAppearance;
-    
+
     for (itA = appearancesMap.begin(); itA != appearancesMap.end(); itA++) {
-        Appearance* appearance = (itA)->second;
-        newAppearance = new CGFappearance(appearance->getAmbient(), appearance->getDiffuse(), appearance->getSpecular(), appearance->getShininess());
-        
-        // emissive attribute of the CGFappearance
-        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, appearance->getEmissive());
-        
-        // TODO : texlength_s and texlength_t
-        
-        // find the texture with the textureref
-        string textureref = appearance->getTextureref();
-        
-        if (!textureref.empty()) // check if there is a textureref to apply
-        {
-            Texture* textureFound = new Texture();
-            map<string, Texture*>::const_iterator itTex = texturesMap.find(textureref);
-            
-            if (itTex == texturesMap.end()) {
-                // texture not found
-                cout << "Texture with the textureref '" << textureref << "' not found" << endl;
-                
-            } else {
-                // texture found
-                textureFound = itTex->second;
-                
-                // sets texture's wrap
-                newAppearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
-                
-                // set texture to appearance
-                newAppearance->setTexture(textureFound->getFile());
-                
-            }
-        }
-        
-        // save CGFappearance
-        appearances.insert(std::pair<string, CGFappearance*>(appearance->getId(), newAppearance));
-        
+	Appearance* appearance = (itA)->second;
+	newAppearance = new CGFappearance(appearance->getAmbient(), appearance->getDiffuse(), appearance->getSpecular(), appearance->getShininess());
+
+	// emissive attribute of the CGFappearance
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, appearance->getEmissive());
+
+	// TODO : texlength_s and texlength_t
+
+	// find the texture with the textureref
+	string textureref = appearance->getTextureref();
+
+	if (!textureref.empty()) // check if there is a textureref to apply
+	{
+	    Texture* textureFound = new Texture();
+	    map<string, Texture*>::const_iterator itTex = texturesMap.find(textureref);
+
+	    if (itTex == texturesMap.end()) {
+		// texture not found
+		cout << "Texture with the textureref '" << textureref << "' not found" << endl;
+
+	    } else {
+		// texture found
+		textureFound = itTex->second;
+
+		// sets texture's wrap
+		newAppearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
+
+		// set texture to appearance
+		newAppearance->setTexture(textureFound->getFile());
+
+	    }
+	}
+
+	// save CGFappearance
+	appearances.insert(std::pair<string, CGFappearance*>(appearance->getId(), newAppearance));
+
     }
-    
-    
-    
+
+
+
     /* TESTING WHITOUT CGFappearances
     // create and save CGFappearances
 
@@ -231,7 +216,7 @@ void Scene::init() {
 		textureFound = itTex->second;
 
 		// sets texture's wrap
-        appearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
+	appearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
 
 		// set texture to appearance
 		appearance->setTexture(textureFound->getFile());
@@ -245,17 +230,17 @@ void Scene::init() {
     }*/
 
 
-//    float amb[3] = {0.0, 0.05, 0.05};
-//    float dif[3] = {0.4, 0.5, 0.5};
-//    float spec[3] = {0.01, 0.1, 0.1};
-//    float shininess = 100.f;
-//    mat_wall = new CGFappearance(amb, dif, spec, shininess);
-//
-//    float light2_pos[4] = {5, 5, 5, 1.0};
-//    light2 = new CGFlight(GL_LIGHT1, light2_pos);
-//    float ambNull[4] = {0, 0, 0, 1};
-//    light2->setAmbient(ambNull);
-//    light2->enable();
+    //    float amb[3] = {0.0, 0.05, 0.05};
+    //    float dif[3] = {0.4, 0.5, 0.5};
+    //    float spec[3] = {0.01, 0.1, 0.1};
+    //    float shininess = 100.f;
+    //    mat_wall = new CGFappearance(amb, dif, spec, shininess);
+    //
+    //    float light2_pos[4] = {5, 5, 5, 1.0};
+    //    light2 = new CGFlight(GL_LIGHT1, light2_pos);
+    //    float ambNull[4] = {0, 0, 0, 1};
+    //    light2->setAmbient(ambNull);
+    //    light2->enable();
 
     // ------- Initialization of variables ------- END
 
@@ -332,8 +317,8 @@ void Scene::processNode(string id) {
 	if (appearancesMap.find(appearanceref) != appearancesMap.end()) // check if there is a appearanceref to apply
 	{
 	    // apply appearance
-        //glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[appearanceref]->getEmissive()); // emissive
-        appearances[appearanceref]->apply();
+	    //glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[appearanceref]->getEmissive()); // emissive
+	    appearances[appearanceref]->apply();
 	    //appearancesMap[appearanceref]->apply(); TESTING WHITOUT CGFappearance
 	}
 
