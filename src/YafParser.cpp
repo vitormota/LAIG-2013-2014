@@ -166,9 +166,9 @@ namespace Parser {
 	    return false;
 	}
 
-	TiXmlElement *perspectiveElement = camerasElement->FirstChildElement();
+	TiXmlElement *cameraElement = camerasElement->FirstChildElement();
 
-	if (perspectiveElement == NULL) {
+	if (cameraElement == NULL) {
 	    cout << element_not_found <<
 		    node_names[PERSPECTIVE] <<
 		    "," <<
@@ -185,28 +185,28 @@ namespace Parser {
 
 	// perspective element
 
-	bool error = true;
+    bool error = true;
 	char *id;
+    scene::Camera* newCamera;
 
-	float near_ = 0, far_ = 0, angle = 0, pos[3], target[3], left = 0, right = 0, top = 0, bottom = 0;
+	//TiXmlNode *x = camerasElement->FirstChild("perspective");
 
-	TiXmlNode *x = camerasElement->FirstChild("perspective");
-	char *name = (char*) x->ToElement()->Value();
+	while (cameraElement) {
+        
+        float near = 0, far = 0, angle = 0, pos[3], target[3], left = 0, right = 0, top = 0, bottom = 0;
 
-	while (perspectiveElement) {
-
-	    id = (char*) perspectiveElement->Attribute("id");
-	    int number = perspectiveElement->QueryFloatAttribute("angle", &angle);
+	    id = (char*) cameraElement->Attribute("id");
+	    //int number = perspectiveElement->QueryFloatAttribute("angle", &angle);
 	    //BUG ---->   if((char*) perspectiveElement->ToText() == node_names[PERSPECTIVE]){ ??
 	    //if (strcmp(perspectiveElement->Value(), node_names[PERSPECTIVE]) == 0) {
-	    if (perspectiveElement->QueryFloatAttribute("angle", &angle) == TIXML_SUCCESS) {
+	    if (cameraElement->QueryFloatAttribute("angle", &angle) == TIXML_SUCCESS) {
 		//perspective found
 		if (!id ||
-			perspectiveElement->QueryFloatAttribute("near", &near_) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("far", &far_) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("angle", &angle) != TIXML_SUCCESS ||
-			StringParsing::FloatReader(perspectiveElement->Attribute("pos"), pos) != 3 ||
-			StringParsing::FloatReader(perspectiveElement->Attribute("target"), target) != 3) {
+			cameraElement->QueryFloatAttribute("near", &near) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("far", &far) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("angle", &angle) != TIXML_SUCCESS ||
+			StringParsing::FloatReader(cameraElement->Attribute("pos"), pos) != 3 ||
+			StringParsing::FloatReader(cameraElement->Attribute("target"), target) != 3) {
 		    //bad perspective found
 		    cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), FAIL.\n";
 		} else {
@@ -214,17 +214,25 @@ namespace Parser {
 			    " id: " << id << ", OK." << endl;
 		    //pre-requesite, at least one so, flag off
 		    if (error) error = false;
+            
+            // save perpective camera
+            newCamera = new scene::Camera(id, "perspective", near, far);
+        
+            newCamera->setAngle(angle);
+            newCamera->setPos(pos);
+            newCamera->setTarget(target);
+            
 		}
 		//} else if (strcmp(perspectiveElement->Value(), node_names[ORTHO]) == 0) {
-	    } else if (perspectiveElement->QueryFloatAttribute("left", &left) == TIXML_SUCCESS) {
+	    } else if (cameraElement->QueryFloatAttribute("left", &left) == TIXML_SUCCESS) {
 		//ortho found
 		if (!id ||
-			perspectiveElement->QueryFloatAttribute("near", &near_) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("far", &far_) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("left", &left) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("right", &right) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("top", &top) != TIXML_SUCCESS ||
-			perspectiveElement->QueryFloatAttribute("bottom", &bottom) != TIXML_SUCCESS) {
+			cameraElement->QueryFloatAttribute("near", &near) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("far", &far) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("left", &left) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("right", &right) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("top", &top) != TIXML_SUCCESS ||
+			cameraElement->QueryFloatAttribute("bottom", &bottom) != TIXML_SUCCESS) {
 		    //bad ortho found
 		    cout << node_names[ORTHO] <<
 			    " id: " <<
@@ -238,10 +246,22 @@ namespace Parser {
 			    endl;
 		    //pre-requesite, at least one so, flag off
 		    if (error) error = false;
+            
+            // save ortho camera
+            newCamera = new scene::Camera(id, "ortho", near, far);
+            
+            newCamera->setLeft(left);
+            newCamera->setRight(right);
+            newCamera->setTop(top);
+            newCamera->setBottom(bottom);
 		}
 	    }
+        
+        // save camera
+        camerasMap.insert(std::pair<string, scene::Camera*>(newCamera->getId(), newCamera));
+        
 	    //next sibling camera
-	    perspectiveElement = perspectiveElement->NextSiblingElement();
+	    cameraElement = cameraElement->NextSiblingElement();
 	}
 	if (error)return false;
 	cout << endl;
@@ -1370,6 +1390,11 @@ namespace Parser {
 
     map<string, Lighting*> YafParser::getLights() {
 	return this->lightingMap;
+    }
+    
+    map<string,scene::Camera*> YafParser::getCameras()
+    {
+        return this->camerasMap;
     }
 }
 

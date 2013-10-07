@@ -138,7 +138,51 @@ void Scene::init() {
 	lightCount++;
 
     }
+    
+    /*
+    // create and save CGFcameras
+    
+    map<string, scene::Camera*>::const_iterator itC = camerasMap.begin();
+    
+    CGFcamera* newCamera;
+    float direction[3];
+    
+    GLenum camera_id;
+    
+    for (itC = camerasMap.begin(); itC != camerasMap.end(); itC++) {
+        	scene::Camera* camera = (itC)->second;
+        newCamera = new CGFcamera();
+        
+        newCamera->set
+        	newLight->setAmbient(light->getAmbient());
+        	newLight->setDiffuse(light->getDiffuse());
+        	newLight->setSpecular(light->getSpecular());
+        
+        	if (light->getType() == "spot") {
+            	    newLight->setAngle(light->getAngle());
+            	    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
+            	    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
+            	}
+           else{
+            for(unsigned int i = 0; i < 3; i++)
 
+            {
+                            direction[i] = 0;}
+               
+               glLightfv(light_id, GL_SPOT_DIRECTION, direction);
+                  }
+
+        
+        if (light->isEnabled()) {
+        }
+        
+        // save camera
+        cameras.push_back(newCamera);
+        camera_id++;
+        
+    }*/
+        
+    
     // create and save CGFappearances
 
     map<string, Appearance*>::const_iterator itA = appearancesMap.begin();
@@ -369,6 +413,12 @@ void Scene::setLights(map<string, Lighting*> lightingMap) {
     this->lightingMap.insert(lightingMap.begin(), lightingMap.end());
 }
 
+void Scene::setCameras(map<string,scene::Camera*> camerasMap)
+{
+    this->camerasMap = map<string, scene::Camera*>();
+    this->camerasMap.insert(camerasMap.begin(), camerasMap.end());
+}
+
 void Scene::setBackground(float* background) {
     memcpy(this->background, background, 4 * sizeof (float));
 }
@@ -405,6 +455,11 @@ void Scene::setAmbient(float* ambient) {
     memcpy(this->ambient, ambient, 4 * sizeof (float));
 }
 
+void Scene::setInitial(string initial)
+{
+    this->initial = initial;
+}
+
 map<string, Appearance*> Scene::getAppearances() {
     return this->appearancesMap;
 }
@@ -415,6 +470,11 @@ map<string, Texture*> Scene::getTextures() {
 
 map<string, Lighting*> Scene::getLights() {
     return this->lightingMap;
+}
+
+map<string,scene::Camera*> Scene::getCameras()
+{
+    return this->camerasMap;
 }
 
 Graph* Scene::getGraph() {
@@ -455,5 +515,10 @@ bool Scene::getEnabled() {
 
 float* Scene::getAmbient() {
     return this->ambient;
+}
+
+string Scene::getInitial()
+{
+    return this->initial;
 }
 

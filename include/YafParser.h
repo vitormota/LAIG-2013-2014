@@ -15,6 +15,7 @@
 #include "Graph.h"
 #include "Node.h"
 #include "Scene.h"
+#include "Camera.h"
 
 namespace Parser {
 
@@ -45,6 +46,7 @@ namespace Parser {
         map<string, Appearance*> getAppearances();
         map<string, Texture*> getTextures();
         map<string, Lighting*> getLights();
+        map<string,scene::Camera*> getCameras();
         
         /* globals */
         float background[4];
@@ -59,6 +61,10 @@ namespace Parser {
         bool enabled;
         float ambient[4];
         
+        /* cameras */
+        string initial; // id of the initial camera
+        
+        /* transforms matrix */
         float m[16];
 
     private:
@@ -82,9 +88,8 @@ namespace Parser {
     private:
     
         /* cameras */
-        string initial; // id of the initial camera?
-        //map<string, Camera*> camerasMap; // TODO : create Camera class (because it can be perspective or ortho)
-
+        map<string, scene::Camera*> camerasMap;
+        
         /* lighting */
         map<string, Lighting*> lightingMap;
 

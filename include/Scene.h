@@ -50,6 +50,7 @@
 #include "Lighting.h"
 #include "Texture.h"
 #include "Appearance.h"
+#include "Camera.h"
 
 using std::map;
 using std::string;
@@ -66,6 +67,7 @@ public:
     void setAppearances(map<string,Appearance*> appearancesMap);
     void setTextures(map<string,Texture*> texturesMap);
     void setLights(map<string,Lighting*> lightningMap);
+    void setCameras(map<string,scene::Camera*> camerasMap);
     void setBackground(float* background);
     void setDrawmode(string drawmode);
     void setShading(string shading);
@@ -77,10 +79,13 @@ public:
     void setEnabled(bool enabled);
     void setAmbient(float* ambient);
     
+    void setInitial(string initial);
+    
     Graph* getGraph();
     map<string,Appearance*> getAppearances();
     map<string,Texture*> getTextures();
     map<string,Lighting*> getLights();
+    map<string,scene::Camera*> getCameras();
     float* getBackground();
     string getDrawmode();
     string getShading();
@@ -92,30 +97,32 @@ public:
     bool getEnabled();
     float* getAmbient();
     
-    CGFappearance *mat_wall;
+    string getInitial();
     
+    CGFappearance *mat_wall;
     
     void processGraph(); // process all the nodes of the graph in order
     void processNode(string id);
 
     ~Scene();
 
-    //scene::Primitive* p;
-
     Graph* sceneGraph;
 
-    /* globals */
+    /* globals element attributes */
     float background[4];
     string drawmode;
     string shading;
     string cullface;
     string cullorder;
     
-    /* lightning */
+    /* lighting element attributes */
     bool doublesided;
     bool local;
     bool enabled;
     float ambient[4];
+    
+    /* cameras element attribute */
+    string initial;
     
     CGFlight *light2;
     
@@ -123,10 +130,12 @@ public:
     map<string,Appearance*> appearancesMap;
     map<string,Texture*> texturesMap;
     map<string,Lighting*> lightingMap;
+    map<string, scene::Camera*> camerasMap;
     
     map<string, CGFappearance*> appearances;
     vector<CGFlight*> lights;
     vector<CGFtexture*> textures;
+    vector<CGFcamera*> cameras;
     
 
 };

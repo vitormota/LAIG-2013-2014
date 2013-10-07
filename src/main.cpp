@@ -62,12 +62,14 @@ int main(int argc, char* argv[]) {
         map<string, Appearance*> appearancesMap = f->getAppearances();
         map<string, Texture*> texturesMap = f->getTextures();
         map<string, Lighting*> lightningMap = f->getLights();
+        map<string,scene::Camera*> camerasMap = f->getCameras();
         
         Scene* newScene = new Scene();
         newScene->setGraph(sceneGraph);
         newScene->setAppearances(appearancesMap);
         newScene->setTextures(texturesMap);
         newScene->setLights(lightningMap);
+        newScene->setCameras(camerasMap);
         newScene->setBackground(f->background);
         newScene->setDrawmode(f->drawmode);
         newScene->setShading(f->shading);
@@ -77,6 +79,7 @@ int main(int argc, char* argv[]) {
         newScene->setLocal(f->local);
         newScene->setEnabled(f->enabled);
         newScene->setAmbient(f->ambient);
+        newScene->setInitial(f->initial);
         
 		app.setScene(newScene);
 		app.setInterface(new CGFinterface());
