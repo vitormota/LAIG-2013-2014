@@ -8,11 +8,25 @@
 #ifndef APPEARANCE_H
 #define	APPEARANCE_H
 
-#if __unix
+/*#if __unix
 #include <CGF/CGFappearance.h>
 #elif __APPLE__
 #include "CGFappearance.h"
+#endif*/
+
+#ifdef __APPLE__
+#include <GLUT/GLUT.h>
+#else
+#include <GL/glut.h>
 #endif
+#ifdef __APPLE__
+#include <gl/glui.h>
+#else
+#include <GL/glui.h>
+#endif
+
+#include <string>
+using std::string;
 
 class Appearance {
     
@@ -52,6 +66,10 @@ public:
     void setShininess(float shininess);
     void setTexlength_s(float texlength_s);
     void setTexlength_t(float texlength_t);
+    
+    void apply();
+    void setTextureWrap(unsigned int sWrap, unsigned int tWrap);
+    void setTexture(string file);
 };
 
 

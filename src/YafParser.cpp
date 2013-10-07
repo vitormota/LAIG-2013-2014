@@ -380,7 +380,7 @@ namespace Parser {
 
 	    lightElement = lightElement->NextSiblingElement();
 	}
-
+        
 	cout << "Found " <<
 		count <<
 		" light(s)\n\n";

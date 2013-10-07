@@ -30,6 +30,7 @@
 #include <CGFapplication.h>
 #endif
 #include "Scene.h"
+#include "Appearance.h"
 
 using std::cout;
 using std::exception;
