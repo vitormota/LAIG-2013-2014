@@ -7,7 +7,7 @@
 #include "math.h"
 
 namespace scene {
-    
+
     Primitive::Primitive() {
 
     }
@@ -53,25 +53,24 @@ namespace scene {
 	this->x2 = x2;
 	this->y1 = y1;
 	this->y2 = y2;
-    this->verticesRectangle = new float*[4];
-    this->verticesRectangle[0] = new float[3];
-    this->verticesRectangle[1] = new float[3];
-    this->verticesRectangle[2] = new float[3];
-    this->verticesRectangle[3] = new float[3];
-    this->verticesRectangle[0][0] = x1;
-    this->verticesRectangle[0][1] = y1;
-    this->verticesRectangle[0][2] = 0;
-    this->verticesRectangle[1][0] = x2;
-    this->verticesRectangle[1][1] = y1;
-    this->verticesRectangle[1][2] = 0;
-    this->verticesRectangle[2][0] = x2;
-    this->verticesRectangle[2][1] = y2;
-    this->verticesRectangle[2][2] = 0;
-    this->verticesRectangle[3][0] = x1;
-    this->verticesRectangle[3][1] = y2;
-    this->verticesRectangle[3][2] = 0;
-        
-    this->normalRectangle = get_normal_newell(verticesRectangle,4);
+	vertices = new float*[4];
+	vertices[0] = new float[3];
+	vertices[1] = new float[3];
+	vertices[2] = new float[3];
+	vertices[3] = new float[3];
+	vertices[0][0] = x1;
+	vertices[0][1] = y1;
+	vertices[0][2] = 0;
+	vertices[1][0] = x2;
+	vertices[1][1] = y1;
+	vertices[1][2] = 0;
+	vertices[2][0] = x2;
+	vertices[2][1] = y2;
+	vertices[2][2] = 0;
+	vertices[3][0] = x1;
+	vertices[3][1] = y2;
+	vertices[3][2] = 0;
+	normal = get_normal_newell(vertices, 4);
 
     }
 
@@ -85,22 +84,22 @@ namespace scene {
 	this->z1 = z1;
 	this->z2 = z2;
 	this->z3 = z3;
-        
-    this->verticesTriangle = new float*[3];
-    this->verticesTriangle[0] = new float[3];
-    this->verticesTriangle[1] = new float[3];
-    this->verticesTriangle[2] = new float[3];
-        this->verticesTriangle[0][0] = x1;
-        this->verticesTriangle[0][1] = y1;
-        this->verticesTriangle[0][2] = z1;
-        this->verticesTriangle[1][0] = x2;
-        this->verticesTriangle[1][1] = y2;
-        this->verticesTriangle[1][2] = z2;
-        this->verticesTriangle[2][0] = x3;
-        this->verticesTriangle[2][1] = y3;
-        this->verticesTriangle[2][2] = z3;
-        
-    this->normalTriangle = get_normal_newell(verticesTriangle,3);
+
+	this->verticesTriangle = new float*[3];
+	this->verticesTriangle[0] = new float[3];
+	this->verticesTriangle[1] = new float[3];
+	this->verticesTriangle[2] = new float[3];
+	this->verticesTriangle[0][0] = x1;
+	this->verticesTriangle[0][1] = y1;
+	this->verticesTriangle[0][2] = z1;
+	this->verticesTriangle[1][0] = x2;
+	this->verticesTriangle[1][1] = y2;
+	this->verticesTriangle[1][2] = z2;
+	this->verticesTriangle[2][0] = x3;
+	this->verticesTriangle[2][1] = y3;
+	this->verticesTriangle[2][2] = z3;
+
+	this->normalTriangle = get_normal_newell(verticesTriangle, 3);
     }
 
     Cylinder::Cylinder(string id, float base, float top, float height, int slices, int stacks) : Primitive(id) {
@@ -139,11 +138,11 @@ namespace scene {
     }
 
     void Rectangle::draw() {
-    
-        glNormal3f(normalRectangle[0],normalRectangle[1],normalRectangle[2]);
-        //glNormal3f(0,0,1);
 
-	
+	glNormal3f(normal[0], normal[1], normal[2]);
+	//glNormal3f(0,0,1);
+
+
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(x1, y1, 0);
@@ -153,15 +152,15 @@ namespace scene {
 	glVertex3f(x2, y2, 0);
 	glTexCoord2f(0, 1 / getTexlength_t());
 	glVertex3f(x1, y2, 0);
-	
+
 	glEnd();
     }
 
     void Triangle::draw() {
 
-        glNormal3f(normalTriangle[0],normalTriangle[1],normalTriangle[2]);
-    
-        
+	glNormal3f(normalTriangle[0], normalTriangle[1], normalTriangle[2]);
+
+
 	glBegin(GL_TRIANGLES);
 
 	glTexCoord3d(x1, y1, z1);
@@ -215,7 +214,7 @@ namespace scene {
 
 	glPopMatrix();
 
-    // side of the cylinder
+	// side of the cylinder
 	gluCylinder(cylinderQuadric, base, top, height, slices, stacks);
 
 	// base of the cylinder
@@ -243,32 +242,32 @@ namespace scene {
     }
 
     float *Primitive::get_normal_newell(float **vertices, int size) {
-        	float *normal = (float*) malloc(sizeof(float)*3);
-        	float *vertex_act, *vertex_next;
-        	int count = 0;
-        	/*while(vertices[count]){
-             	cout << vertices[count][0] << "," << vertices[count][1] << "," << vertices[count][2] << endl;
-             	count++;
-             	} */
-        	for (int vert = 0; vert < size; ++vert) {
-            	    vertex_act = vertices[vert];
-            	    vertex_next = vertices[(vert + 1) % size];
-            	    /*
-                     	    Set Normal.x to Sum of Normal.x and (multiply (Current.y minus Next.y) by (Current.z plus Next.z))
-                     	    Set Normal.y to Sum of Normal.y and (multiply (Current.z minus Next.z) by (Current.x plus Next.x))
-                     	    Set Normal.z to Sum of Normal.z and (multiply (Current.x minus Next.x) by (Current.y plus Next.y))
-                     	     */
-            	    normal[0] = normal[0]+(vertex_act[1] - vertex_next[1])*(vertex_act[2] + vertex_next[2]);
-            	    normal[1] = normal[1]+(vertex_act[2] - vertex_next[2])*(vertex_act[0] + vertex_next[0]);
-            	    normal[2] = normal[2]+(vertex_act[0] - vertex_next[0])*(vertex_act[1] + vertex_next[1]);
-            
-            	    float tmp = (float) sqrt((normal[0] * normal[0]) + (normal[1] * normal[1]) + (normal[2] * normal[2]));
-            	    normal[0] /= tmp;
-            	    normal[1] /= tmp;
-            	    normal[2] /= tmp;
-            	}
-        	return normal;
-            }
+	float *normal = (float*) malloc(sizeof (float)*3);
+	float *vertex_act, *vertex_next;
+	int count = 0;
+	/*while(vertices[count]){
+	cout << vertices[count][0] << "," << vertices[count][1] << "," << vertices[count][2] << endl;
+	count++;
+	} */
+	for (int vert = 0; vert < size; ++vert) {
+	    vertex_act = vertices[vert];
+	    vertex_next = vertices[(vert + 1) % size];
+	    /*
+		    Set Normal.x to Sum of Normal.x and (multiply (Current.y minus Next.y) by (Current.z plus Next.z))
+		    Set Normal.y to Sum of Normal.y and (multiply (Current.z minus Next.z) by (Current.x plus Next.x))
+		    Set Normal.z to Sum of Normal.z and (multiply (Current.x minus Next.x) by (Current.y plus Next.y))
+	     */
+	    normal[0] = normal[0]+(vertex_act[1] - vertex_next[1])*(vertex_act[2] + vertex_next[2]);
+	    normal[1] = normal[1]+(vertex_act[2] - vertex_next[2])*(vertex_act[0] + vertex_next[0]);
+	    normal[2] = normal[2]+(vertex_act[0] - vertex_next[0])*(vertex_act[1] + vertex_next[1]);
+
+	    float tmp = (float) sqrt((normal[0] * normal[0]) + (normal[1] * normal[1]) + (normal[2] * normal[2]));
+	    normal[0] /= tmp;
+	    normal[1] /= tmp;
+	    normal[2] /= tmp;
+	}
+	return normal;
+    }
 
 
 }

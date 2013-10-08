@@ -6,7 +6,11 @@
 #ifndef Interface_H
 #define Interface_H
 
+#if __APPLE__
 #include "CGFinterface.h"
+#elif __unix
+#include <CGF/CGFinterface.h>
+#endif
 #include <string>
 #include <map>
 

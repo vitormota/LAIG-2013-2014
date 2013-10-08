@@ -52,6 +52,8 @@
 #include "Appearance.h"
 #include "Camera.h"
 
+#include <stack>
+
 using std::map;
 using std::string;
 
@@ -141,6 +143,8 @@ public:
     bool local;
     bool enabled;
     float ambient[4];
+    
+    stack<CGFappearance*> app_stack;
     
     /* cameras element attribute */
     string initial;

@@ -51,6 +51,8 @@ namespace scene{
 
 	private:
 		float x1, y1, x2, y2;
+		float **vertices;
+		float *normal;
 
 	public:
 		Rectangle(string id,float x1, float y1, float x2, float y2);
