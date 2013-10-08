@@ -7,6 +7,8 @@
 #include "math.h"
 
 namespace scene {
+    
+    float *get_normal_newell(float **vertices, int size);
 
     Primitive::Primitive() {
 
@@ -53,6 +55,15 @@ namespace scene {
 	this->x2 = x2;
 	this->y1 = y1;
 	this->y2 = y2;
+	vertices = new float*[4];
+	vertices[0] = new float[3];vertices[1] = new float[3];
+	vertices[2] = new float[3];vertices[3] = new float[3];
+	vertices[0][0] = x1;vertices[0][1] = y1;vertices[0][2] = 0;
+	vertices[1][0] = x2;vertices[1][1] = y1;vertices[1][2] = 0;
+	vertices[2][0] = x2;vertices[2][1] = y2;vertices[2][2] = 0;
+	vertices[3][0] = x1;vertices[3][1] = y2;vertices[3][2] = 0;
+	
+	
     }
 
     Triangle::Triangle(string id, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3) : Primitive(id) {
@@ -102,23 +113,21 @@ namespace scene {
 	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
     }
 
-    void Rectangle::draw() {
-	if (x1 < x2) {
-	    glNormal3f(0, 0, 1);
-	} else {
-	    glNormal3f(0, 0, -1);
-	}
-	
+    void Rectangle::draw() { 
+	float *n;
+	n = get_normal_newell(vertices,4);
+	glNormal3f(n[0],n[1],n[2]);
+	//glNormal3f(0,0,1);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(x1, y1, 0);
-	glTexCoord2f(1/getTexlength_s(),0);
+	glTexCoord2f(1 / getTexlength_s(), 0);
 	glVertex3f(x2, y1, 0);
-	glTexCoord2f(1/getTexlength_s(), 1/getTexlength_t());
+	glTexCoord2f(1 / getTexlength_s(), 1 / getTexlength_t());
 	glVertex3f(x2, y2, 0);
-	glTexCoord2f(0, 1/getTexlength_t());
+	glTexCoord2f(0, 1 / getTexlength_t());
 	glVertex3f(x1, y2, 0);
-	
+
 	glEnd();
     }
 
@@ -195,7 +204,7 @@ namespace scene {
     void Torus::draw() {
 	glPushMatrix();
 
-//	glEnable(GL_NORMALIZE);
+	//glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_GEN_S);
 	glEnable(GL_TEXTURE_GEN_T);
 
@@ -208,7 +217,33 @@ namespace scene {
 
     }
 
+    float *get_normal_newell(float **vertices, int size) {
+	float *normal = (float*) malloc(sizeof(float)*3);
+	float *vertex_act, *vertex_next;
+	int count = 0;
+	/*while(vertices[count]){
+	cout << vertices[count][0] << "," << vertices[count][1] << "," << vertices[count][2] << endl;
+	count++;
+	} */
+	for (int vert = 0; vert < size; ++vert) {
+	    vertex_act = vertices[vert];
+	    vertex_next = vertices[(vert + 1) % size];
+	    /*
+	    Set Normal.x to Sum of Normal.x and (multiply (Current.y minus Next.y) by (Current.z plus Next.z))
+	    Set Normal.y to Sum of Normal.y and (multiply (Current.z minus Next.z) by (Current.x plus Next.x))
+	    Set Normal.z to Sum of Normal.z and (multiply (Current.x minus Next.x) by (Current.y plus Next.y))
+	     */
+	    normal[0] = normal[0]+(vertex_act[1] - vertex_next[1])*(vertex_act[2] + vertex_next[2]);
+	    normal[1] = normal[1]+(vertex_act[2] - vertex_next[2])*(vertex_act[0] + vertex_next[0]);
+	    normal[2] = normal[2]+(vertex_act[0] - vertex_next[0])*(vertex_act[1] + vertex_next[1]);
 
+	    float tmp = (float) sqrt((normal[0] * normal[0]) + (normal[1] * normal[1]) + (normal[2] * normal[2]));
+	    normal[0] /= tmp;
+	    normal[1] /= tmp;
+	    normal[2] /= tmp;
+	}
+	return normal;
+    }
 
 }
 

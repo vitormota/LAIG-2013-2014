@@ -599,7 +599,6 @@ namespace Parser {
 	    // textureref attribute
 
 	    if (!textureref) {
-		error = true;
 		// invalid textureref
 		cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), FAIL.\n";
 
@@ -617,7 +616,7 @@ namespace Parser {
 	    //if (!texlength_sStr || (StringParsing::FloatReader(texlength_sStr, texlength_s)) != 1) {
 	    if (ret1 != TIXML_SUCCESS) {
 
-		error = true;
+
 		// invalid texlength_s
 		cout << node_names[APPEARANCE] << " texlength_s: " << " has invalid field(s), FAIL.\n";
 
@@ -632,7 +631,7 @@ namespace Parser {
 	    int ret2 = appearanceElement->QueryFloatAttribute("texlength_t", &texlength_t);
 	    //if (!texlength_tStr || (StringParsing::FloatReader(texlength_tStr, texlength_t)) != 1) {
 	    if (ret2 != TIXML_SUCCESS) {
-		error = true;
+
 		// invalid texlength_t
 		cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), FAIL.\n";
 
@@ -647,12 +646,18 @@ namespace Parser {
 	    appearanceElement = appearanceElement->NextSiblingElement();
 
 	    if (!error) {
-
+		Appearance * newAppearance;
 		// valid block
 		// create and save appearance
-		Appearance *newAppearance = new Appearance(id, emissive, ambientApp, diffuse,
-			specular, shininess, textureref,
-			texlength_s, texlength_t);
+		if (textureref) {
+		    newAppearance = new Appearance(id, emissive, ambientApp, diffuse,
+			    specular, shininess, textureref,
+			    texlength_s, texlength_t);
+		} else {
+		    newAppearance = new Appearance(id, emissive, ambientApp, diffuse,
+			    specular, shininess);
+		}
+
 
 		appearancesMap.insert(std::pair<string, Appearance*>(newAppearance->getId(), newAppearance));
 
@@ -979,7 +984,7 @@ namespace Parser {
 			cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", OK." << endl;
 
 		    }
-		   
+
 		    // create and save child/primitive
 		    scene::Primitive* newPrimitive = new scene::Rectangle(node_id, xy1[0], xy1[1], xy2[0], xy2[1]);
 

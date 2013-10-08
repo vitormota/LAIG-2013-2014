@@ -16,36 +16,36 @@
    
     <lighting doublesided="true" local="true" enabled="true" ambient="0 0 0 1.0" > 
 	
-	<omni id="light1" enabled="false" 
-		  location="5 7.5 5" 
-		  ambient="0.1 0.03 0.03 0.03" 
-		  diffuse="0.5 0.6 0.8 1" 
-		  specular="0.2 0.2 0.3 1" 
+	<omni id="light1" enabled="true" 
+	      location="5.0 5.0 5.0" 
+	      ambient="1.0 1.0 1.0 1.0" 
+	      diffuse="0 0 0 1" 
+	      specular="0 0 0 1" 
 	/> 
 
 	<omni id="light2" enabled="false" 
-		  location="11.25 7.3 3.75" 
-		  ambient="0.1 0.03 0.03 0.03" 
-		  diffuse="0.5 0.6 0.8 1" 
-		  specular="0.2 0.2 0.3 1" 
+	      location="11.25 7.3 3.75" 
+	      ambient="0.1 0.03 0.03 0.03" 
+	      diffuse="0.5 0.6 0.8 1" 
+	      specular="0.2 0.2 0.3 1" 
 	/> 
 			
 	<omni id="light3" enabled="false" 
-			      location="11.25 7.3 3.75" 
-			      ambient="0.1 0.03 0.03 0.03" 
-			      diffuse="0.5 0.6 0.8 1" 
-			      specular="0.2 0.2 0.3 1" 
+	      location="11.25 7.3 3.75" 
+	      ambient="0.1 0.03 0.03 0.03" 
+	      diffuse="0.5 0.6 0.8 1" 
+	      specular="0.2 0.2 0.3 1" 
 	/> 
 			
-	<spot id="light4" enabled="true" 
-			      location="5 7.5 5" 
-			      ambient="0.1 0.2 0.3 0.5" 
-			      diffuse="0.5 0.6 0.8 1" 
-			      specular="0.5 0.5 0.4 1" 
-			      angle="45" 
-			      exponent="2" 
-			      direction="5 0 5" 
-	/> 
+	<spot id="light4" enabled="false" 
+	      location="5 7.5 5" 
+	      ambient="0.1 0.2 0.3 0.5" 
+	      diffuse="0.55 0.65 0.85 1" 
+	      specular="0.7 0.7 0.7 1" 
+	      angle="45" 
+	      exponent="2" 
+	      direction="5 0 5" 
+	/>
 
     </lighting> 
 
@@ -60,93 +60,102 @@
 
 	<appearance id="app_wood" 
 		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.8 0.5 0.2 1.0" 
+		    diffuse="0.8 0.5 0.2 1.0" 
+		    specular="0.1 0.05 0.05 1.0" 
+		    shininess="28.0" 
+		    textureref="wood_text" 
+		    texlength_s="1.0" 
+		    texlength_t="1.0" />
+			
+	<appearance id="app_wall" 
+		    emissive="0 0 0 1" 
 		    ambient="0.1 0.03 0.03 0.03" 
 		    diffuse="0.8 0.8 0.8 1.0" 
 		    specular="0 0 0 0" 
-		    shininess="10" 
-		    textureref="wood_text" 
+		    shininess="0" 
+		    textureref="wood_wall" 
 		    texlength_s="0.5" 
-		    texlength_t="0.5" />
-			
-	<appearance id="app_wall" 
-			    emissive="0 0 0 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0" 
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="wood_wall" 
-			    texlength_s="0.5" 
-			    texlength_t="1.0" />
-		
-	<appearance id="rightWallApp" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0" 
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="rightWallTex" 
-			    texlength_s="1" 
-			    texlength_t="1" />
+		    texlength_t="1.0" />
+			    
+	<appearance id="app_default" 
+		    emissive="0.0 0.0 0.0 1" 
+		    ambient="0.0 0.0 0.0 1.0" 
+		    diffuse="0.55 0.55 0.55 1.0" 
+		    specular="0.7 0.7 0.7 1.0" 
+		    shininess="32.0" 
+	/>
+			    
+	<appearance id="app_brass" 
+		    emissive="0 0 0 1" 
+		    ambient="0.329412 0.223529 0.027451 1.0" 
+		    diffuse="0.780392 0.568627 0.113725 1.0" 
+		    specular="0.992157 0.941176 0.807843 1.0" 
+		    shininess="27.8974"  />
+		    
+	<appearance id="app_red" 
+		    emissive="0 0 0 1" 
+		    ambient="0.2 0 0 1.0" 
+		    diffuse="1.0 0 0 1.0" 
+		    specular="0 0 0 1.0" 
+		    shininess="27.8974"  />
 		
 	<appearance id="app_floor" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0"  
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="floor" 
-			    texlength_s="0.2" 
-			    texlength_t="0.2" />
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.1 0.03 0.03 0.03" 
+		    diffuse="0.8 0.8 0.8 1.0"  
+		    specular="0 0 0 0" 
+		    shininess="0" 
+		    textureref="floor" 
+		    texlength_s="0.1" 
+		    texlength_t="0.1" />
 		
-	<appearance id="crimeWeaponApp" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0"  
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="crimeWeaponTex" 
-			    texlength_s="1" 
-			    texlength_t="1" />
+	<appearance id="app_metal" 
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.19225 0.19225 0.19225 1.0" 
+		    diffuse="0.507054 0.507054 0.507054 1.0"  
+		    specular="0.508273 0.508273 0.508273 1.0" 
+		    shininess="51.4" />
 			
 	<appearance id="tapeApp" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0"  
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="tapeTex" 
-			    texlength_s="1" 
-			    texlength_t="1" />
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.1 0.03 0.03 0.03" 
+		    diffuse="0.8 0.8 0.8 1.0"  
+		    specular="0 0 0 0" 
+		    shininess="0" 
+		    textureref="tapeTex" 
+		    texlength_s="1" 
+		    texlength_t="1" />
 			
 	<appearance id="tapeSupportApp" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0"  
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="tapeSupportTex" 
-			    texlength_s="1" 
-			    texlength_t="1" />
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.1 0.03 0.03 0.03" 
+		    diffuse="0.8 0.8 0.8 1.0"  
+		    specular="0 0 0 0" 
+		    shininess="0" 
+		    textureref="tapeSupportTex" 
+		    texlength_s="1" 
+		    texlength_t="1" />
 		
 	<appearance id="pineApp" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0"  
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="pineTex" 
-			    texlength_s="1" 
-			    texlength_t="1" />
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.1 0.03 0.03 0.03" 
+		    diffuse="0.8 0.8 0.8 1.0"  
+		    specular="0 0 0 0" 
+		    shininess="0" 
+		    textureref="pineTex" 
+		    texlength_s="1" 
+		    texlength_t="1" />
 			
 	<appearance id="vaseApp" 
-			    emissive="0.5 0.5 0.5 1" 
-			    ambient="0.1 0.03 0.03 0.03" 
-			    diffuse="0.8 0.8 0.8 1.0"  
-			    specular="0 0 0 0" 
-			    shininess="0" 
-			    textureref="vaseTex" 
-			    texlength_s="1" 
-			    texlength_t="1" />
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.1 0.03 0.03 0.03" 
+		    diffuse="0.8 0.8 0.8 1.0"  
+		    specular="0 0 0 0" 
+		    shininess="0" 
+		    textureref="vaseTex" 
+		    texlength_s="1" 
+		    texlength_t="1" />
 			
     </appearances> 
     
@@ -155,10 +164,13 @@
 	    <transforms>
 		
 	    </transforms>
+	    <appearanceref id="app_default"/>
+<!-- 	    <appearanceref id="app_brass"/> -->
 	    <children>
 		<noderef id="floor" />
 		<noderef id="walls" />
 		<noderef id="objects" />
+<!-- 		<noderef id="unit_cube"/> -->
 	    </children>
 	</node>
 	<node id="floor">
@@ -595,6 +607,14 @@
 	    <children>
 		<noderef id="chair_back" />
 		<noderef id="chair_sit" />
+		<noderef id="chair_legs" />
+	    </children>
+	</node>
+	<node id="chair_legs">
+	    <transforms>
+	    </transforms>
+	    <appearanceref id="app_metal"/>
+	    <children>
 		<noderef id="chair_leg1" />
 		<noderef id="chair_leg2" />
 		<noderef id="chair_leg3" />
@@ -624,6 +644,7 @@
 		<scale factor="0.8 0.4 0.5"/>
 		<rotate axis="x" angle="-8"/>
 	    </transforms>
+	    <appearanceref is="app_red"/>
 	    <children>
 		<noderef id="chair_back_torus" />
 	    </children>

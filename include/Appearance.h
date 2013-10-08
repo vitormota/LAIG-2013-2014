@@ -47,6 +47,9 @@ public:
 	    float emissive[4], float ambient[4], float diffuse[4],
 	    float specular[4], float shininess, string textureref,
                float texlength_s, float texlength_t);
+    Appearance(string id,
+	    float emissive[4], float ambient[4], float diffuse[4],
+	    float specular[4], float shininess);
     ~Appearance();
     string getId();
     string getTextureref();

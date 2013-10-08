@@ -36,6 +36,7 @@ namespace scene {
 	float getTexlength_s();
 	float getTexlength_t();
 
+	float **vertices;
 	virtual void draw() {
 	}
 

@@ -52,6 +52,8 @@
 #include "Appearance.h"
 #include "Camera.h"
 
+#include <stack>
+
 using std::map;
 using std::string;
 
@@ -137,6 +139,8 @@ public:
     vector<CGFlight*> lights;
     vector<CGFtexture*> textures;
     vector<CGFcamera*> cameras;
+
+    stack<CGFappearance*> app_stack;
 
 
 };

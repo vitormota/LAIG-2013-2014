@@ -1,9 +1,14 @@
+
+#include "Appearance.h"
+
 //
 //  Scene.cpp
 //  LAIG - P1
 //
 
 #include "Scene.h"
+
+CGFlight *l;
 
 void Scene::init() {
 
@@ -19,11 +24,11 @@ void Scene::init() {
 
     // drawmode attribute
     if (this->drawmode == "fill") {
-	glPolygonMode(GL_FRONT, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     } else if (this->drawmode == "line") {
-	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     } else if (this->drawmode == "point") {
-	glPolygonMode(GL_FRONT, GL_POINT);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     }
 
     // shading attribute
@@ -137,6 +142,12 @@ void Scene::init() {
 
 	lightCount++;
 
+	//	l = new CGFlight(GL_LIGHT0,light->getLocation());
+	//	l->setAmbient(light->getAmbient());
+	//	l->setDiffuse(light->getDiffuse());
+	//	l->setSpecular(light->getSpecular());
+	//	l->enable();
+	//	break;
     }
 
     /*
@@ -200,7 +211,6 @@ void Scene::init() {
 
 	// find the texture with the textureref
 	string textureref = appearance->getTextureref();
-
 	if (!textureref.empty()) // check if there is a textureref to apply
 	{
 	    Texture* textureFound = new Texture();
@@ -226,10 +236,20 @@ void Scene::init() {
 	// save CGFappearance
 	appearances.insert(std::pair<string, CGFappearance*>(appearance->getId(), newAppearance));
 
+	GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+	GLfloat mat_shininess[] = {50.0};
+	GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glShadeModel(GL_SMOOTH);
+
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_DEPTH_TEST);
     }
-
-
-
     /* TESTING WHITOUT CGFappearances
     // create and save CGFappearances
 
@@ -344,7 +364,7 @@ void Scene::processGraph() {
 }
 
 void Scene::processNode(string id) {
-
+    bool pop = false;
     // IR BUSCAR NÓ DE ROOT/ACTUAL (com o id = id)
     Node* currentNode = sceneGraph->getNodeById(id);
 
@@ -360,9 +380,12 @@ void Scene::processNode(string id) {
 
 	if (appearancesMap.find(appearanceref) != appearancesMap.end()) // check if there is a appearanceref to apply
 	{
+	    //new appearance for the stack
+	    pop = true;
 	    // apply appearance
 	    //glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[appearanceref]->getEmissive()); // emissive
 	    appearances[appearanceref]->apply();
+	    app_stack.push(appearances[appearanceref]);
 	    txt_s = appearancesMap[appearanceref]->getTexlength_s();
 	    txt_t = appearancesMap[appearanceref]->getTexlength_t();
 	    //appearancesMap[appearanceref]->apply(); TESTING WHITOUT CGFappearance
@@ -394,6 +417,12 @@ void Scene::processNode(string id) {
 	    glPopMatrix();
 	}
 
+	//Reaching here means all children processed
+	//so we need previous appearance
+	if (pop && app_stack.size() > 1) {
+	    app_stack.pop();
+	    app_stack.top()->apply();
+	}
     }
 }
 
