@@ -3,8 +3,8 @@
 //  LAIG - P1
 //
 
-#ifndef _CAMERAS_H
-#define _CAMERAS_H
+#ifndef _CAMERA_H
+#define _CAMERA_H
 
 #include <string>
 #include <cstring>

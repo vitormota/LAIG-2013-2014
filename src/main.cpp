@@ -31,6 +31,7 @@
 #endif
 #include "Scene.h"
 #include "Appearance.h"
+#include "Interface.h"
 
 using std::cout;
 using std::exception;
@@ -82,7 +83,7 @@ int main(int argc, char* argv[]) {
         newScene->setInitial(f->initial);
         
 		app.setScene(newScene);
-		app.setInterface(new CGFinterface());
+		app.setInterface(new Interface());
 		
 		app.run();
 	}
