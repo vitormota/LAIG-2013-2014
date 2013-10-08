@@ -103,7 +103,7 @@ namespace scene {
     }
 
     void Rectangle::draw() {
-	if (abs(x1) < abs(x2)) {
+	if (x1 < x2) {
 	    glNormal3f(0, 0, 1);
 	} else {
 	    glNormal3f(0, 0, -1);
@@ -112,20 +112,17 @@ namespace scene {
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(x1, y1, 0);
-	glTexCoord2f(1, 0);
+	glTexCoord2f(1/getTexlength_s(),0);
 	glVertex3f(x2, y1, 0);
-	glTexCoord2f(1, 1);
+	glTexCoord2f(1/getTexlength_s(), 1/getTexlength_t());
 	glVertex3f(x2, y2, 0);
-	glTexCoord2f(0, 1);
+	glTexCoord2f(0, 1/getTexlength_t());
 	glVertex3f(x1, y2, 0);
 	
 	glEnd();
     }
 
     void Triangle::draw() {
-	glPushMatrix();
-
-	//glEnable(GL_NORMALIZE);
 
 	glBegin(GL_TRIANGLES);
 
@@ -138,7 +135,6 @@ namespace scene {
 
 	glEnd();
 
-	glPopMatrix();
 
 	/*
 	// p1, p2, p3: triangle vertexes p2
@@ -181,10 +177,7 @@ namespace scene {
 	gluDisk(cylinderQuadric, 0, top, slices, stacks);
 
 	glPopMatrix();
-
-	glPushMatrix();
 	gluCylinder(cylinderQuadric, base, top, height, slices, stacks);
-	glPopMatrix();
 
 	// base of the cylinder
 	glPushMatrix();
@@ -202,7 +195,7 @@ namespace scene {
     void Torus::draw() {
 	glPushMatrix();
 
-	glEnable(GL_NORMALIZE);
+//	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_GEN_S);
 	glEnable(GL_TEXTURE_GEN_T);
 

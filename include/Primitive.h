@@ -17,89 +17,90 @@
 
 using std::string;
 
-namespace scene{
+namespace scene {
 
-	class Primitive
-	{
-	private:
-		string id;
-        float texlength_s;
-        float texlength_t;
+    class Primitive {
+    private:
+	string id;
+	float texlength_s;
+	float texlength_t;
 
-	public:
-        Primitive();
-		Primitive(string id);
-		~Primitive();
-		void setId(string id);
-        void setTexlength_s(float texlength_s);
-        void setTexlength_t(float texlength_t);
-		string getId();
-        float getTexlength_s();
-        float getTexlength_t();
-		virtual void draw(){}
+    public:
+	Primitive();
+	Primitive(string id);
+	~Primitive();
+	void setId(string id);
+	void setTexlength_s(float texlength_s);
+	void setTexlength_t(float texlength_t);
+	string getId();
+	float getTexlength_s();
+	float getTexlength_t();
 
-	};
+	virtual void draw() {
+	}
 
-	// RECTANGLE
-	class Rectangle: public Primitive{
+    };
 
-	private:
-		float x1, y1, x2, y2;
+    // RECTANGLE
 
-	public:
-		Rectangle(string id,float x1, float y1, float x2, float y2);
-		virtual void draw();
-	};
+    class Rectangle : public Primitive {
+    private:
+	float x1, y1, x2, y2;
 
-	// TRIANGLE
-	class Triangle: public Primitive{
+    public:
+	Rectangle(string id, float x1, float y1, float x2, float y2);
+	virtual void draw();
+    };
 
-	private:
-		float x1, y1, z1, x2, y2, z2, x3, y3, z3;
+    // TRIANGLE
 
-	public:
-		Triangle(string id, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
-		virtual void draw();
-	};
+    class Triangle : public Primitive {
+    private:
+	float x1, y1, z1, x2, y2, z2, x3, y3, z3;
 
-	// CYLINDER
-	class Cylinder: public Primitive{
+    public:
+	Triangle(string id, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
+	virtual void draw();
+    };
 
-	private:
-		float base, top, height;
-		int slices, stacks;
-		GLUquadric* cylinderQuadric;
+    // CYLINDER
 
-	public:
-		Cylinder(string id, float base, float top, float height, int slices, int stacks);
-        ~Cylinder();
-		virtual void draw();
-	};
+    class Cylinder : public Primitive {
+    private:
+	float base, top, height;
+	int slices, stacks;
+	GLUquadric* cylinderQuadric;
 
-	// SPHERE
-	class Sphere: public Primitive{
+    public:
+	Cylinder(string id, float base, float top, float height, int slices, int stacks);
+	~Cylinder();
+	virtual void draw();
+    };
 
-	private:
-		float radius;
-		int slices, stacks;
-        GLUquadric* sphereQuadric;
+    // SPHERE
 
-	public:
-		Sphere(string id, float radius, int slices, int stacks);
-		virtual void draw();
-	};
+    class Sphere : public Primitive {
+    private:
+	float radius;
+	int slices, stacks;
+	GLUquadric* sphereQuadric;
 
-	// TORUS
-	class Torus: public Primitive{
+    public:
+	Sphere(string id, float radius, int slices, int stacks);
+	virtual void draw();
+    };
 
-	private:
-		float inner, outer;
-		int slices, loops;
+    // TORUS
 
-	public:
-		Torus(string id, float inner, float outer, int slices, int loops);
-		virtual void draw();
-	};
+    class Torus : public Primitive {
+    private:
+	float inner, outer;
+	int slices, loops;
+
+    public:
+	Torus(string id, float inner, float outer, int slices, int loops);
+	virtual void draw();
+    };
 
 }
 

@@ -7,6 +7,7 @@
 #define _CAMERAS_H
 
 #include <string>
+#include <cstring>
 #if __APPLE__
 #include "CGFcamera.h"
 #elif __unix

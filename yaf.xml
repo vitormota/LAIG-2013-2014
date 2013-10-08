@@ -6,46 +6,46 @@
 
 <yaf>
     
-    <globals background="0 0 0 1" drawmode="fill" shading="gouraud" cullface="none" cullorder="CCW" /> 
+    <globals background="0 0 0 1" drawmode="fill" shading="gouraud" cullface="front" cullorder="CW" /> 
 
     <cameras initial="cam1" > 
 
-        <perspective id="cam1" near="0.1" far="1000" angle="60" pos="15 15 15" target="0 0.0 0" /> 
+	<perspective id="cam1" near="0.1" far="1000" angle="60" pos="15 15 15" target="0 0.0 0" /> 
 
     </cameras> 
    
-    <lighting doublesided="true" local="true" enabled="true" ambient="1.0 1.0 1.0 1" > 
+    <lighting doublesided="true" local="true" enabled="true" ambient="0 0 0 1.0" > 
 	
-            <omni id="light1" enabled="true" 
-                location="3.75 7.3 3.75" 
-                ambient="0.1 0.03 0.03 0.03" 
-                diffuse="0.5 0.6 0.8 1" 
-                specular="0.2 0.2 0.3 1" 
-            /> 
+	<omni id="light1" enabled="false" 
+		  location="5 7.5 5" 
+		  ambient="0.1 0.03 0.03 0.03" 
+		  diffuse="0.5 0.6 0.8 1" 
+		  specular="0.2 0.2 0.3 1" 
+	/> 
 
-            <omni id="light2" enabled="true" 
-                location="11.25 7.3 3.75" 
-                ambient="0.1 0.03 0.03 0.03" 
-                diffuse="0.5 0.6 0.8 1" 
-                specular="0.2 0.2 0.3 1" 
-            /> 
+	<omni id="light2" enabled="false" 
+		  location="11.25 7.3 3.75" 
+		  ambient="0.1 0.03 0.03 0.03" 
+		  diffuse="0.5 0.6 0.8 1" 
+		  specular="0.2 0.2 0.3 1" 
+	/> 
 			
-			<omni id="light3" enabled="false" 
-                location="11.25 7.3 3.75" 
-                ambient="0.1 0.03 0.03 0.03" 
-                diffuse="0.5 0.6 0.8 1" 
-                specular="0.2 0.2 0.3 1" 
-            /> 
+	<omni id="light3" enabled="false" 
+			      location="11.25 7.3 3.75" 
+			      ambient="0.1 0.03 0.03 0.03" 
+			      diffuse="0.5 0.6 0.8 1" 
+			      specular="0.2 0.2 0.3 1" 
+	/> 
 			
-			<spot id="light4" enabled="false" 
-                location="2 2 4" 
-                ambient="0.1 0.2 0.3 0.5" 
-                diffuse="0.5 0.6 0.8 1" 
-                specular="0.2 0.2 0.3 1" 
-                angle="4" 
-                exponent="2" 
-                direction="5 0.2 1" 
-            /> 
+	<spot id="light4" enabled="true" 
+			      location="5 7.5 5" 
+			      ambient="0.1 0.2 0.3 0.5" 
+			      diffuse="0.5 0.6 0.8 1" 
+			      specular="0.5 0.5 0.4 1" 
+			      angle="45" 
+			      exponent="2" 
+			      direction="5 0 5" 
+	/> 
 
     </lighting> 
 
@@ -53,100 +53,100 @@
     <textures>        
 	<texture id="wood_text" file="data/wood.jpg" />
 	<texture id="wood_wall" file="data/wood_wall.jpg" />
-	<texture id="floor" file="data/ceiling1.jpg" />
+	<texture id="floor" file="data/floor.jpg" />
     </textures> 
 
     <appearances> 
 
-        <appearance id="tableApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0" 
-            specular="0 0 0 0" 
-            shininess="10" 
-            textureref="wood_text" 
-            texlength_s="0.5" 
-            texlength_t="0.5" />
+	<appearance id="app_wood" 
+		    emissive="0.5 0.5 0.5 1" 
+		    ambient="0.1 0.03 0.03 0.03" 
+		    diffuse="0.8 0.8 0.8 1.0" 
+		    specular="0 0 0 0" 
+		    shininess="10" 
+		    textureref="wood_text" 
+		    texlength_s="0.5" 
+		    texlength_t="0.5" />
 			
-		<appearance id="app_wall" 
-            emissive="0 0 0 1" 
-	    ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0" 
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="wood_wall" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="app_wall" 
+			    emissive="0 0 0 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0" 
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="wood_wall" 
+			    texlength_s="0.5" 
+			    texlength_t="1.0" />
 		
-		<appearance id="rightWallApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0" 
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="rightWallTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="rightWallApp" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0" 
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="rightWallTex" 
+			    texlength_s="1" 
+			    texlength_t="1" />
 		
-		<appearance id="app_floor" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0"  
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="floor" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="app_floor" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0"  
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="floor" 
+			    texlength_s="0.2" 
+			    texlength_t="0.2" />
 		
-		<appearance id="crimeWeaponApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0"  
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="crimeWeaponTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="crimeWeaponApp" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0"  
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="crimeWeaponTex" 
+			    texlength_s="1" 
+			    texlength_t="1" />
 			
-		<appearance id="tapeApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0"  
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="tapeTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="tapeApp" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0"  
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="tapeTex" 
+			    texlength_s="1" 
+			    texlength_t="1" />
 			
-		<appearance id="tapeSupportApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0"  
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="tapeSupportTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="tapeSupportApp" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0"  
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="tapeSupportTex" 
+			    texlength_s="1" 
+			    texlength_t="1" />
 		
-		<appearance id="pineApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0"  
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="pineTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="pineApp" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0"  
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="pineTex" 
+			    texlength_s="1" 
+			    texlength_t="1" />
 			
-		<appearance id="vaseApp" 
-            emissive="0.5 0.5 0.5 1" 
-            ambient="0.1 0.03 0.03 0.03" 
-            diffuse="0.8 0.8 0.8 1.0"  
-            specular="0 0 0 0" 
-            shininess="0" 
-            textureref="vaseTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+	<appearance id="vaseApp" 
+			    emissive="0.5 0.5 0.5 1" 
+			    ambient="0.1 0.03 0.03 0.03" 
+			    diffuse="0.8 0.8 0.8 1.0"  
+			    specular="0 0 0 0" 
+			    shininess="0" 
+			    textureref="vaseTex" 
+			    texlength_s="1" 
+			    texlength_t="1" />
 			
     </appearances> 
     
@@ -462,7 +462,7 @@
 	<node id="dinner_table">
 	    <transforms>
 	    </transforms>
-	    <appearanceref id="tableApp" /> 
+	    <appearanceref id="app_wood" /> 
 	    <children>
 		<noderef id="dinner_table_top"/>
 		<noderef id="dinner_table_leg1"/>

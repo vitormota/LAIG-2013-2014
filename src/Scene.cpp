@@ -19,11 +19,11 @@ void Scene::init() {
 
     // drawmode attribute
     if (this->drawmode == "fill") {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT, GL_FILL);
     } else if (this->drawmode == "line") {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT, GL_LINE);
     } else if (this->drawmode == "point") {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	glPolygonMode(GL_FRONT, GL_POINT);
     }
 
     // shading attribute
@@ -138,7 +138,7 @@ void Scene::init() {
 	lightCount++;
 
     }
-    
+
     /*
     // create and save CGFcameras
     
@@ -150,39 +150,39 @@ void Scene::init() {
     GLenum camera_id;
     
     for (itC = camerasMap.begin(); itC != camerasMap.end(); itC++) {
-        	scene::Camera* camera = (itC)->second;
-        newCamera = new CGFcamera();
+		scene::Camera* camera = (itC)->second;
+	newCamera = new CGFcamera();
         
-        newCamera->set
-        	newLight->setAmbient(light->getAmbient());
-        	newLight->setDiffuse(light->getDiffuse());
-        	newLight->setSpecular(light->getSpecular());
+	newCamera->set
+		newLight->setAmbient(light->getAmbient());
+		newLight->setDiffuse(light->getDiffuse());
+		newLight->setSpecular(light->getSpecular());
         
-        	if (light->getType() == "spot") {
-            	    newLight->setAngle(light->getAngle());
-            	    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
-            	    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
-            	}
-           else{
-            for(unsigned int i = 0; i < 3; i++)
+		if (light->getType() == "spot") {
+		    newLight->setAngle(light->getAngle());
+		    glLightfv(light_id, GL_SPOT_DIRECTION, light->getDirection());
+		    glLightf(light_id, GL_SPOT_EXPONENT, light->getExponent());
+		}
+	   else{
+	    for(unsigned int i = 0; i < 3; i++)
 
-            {
-                            direction[i] = 0;}
+	    {
+			    direction[i] = 0;}
                
-               glLightfv(light_id, GL_SPOT_DIRECTION, direction);
-                  }
+	       glLightfv(light_id, GL_SPOT_DIRECTION, direction);
+		  }
 
         
-        if (light->isEnabled()) {
-        }
+	if (light->isEnabled()) {
+	}
         
-        // save camera
-        cameras.push_back(newCamera);
-        camera_id++;
+	// save camera
+	cameras.push_back(newCamera);
+	camera_id++;
         
     }*/
-        
-    
+
+
     // create and save CGFappearances
 
     map<string, Appearance*>::const_iterator itA = appearancesMap.begin();
@@ -215,7 +215,7 @@ void Scene::init() {
 		textureFound = itTex->second;
 
 		// sets texture's wrap
-		newAppearance->setTextureWrap(GL_CLAMP, GL_CLAMP);
+		newAppearance->setTextureWrap(GL_REPEAT, GL_REPEAT);
 
 		// set texture to appearance
 		newAppearance->setTexture(textureFound->getFile());
@@ -363,8 +363,11 @@ void Scene::processNode(string id) {
 	    // apply appearance
 	    //glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[appearanceref]->getEmissive()); // emissive
 	    appearances[appearanceref]->apply();
+	    txt_s = appearancesMap[appearanceref]->getTexlength_s();
+	    txt_t = appearancesMap[appearanceref]->getTexlength_t();
 	    //appearancesMap[appearanceref]->apply(); TESTING WHITOUT CGFappearance
 	}
+
 
 	// Draw all the primitives of the current node
 	vector<scene::Primitive*> primitives = currentNode->getPrimitives();
@@ -372,6 +375,10 @@ void Scene::processNode(string id) {
 	vector<scene::Primitive*>::const_iterator itP;
 
 	for (itP = primitives.begin(); itP != primitives.end(); itP++) {
+	    if (txt_t && txt_s) {
+		(*itP)->setTexlength_s(txt_s);
+		(*itP)->setTexlength_t(txt_t);
+	    }
 	    (*itP)->draw();
 	}
 
@@ -413,8 +420,7 @@ void Scene::setLights(map<string, Lighting*> lightingMap) {
     this->lightingMap.insert(lightingMap.begin(), lightingMap.end());
 }
 
-void Scene::setCameras(map<string,scene::Camera*> camerasMap)
-{
+void Scene::setCameras(map<string, scene::Camera*> camerasMap) {
     this->camerasMap = map<string, scene::Camera*>();
     this->camerasMap.insert(camerasMap.begin(), camerasMap.end());
 }
@@ -455,8 +461,7 @@ void Scene::setAmbient(float* ambient) {
     memcpy(this->ambient, ambient, 4 * sizeof (float));
 }
 
-void Scene::setInitial(string initial)
-{
+void Scene::setInitial(string initial) {
     this->initial = initial;
 }
 
@@ -472,8 +477,7 @@ map<string, Lighting*> Scene::getLights() {
     return this->lightingMap;
 }
 
-map<string,scene::Camera*> Scene::getCameras()
-{
+map<string, scene::Camera*> Scene::getCameras() {
     return this->camerasMap;
 }
 
@@ -517,8 +521,7 @@ float* Scene::getAmbient() {
     return this->ambient;
 }
 
-string Scene::getInitial()
-{
+string Scene::getInitial() {
     return this->initial;
 }
 

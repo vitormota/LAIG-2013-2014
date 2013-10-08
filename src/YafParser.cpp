@@ -185,15 +185,15 @@ namespace Parser {
 
 	// perspective element
 
-    bool error = true;
+	bool error = true;
 	char *id;
-    scene::Camera* newCamera;
+	scene::Camera* newCamera;
 
 	//TiXmlNode *x = camerasElement->FirstChild("perspective");
 
 	while (cameraElement) {
-        
-        float near = 0, far = 0, angle = 0, pos[3], target[3], left = 0, right = 0, top = 0, bottom = 0;
+
+	    float near = 0, far = 0, angle = 0, pos[3], target[3], left = 0, right = 0, top = 0, bottom = 0;
 
 	    id = (char*) cameraElement->Attribute("id");
 	    //int number = perspectiveElement->QueryFloatAttribute("angle", &angle);
@@ -214,14 +214,14 @@ namespace Parser {
 			    " id: " << id << ", OK." << endl;
 		    //pre-requesite, at least one so, flag off
 		    if (error) error = false;
-            
-            // save perpective camera
-            newCamera = new scene::Camera(id, "perspective", near, far);
-        
-            newCamera->setAngle(angle);
-            newCamera->setPos(pos);
-            newCamera->setTarget(target);
-            
+
+		    // save perpective camera
+		    newCamera = new scene::Camera(id, "perspective", near, far);
+
+		    newCamera->setAngle(angle);
+		    newCamera->setPos(pos);
+		    newCamera->setTarget(target);
+
 		}
 		//} else if (strcmp(perspectiveElement->Value(), node_names[ORTHO]) == 0) {
 	    } else if (cameraElement->QueryFloatAttribute("left", &left) == TIXML_SUCCESS) {
@@ -246,20 +246,20 @@ namespace Parser {
 			    endl;
 		    //pre-requesite, at least one so, flag off
 		    if (error) error = false;
-            
-            // save ortho camera
-            newCamera = new scene::Camera(id, "ortho", near, far);
-            
-            newCamera->setLeft(left);
-            newCamera->setRight(right);
-            newCamera->setTop(top);
-            newCamera->setBottom(bottom);
+
+		    // save ortho camera
+		    newCamera = new scene::Camera(id, "ortho", near, far);
+
+		    newCamera->setLeft(left);
+		    newCamera->setRight(right);
+		    newCamera->setTop(top);
+		    newCamera->setBottom(bottom);
 		}
 	    }
-        
-        // save camera
-        camerasMap.insert(std::pair<string, scene::Camera*>(newCamera->getId(), newCamera));
-        
+
+	    // save camera
+	    camerasMap.insert(std::pair<string, scene::Camera*>(newCamera->getId(), newCamera));
+
 	    //next sibling camera
 	    cameraElement = cameraElement->NextSiblingElement();
 	}
@@ -296,7 +296,7 @@ namespace Parser {
 	this->enabled = false;
 
 	float ambient[4];
-        
+
 	if (!strcmp(lightingElement->Attribute("doublesided"), "true")) {
 	    this->doublesided = true;
 	}
@@ -314,10 +314,9 @@ namespace Parser {
 	    cout << "Bad ambient attribute\n";
 	} else {
 	    //memcpy(this->ambient, ambient, 4*sizeof(float));
-        for(unsigned int i = 0; i < 4; i++)
-        {
-            this->ambient[i] = ambient[i];
-        }
+	    for (unsigned int i = 0; i < 4; i++) {
+		this->ambient[i] = ambient[i];
+	    }
 	}
 
 	// omni/spot lights
@@ -326,16 +325,15 @@ namespace Parser {
 	int count = 0;
 
 	while (lightElement) {
-        
-        char *id;
-        bool enabledLight = false;
-        float location[3], ambientLight[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
-        
-        for(unsigned int i = 0; i < 3; i++)
-        {
-            direction[i] = 0;
-        }
-        
+
+	    char *id;
+	    bool enabledLight = false;
+	    float location[3], ambientLight[4], diffuse[4], specular[4], angle = 0, exponent = 0, direction[3];
+
+	    for (unsigned int i = 0; i < 3; i++) {
+		direction[i] = 0;
+	    }
+
 	    bool error = false, spot = false;
 	    id = (char*) lightElement->Attribute("id");
 
@@ -378,8 +376,8 @@ namespace Parser {
 		//create omni light
 
 		newLighting = new Lighting("omni", id, enabledLight, location, ambientLight, diffuse, specular);
-            
-            newLighting->setDirection(direction);
+
+		newLighting->setDirection(direction);
 	    }
 
 	    if (!error) {
@@ -400,7 +398,7 @@ namespace Parser {
 
 	    lightElement = lightElement->NextSiblingElement();
 	}
-        
+
 	cout << "Found " <<
 		count <<
 		" light(s)\n\n";
@@ -651,7 +649,6 @@ namespace Parser {
 	    if (!error) {
 
 		// valid block
-
 		// create and save appearance
 		Appearance *newAppearance = new Appearance(id, emissive, ambientApp, diffuse,
 			specular, shininess, textureref,
@@ -982,7 +979,7 @@ namespace Parser {
 			cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", OK." << endl;
 
 		    }
-
+		   
 		    // create and save child/primitive
 		    scene::Primitive* newPrimitive = new scene::Rectangle(node_id, xy1[0], xy1[1], xy2[0], xy2[1]);
 
@@ -1391,10 +1388,9 @@ namespace Parser {
     map<string, Lighting*> YafParser::getLights() {
 	return this->lightingMap;
     }
-    
-    map<string,scene::Camera*> YafParser::getCameras()
-    {
-        return this->camerasMap;
+
+    map<string, scene::Camera*> YafParser::getCameras() {
+	return this->camerasMap;
     }
 }
 
