@@ -233,7 +233,7 @@ void Scene::init() {
 	newAppearance = new CGFappearance(appearance->getAmbient(), appearance->getDiffuse(), appearance->getSpecular(), appearance->getShininess());
 
 	// emissive attribute of the CGFappearance
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, appearance->getEmissive());
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, appearance->getEmissive());
 
 	// find the texture with the textureref
 	string textureref = appearance->getTextureref();
@@ -280,7 +280,7 @@ void Scene::init() {
 	id++;
     }
 
-    this->currentCameraId = this->initial;
+    this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
     this->cameraLeftAspect = 1.0;
     this->cameraRightAspect = 1.0;
 
@@ -313,7 +313,15 @@ void Scene::display() {
     // Apply transformations corresponding to the camera position relative to the origin
     CGFscene::activeCamera->applyView();
 
-    changeCamera(this->currentCameraId);
+    // change to the current camera
+    if(this->currentCameraId == "activeCGFcamera0")
+    {
+        CGFscene::activeCamera->applyView();
+    }
+    else
+    {
+        changeCamera(this->currentCameraId);
+    }
     
     
     /*activeCamera = new CGFcamera();

@@ -22,8 +22,6 @@ void Interface::processKeyboard(unsigned char key, int x, int y)
 	{
 		case 'c':
 		{
-			// change camera view
-			
 			break;
 		}
 	}
@@ -83,7 +81,9 @@ void Interface::initGUI()
     // Cameras
     GLUI_Panel *camerasPanel= addPanelToPanel(mainPanel, "Cameras", GLUI_PANEL_EMBOSSED);
      
-     GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
+    GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
+    
+    cameraListBox->add_item(0,"Predefined"); // predefined active camera
     
     map<string, scene::Camera*> cameras = ((Scene *) scene)->getCameras();
     map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
@@ -91,6 +91,7 @@ void Interface::initGUI()
     map<string, scene::Camera*>::const_iterator itC;
     scene::Camera* currentCamera;
     
+    // fixed cameras
     for (itC = cameras.begin(); itC != cameras.end(); itC++)
     {
         currentCamera = (itC)->second;
@@ -135,6 +136,9 @@ void Interface::processGUI(GLUI_Control *ctrl)
                 }
                 
             ((Scene *) scene)->setCurrentCameraId(cameraIDStr);
+            }
+            else {
+                ((Scene *) scene)->setCurrentCameraId("activeCGFcamera0");
             }
             break;
         };
