@@ -149,6 +149,12 @@ public:
     /* cameras element attribute */
     string initial;
     
+    string currentCameraId;
+    
+    void setCurrentCameraId(string currentCameraId);
+    
+    float cameraLeftAspect, cameraRightAspect;
+    
     float txt_s, txt_t; // texlength_s/texlength_t
     
     map<string,Texture*> texture_mapping;

@@ -115,59 +115,6 @@ void Interface::processGUI(GLUI_Control *ctrl)
     
 	switch (ctrl->user_id)
 	{
-		case 1:
-		{
-			break;
-		};
-            
-		case 2:
-		{
-			((Scene *) scene)->changeLightEnableDisable(0);
-			break;
-		};
-            
-        case 3:
-		{
-			((Scene *) scene)->changeLightEnableDisable(1);
-			break;
-		};
-            
-        case 4:
-		{
-			((Scene *) scene)->changeLightEnableDisable(2);
-			break;
-		};
-            
-        case 5:
-		{
-			((Scene *) scene)->changeLightEnableDisable(3);
-			break;
-		};
-            
-        case 6:
-		{
-			((Scene *) scene)->changeLightEnableDisable(4);
-			break;
-		};
-            
-        case 7:
-        {
-            ((Scene *) scene)->changeLightEnableDisable(5);
-            break;
-        };
-            
-        case 8:
-		{
-			((Scene *) scene)->changeLightEnableDisable(6);
-			break;
-		};
-            
-        case 9:
-        {
-            ((Scene *) scene)->changeLightEnableDisable(7);
-            break;
-        };
-            
         case 10:
         {
             if(cameraID > 0)
@@ -187,7 +134,7 @@ void Interface::processGUI(GLUI_Control *ctrl)
                     }
                 }
                 
-            ((Scene *) scene)->changeCamera(cameraIDStr);
+            ((Scene *) scene)->setCurrentCameraId(cameraIDStr);
             }
             break;
         };

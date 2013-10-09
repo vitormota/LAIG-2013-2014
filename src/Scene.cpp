@@ -175,6 +175,47 @@ void Scene::init() {
 	    glEnable(light_id);
 	} else {
 	    glDisable(light_id);
+        
+        // disabled the lights with enabled = false
+        if(light_id == GL_LIGHT0)
+        {
+            *this->light_0 = 0;
+        }
+        else
+            if(light_id == GL_LIGHT1)
+            {
+                *this->light_1 = 0;
+            }
+            else
+                if(light_id == GL_LIGHT2)
+                {
+                    *this->light_2 = 0;
+                }
+                else
+                    if(light_id == GL_LIGHT3)
+                    {
+                        *this->light_3 = 0;
+                    }
+                    else
+                        if(light_id == GL_LIGHT4)
+                        {
+                            *this->light_4 = 0;
+                        }
+                        else
+                            if(light_id == GL_LIGHT5)
+                            {
+                                *this->light_5 = 0;
+                            }
+                            else
+                                if(light_id == GL_LIGHT6)
+                                {
+                                    *this->light_6 = 0;
+                                }
+                                else
+                                    if(light_id == GL_LIGHT7)
+                                    {
+                                        *this->light_7 = 0;
+                                    }
 	}
 
 	lightCount++;
@@ -239,7 +280,9 @@ void Scene::init() {
 	id++;
     }
 
-
+    this->currentCameraId = this->initial;
+    this->cameraLeftAspect = 1.0;
+    this->cameraRightAspect = 1.0;
 
     //    float amb[3] = {0.0, 0.05, 0.05};
     //    float dif[3] = {0.4, 0.5, 0.5};
@@ -270,8 +313,30 @@ void Scene::display() {
     // Apply transformations corresponding to the camera position relative to the origin
     CGFscene::activeCamera->applyView();
 
-    changeCamera(this->initial);
-
+    changeCamera(this->currentCameraId);
+    
+    
+    /*activeCamera = new CGFcamera();
+    
+    scene::Camera* currentCamera = camerasMap[currentCameraId];
+    //activeCamera->moveTo(currentCamera->getAngle, currentCamera->get)
+    float far = currentCamera->getFar();
+    float near = currentCamera->getNear();
+    
+    activeCamera->updateProjectionMatrix(near, far);
+    
+    float* pos = currentCamera->getPos();
+    activeCamera->setX(pos[0]);
+    activeCamera->setX(pos[1]);
+    activeCamera->setX(pos[2]);
+    
+    float* target = currentCamera->getTarget();
+    
+    float left = currentCamera->getLeft();
+    float right = currentCamera->getRight();
+    float top = currentCamera->getTop();
+    float bottom = currentCamera->getBottom();*/
+    
     // Uncomment below to enable normalization of lighting normal vectors
     //glEnable(GL_NORMALIZE);
 
@@ -281,7 +346,57 @@ void Scene::display() {
     // ---- END Background, camera and axis setup
 
     // ---- BEGIN Primitive drawing section
-
+    
+    // enable/disable lights
+    if (light0Exists && (*this->light_0 == 1)){
+	    glEnable(GL_LIGHT0);
+	} else {
+	    glDisable(GL_LIGHT0);
+	}
+    
+    if (light1Exists && (*this->light_1 == 1)) {
+	    glEnable(GL_LIGHT1);
+	} else {
+	    glDisable(GL_LIGHT1);
+	}
+    
+    if (light2Exists && (*this->light_2 == 1)){
+	    glEnable(GL_LIGHT2);
+	} else {
+	    glDisable(GL_LIGHT2);
+	}
+    
+    if (light3Exists && (*this->light_3 == 1)) {
+	    glEnable(GL_LIGHT3);
+	} else {
+	    glDisable(GL_LIGHT3);
+	}
+    
+    if (light4Exists && (*this->light_4 == 1)) {
+	    glEnable(GL_LIGHT4);
+	} else {
+	    glDisable(GL_LIGHT4);
+	}
+    
+    if (light5Exists && (*this->light_5 == 1)) {
+	    glEnable(GL_LIGHT5);
+	} else {
+	    glDisable(GL_LIGHT5);
+	}
+    
+    if (light6Exists && (*this->light_6 == 1)) {
+	    glEnable(GL_LIGHT6);
+	} else {
+	    glDisable(GL_LIGHT6);
+	}
+    
+    if (light7Exists && (*this->light_7 == 1)) {
+	    glEnable(GL_LIGHT7);
+	} else {
+	    glDisable(GL_LIGHT7);
+	}
+    
+    
     processGraph();
 
     // ---- END Primitive drawing section
@@ -453,6 +568,11 @@ void Scene::setDrawingMode(unsigned int mode) {
     this->mode = mode;
 }
 
+void Scene::setCurrentCameraId(string currentCameraId)
+{
+    this->currentCameraId = currentCameraId;
+}
+
 map<string, Appearance*> Scene::getAppearances() {
     return this->appearancesMap;
 }
@@ -528,27 +648,30 @@ void Scene::changeCamera(string cameraId) {
 	scene::Camera* currentCamera = camerasMap[cameraId];
 
 	if (currentCamera->getType() == "perspective") {
-	    glMatrixMode(GL_PROJECTION);
-	    // Clear image and depth buffer everytime we update the scene
+        
+        glMatrixMode(GL_PROJECTION);
+        // Clear image and depth buffer everytime we update the scene
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	    glLoadIdentity();
 	    gluPerspective(currentCamera->getAngle(), 1.0, currentCamera->getNear(), currentCamera->getFar());
-
-
-	    // Specifies the aspect ratio that determines the field of view in the x direction. The aspect ratio is the ratio of x (width) to y (height).
-	    //if(to_x==from_x && to_z==from_z)
-	    //  gluLookAt(from_x,from_y,from_z,to_x,to_y,to_z,1,0,0);
-
+        glMatrixMode( GL_MODELVIEW );
+        // Clear image and depth buffer everytime we update the scene
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        
 	    float* pos = currentCamera->getPos();
 	    float* target = currentCamera->getTarget();
-	    gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 0.0, 1.0, 0.0);
-	    //else
-	    // gluLookAt(from_x,from_y,from_z,to_x,to_y,to_z,0,1,0);
-
-	    glMatrixMode(GL_MODELVIEW);
-	    // Clear image and depth buffer everytime we update the scene
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    glLoadIdentity();
+        
+        /*if((target[0] == pos[0]) && (target[2] == pos[2]))
+        {
+	    gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 1.0, 0.0, 0.0);
+        }
+        else
+        {
+            gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 0.0, 1.0, 0.0);
+        }*/
+        
+        gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 0.0, 1.0, 0.0);
 
 	} else
 	    if (currentCamera->getType() == "ortho") {
@@ -557,84 +680,15 @@ void Scene::changeCamera(string cameraId) {
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	    glLoadIdentity();
 
-	    glOrtho(currentCamera->getLeft(), currentCamera->getRight(), currentCamera->getBottom(), currentCamera->getTop(), currentCamera->getNear(), currentCamera->getFar());
-	    //glOrtho(left*xy_aspect,  right*xy_aspect,  bottom,  top,  near,  far);
+	    glOrtho(currentCamera->getLeft()*(this->cameraLeftAspect), currentCamera->getRight()*(this->cameraLeftAspect), currentCamera->getBottom(), currentCamera->getTop(), currentCamera->getNear(), currentCamera->getFar());
 
-	    glMatrixMode(GL_MODELVIEW);
-	    // Clear image and depth buffer everytime we update the scene
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    glLoadIdentity();
+            // Clear image and depth buffer everytime we update the scene
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            
+            // Initialize Model-View matrix as identity
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
 	}
-
+        
     }
-
-}
-
-void Scene::changeLightEnableDisable(unsigned int light_id) {
-    if (light_id == 0) // light_0
-    {
-	if (*this->light_0 == 1) {
-	    glEnable(GL_LIGHT0);
-	} else {
-	    glDisable(GL_LIGHT0);
-	}
-    } else
-	if (light_id == 1) // light_1
-    {
-	if (*this->light_1 == 1) {
-	    glEnable(GL_LIGHT1);
-	} else {
-	    glDisable(GL_LIGHT1);
-	}
-    } else
-	if (light_id == 1) // light_2
-    {
-	if (*this->light_2 == 1) {
-	    glEnable(GL_LIGHT2);
-	} else {
-	    glDisable(GL_LIGHT2);
-	}
-    } else
-	if (light_id == 1) // light_3
-    {
-	if (*this->light_3 == 1) {
-	    glEnable(GL_LIGHT3);
-	} else {
-	    glDisable(GL_LIGHT3);
-	}
-    } else
-	if (light_id == 1) // light_4
-    {
-	if (*this->light_4 == 1) {
-	    glEnable(GL_LIGHT4);
-	} else {
-	    glDisable(GL_LIGHT4);
-	}
-    } else
-	if (light_id == 1) // light_5
-    {
-	if (*this->light_5 == 1) {
-	    glEnable(GL_LIGHT5);
-	} else {
-	    glDisable(GL_LIGHT5);
-	}
-    } else
-	if (light_id == 1) // light_6
-    {
-	if (*this->light_6 == 1) {
-	    glEnable(GL_LIGHT6);
-	} else {
-	    glDisable(GL_LIGHT6);
-	    light_6 = 0;
-	}
-    } else
-	if (light_id == 1) // light_7
-    {
-	if (*this->light_7 == 1) {
-	    glEnable(GL_LIGHT7);
-	} else {
-	    glDisable(GL_LIGHT7);
-	}
-    }
-
 }

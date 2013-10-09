@@ -71,8 +71,10 @@ namespace scene {
 	vertices[3][1] = y2;
 	vertices[3][2] = 0;
 	normal = get_normal_newell(vertices, 4);
-	lenght = abs(x1-x2);
-	height = abs(x1-y2);
+        
+    length = abs(x1-x2);
+    height = abs(x1-y2);
+
     }
 
     Triangle::Triangle(string id, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3) : Primitive(id) {
@@ -142,12 +144,14 @@ namespace scene {
 
 	glNormal3f(normal[0], normal[1], normal[2]);
 	//glNormal3f(0,0,1);
+
+
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(x1, y1, 0);
-	glTexCoord2f(lenght/getTexlength_s(), 0);
+	glTexCoord2f(length/getTexlength_s(), 0);
 	glVertex3f(x2, y1, 0);
-	glTexCoord2f(lenght/getTexlength_s(), height/getTexlength_t());
+	glTexCoord2f(length/getTexlength_s(), height/getTexlength_t());
 	glVertex3f(x2, y2, 0);
 	glTexCoord2f(0, height/getTexlength_t());
 	glVertex3f(x1, y2, 0);
