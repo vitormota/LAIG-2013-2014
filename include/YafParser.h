@@ -47,6 +47,7 @@ namespace Parser {
         map<string, Texture*> getTextures();
         map<string, Lighting*> getLights();
         map<string,scene::Camera*> getCameras();
+        string getInitial();
         
         /* globals */
         float background[4];

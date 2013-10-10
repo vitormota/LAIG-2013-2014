@@ -182,6 +182,9 @@ namespace Parser {
             cout << "Initial camera not found, using first read."
 		    << endl;
         }
+        else{
+            this->initial = initialElementStr;
+        }
         
         // perspective element
         
@@ -598,11 +601,15 @@ namespace Parser {
                 
             }
             
-            // textureref attribute
+            // textureref attribute TODO: se não existir textura na appearance, textureref, texlength_s e texlength_s são opcionais
+            
+            bool noTexture = false;
             
             if (!textureref) {
                 // invalid textureref
-                cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), FAIL.\n";
+                //cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), FAIL.\n";
+                // TEXTURE DOESN't EXISTS
+                noTexture = true;
                 
             } else {
                 
@@ -612,6 +619,8 @@ namespace Parser {
             }
             
             
+            if(noTexture == false)
+            {
             // texlength_s attribute
             
             int ret1 = appearanceElement->QueryFloatAttribute("texlength_s", &texlength_s);
@@ -638,6 +647,8 @@ namespace Parser {
                 
                 // valid texlength_t
                 cout << node_names[APPEARANCE] << " texlength_t: " << texlength_tStr << ", OK." << endl;
+                
+            }
                 
             }
             
@@ -1399,6 +1410,11 @@ namespace Parser {
     map<string,scene::Camera*> YafParser::getCameras()
     {
         return this->camerasMap;
+    }
+    
+    string YafParser::getInitial()
+    {
+        return this->initial;
     }
 }
 

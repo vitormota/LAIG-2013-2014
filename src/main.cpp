@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
         map<string, Texture*> texturesMap = f->getTextures();
         map<string, Lighting*> lightningMap = f->getLights();
         map<string,scene::Camera*> camerasMap = f->getCameras();
+        string initial = f->getInitial();
         
         Scene* newScene = new Scene();
         newScene->setGraph(sceneGraph);
@@ -80,7 +81,7 @@ int main(int argc, char* argv[]) {
         newScene->setLocal(f->local);
         newScene->setEnabled(f->enabled);
         newScene->setAmbient(f->ambient);
-        newScene->setInitial(f->initial);
+        newScene->setInitial(initial);
         
 		app.setScene(newScene);
 		app.setInterface(new Interface());

@@ -280,7 +280,13 @@ void Scene::init() {
 	id++;
     }
 
+    if(this->initial == "")
+    {
+        this->currentCameraId = "activeCGFcamera0"; // the id of the default camera
+    }
+    else{
     this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
+    }
     this->cameraLeftAspect = 1.0;
     this->cameraRightAspect = 1.0;
 
@@ -311,7 +317,7 @@ void Scene::display() {
     glLoadIdentity();
 
     // Apply transformations corresponding to the camera position relative to the origin
-    CGFscene::activeCamera->applyView();
+    //CGFscene::activeCamera->applyView();
 
     // change to the current camera
     if(this->currentCameraId == "activeCGFcamera0")

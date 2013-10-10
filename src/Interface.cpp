@@ -83,7 +83,7 @@ void Interface::initGUI()
      
     GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
     
-    cameraListBox->add_item(0,"Predefined"); // predefined active camera
+    cameraListBox->add_item(0,"Default"); // default active camera
     
     map<string, scene::Camera*> cameras = ((Scene *) scene)->getCameras();
     map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
@@ -95,7 +95,13 @@ void Interface::initGUI()
     for (itC = cameras.begin(); itC != cameras.end(); itC++)
     {
         currentCamera = (itC)->second;
-        cameraListBox->add_item(camerasId[currentCamera->getId()], currentCamera->getId().c_str());
+        string currentCameraId = currentCamera->getId();
+        cameraListBox->add_item(camerasId[currentCamera->getId()], currentCameraId.c_str());
+        
+        if(currentCameraId == ((Scene *) scene)->getInitial())
+        {
+            this->cameraID = camerasId[currentCamera->getId()];
+        }
     }
     
     addColumnToPanel(mainPanel);
