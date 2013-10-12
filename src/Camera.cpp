@@ -163,11 +163,6 @@ Camera::~Camera()
             glLoadIdentity();
             gluPerspective(this->angle, this->aspect, this->near, this->far);
             
-            //glMatrixMode( GL_MODELVIEW );
-            // Clear image and depth buffer everytime we update the scene
-            //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            //glLoadIdentity();
-            
             float* pos = this->pos;
             float* target = this->target;
             
@@ -193,13 +188,13 @@ Camera::~Camera()
                 
                 glOrtho(this->left, this->right, this->bottom, this->top
                         , this->near, this->far);
-                
-                // Clear image and depth buffer everytime we update the scene
-                //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                
-                // Initialize Model-View matrix as identity
-                //glMatrixMode(GL_MODELVIEW);
-                //glLoadIdentity();
             }
+        
+        // Clear image and depth buffer everytime we update the scene
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        // Initialize Model-View matrix as identity
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
     }
