@@ -10,12 +10,9 @@
 #include "CGFinterface.h"
 #elif __unix
 #include <CGF/CGFinterface.h>
+#elif _WIN32
+#include "CGF\CGFinterface.h"
 #endif
-#include <string>
-#include <map>
-
-/*using std::string;
-using std::map;*/
 
 class Interface: public CGFinterface {
 public:
@@ -26,12 +23,12 @@ public:
     
     virtual void processKeyboard(unsigned char key, int x, int y);
 
+private:
     int cameraID;
     int viewID;
-    
-    //map<string, unsigned int> camerasId;
+   
 };
 
-
 #endif
+
 

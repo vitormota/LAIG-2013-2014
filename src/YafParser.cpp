@@ -190,7 +190,7 @@ namespace Parser {
         
         bool error = true;
         char *id;
-        scene::Camera* newCamera;
+        Camera* newCamera;
         
         //TiXmlNode *x = camerasElement->FirstChild("perspective");
         
@@ -219,7 +219,7 @@ namespace Parser {
                     if (error) error = false;
                     
                     // save perpective camera
-                    newCamera = new scene::Camera(id, "perspective", near, far);
+                    newCamera = new Camera(id, "perspective", near, far);
                     
                     newCamera->setAngle(angle);
                     newCamera->setPos(pos);
@@ -251,7 +251,7 @@ namespace Parser {
                     if (error) error = false;
                     
                     // save ortho camera
-                    newCamera = new scene::Camera(id, "ortho", near, far);
+                    newCamera = new Camera(id, "ortho", near, far);
                     
                     newCamera->setLeft(left);
                     newCamera->setRight(right);
@@ -261,7 +261,7 @@ namespace Parser {
             }
             
             // save camera
-            camerasMap.insert(std::pair<string, scene::Camera*>(newCamera->getId(), newCamera));
+            camerasMap.insert(std::pair<string, Camera*>(newCamera->getId(), newCamera));
             
             //next sibling camera
             cameraElement = cameraElement->NextSiblingElement();
@@ -478,7 +478,7 @@ namespace Parser {
         int count = 0; // number of appearance elements
         char *id, *textureref;
         float emissive[4];
-        float ambientApp[4];
+        float ambientApp[5];
         float diffuse[4];
         float specular[4];
         char *emissiveStr;
@@ -1407,7 +1407,7 @@ namespace Parser {
         return this->lightingMap;
     }
     
-    map<string,scene::Camera*> YafParser::getCameras()
+    map<string,Camera*> YafParser::getCameras()
     {
         return this->camerasMap;
     }

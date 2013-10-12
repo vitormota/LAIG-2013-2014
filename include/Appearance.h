@@ -14,6 +14,9 @@
 #include "CGFappearance.h"
 #endif*/
 
+
+
+#include <string>
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
@@ -25,8 +28,8 @@
 #include <GL/glui.h>
 #endif
 
-#include <string>
 using std::string;
+
 
 class Appearance {
     

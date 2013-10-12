@@ -13,6 +13,8 @@
 #include <CGF/CGFtexture.h>
 #elif __APPLE__
 #include "CGFtexture.h"
+#else
+#include "CGF\CGFtexture.h"
 #endif
 
 using namespace std;

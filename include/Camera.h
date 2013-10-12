@@ -13,14 +13,13 @@
 #elif __unix
 #include <CGF/CGFcamera.h>
 #elif _WIN32
-#include "CGFcamera.h"
+#include "CGF\CGFcamera.h"
 #endif
 
-namespace scene{
     
     using namespace std;
     
-    class Camera
+    class Camera: public CGFcamera
     {
     public:
         Camera();
@@ -41,6 +40,8 @@ namespace scene{
         void setTop(float top);
         void setBottom(float bottom);
         
+        void setAspect(float aspect);
+        
         string getId();
         float getNear();
         float getFar();
@@ -54,6 +55,9 @@ namespace scene{
         float getRight();
         float getTop();
         float getBottom();
+        
+        // override
+        virtual void updateProjectionMatrix(int width, int height);
         
     private:
         string id, type;
@@ -69,8 +73,8 @@ namespace scene{
         float right;
         float top;
         float bottom;
+        
+        float aspect;
     };
-    
-}//scene
 
 #endif

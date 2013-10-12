@@ -46,7 +46,7 @@ namespace Parser {
         map<string, Appearance*> getAppearances();
         map<string, Texture*> getTextures();
         map<string, Lighting*> getLights();
-        map<string,scene::Camera*> getCameras();
+        map<string,Camera*> getCameras();
         string getInitial();
         
         /* globals */
@@ -89,7 +89,7 @@ namespace Parser {
     private:
     
         /* cameras */
-        map<string, scene::Camera*> camerasMap;
+        map<string, Camera*> camerasMap;
         
         /* lighting */
         map<string, Lighting*> lightingMap;

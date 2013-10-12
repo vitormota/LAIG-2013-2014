@@ -14,6 +14,7 @@
 #else
 #include <GL/glut.h>
 #endif
+
 #ifdef __APPLE__
 #include <gl/glui.h>
 #else
@@ -63,7 +64,7 @@ int main(int argc, char* argv[]) {
         map<string, Appearance*> appearancesMap = f->getAppearances();
         map<string, Texture*> texturesMap = f->getTextures();
         map<string, Lighting*> lightningMap = f->getLights();
-        map<string,scene::Camera*> camerasMap = f->getCameras();
+        map<string,Camera*> camerasMap = f->getCameras();
         string initial = f->getInitial();
         
         Scene* newScene = new Scene();

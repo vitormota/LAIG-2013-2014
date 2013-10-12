@@ -7,7 +7,7 @@
 #elif __unix
 #include <CGF/CGFlight.h>
 #else
-#include <CGFlight.h>
+#include "CGF\CGFlight.h"
 #endif
 
 using namespace std;

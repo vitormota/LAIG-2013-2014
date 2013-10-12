@@ -3,24 +3,11 @@
 
 #include "Node.h"
 #include <map>
-#include <vector>
 #include <string>
 #include <iostream>
 
 using std::string;
-using std::vector;
 using std::map;
-
-	/*class Scene_graph{
-	public:
-		Scene_graph(string root);
-		~Scene_graph();
-		void process_object(string id);
-	private:
-		string root_id;
-		map<string,Node*> graph;
-
-	};*/
 
 class Graph
 {
@@ -39,9 +26,6 @@ class Graph
         Node* getNodeById(string id);
         map<string, Node*> getNodes();
     
-        
 };
-
-
 
 #endif

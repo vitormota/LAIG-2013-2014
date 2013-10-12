@@ -6,7 +6,7 @@
 #elif __unix
 #include <CGF/CGFobject.h>
 #elif _WIN32
-#include <CGFobject.h>
+#include "CGF\CGFobject.h"
 #endif
 
 #include "Primitive.h"

@@ -83,13 +83,13 @@ void Interface::initGUI()
      
     GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
     
-    cameraListBox->add_item(0,"Default"); // default active camera
+    //cameraListBox->add_item(0,"Default"); // default active camera
     
-    map<string, scene::Camera*> cameras = ((Scene *) scene)->getCameras();
+    map<string, Camera*> cameras = ((Scene *) scene)->getCameras();
     map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
     
-    map<string, scene::Camera*>::const_iterator itC;
-    scene::Camera* currentCamera;
+    map<string, Camera*>::const_iterator itC;
+    Camera* currentCamera;
     
     // fixed cameras
     for (itC = cameras.begin(); itC != cameras.end(); itC++)
@@ -143,9 +143,7 @@ void Interface::processGUI(GLUI_Control *ctrl)
                 
             ((Scene *) scene)->setCurrentCameraId(cameraIDStr);
             }
-            else {
-                ((Scene *) scene)->setCurrentCameraId("activeCGFcamera0");
-            }
+
             break;
         };
             

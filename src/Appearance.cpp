@@ -125,27 +125,3 @@ void Appearance::setTexlength_t(float texlength_t)
 {
     this->texlength_t = texlength_t;
 }
-
-/*void Appearance::apply()
-{
-    glDisable(GL_COLOR);
-    glDisable(GL_COLOR_MATERIAL);
-    
-    glMaterialfv(GL_FRONT, GL_AMBIENT, this->ambient); // ambient
-    glMaterialfv(GL_FRONT, GL_EMISSION, this->getEmissive()); // emissive
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, this->getDiffuse()); // diffuse
-    glMaterialfv(GL_FRONT, GL_SPECULAR, this->getSpecular()); // specular
-    glMaterialf(GL_FRONT, GL_SHININESS, this->getShininess()); // shininess
-}
-
-void Appearance::setTextureWrap(unsigned int sWrap, unsigned int tWrap)
-{
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, sWrap);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, tWrap);
-}
-
-void Appearance::setTexture(string file)
-{
-    //glEnable(GL_TEXTURE_2D);
-}*/
-

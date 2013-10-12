@@ -271,8 +271,8 @@ void Scene::init() {
 
     unsigned int id = 1;
 
-    map<string, scene::Camera*>::const_iterator itC;
-    scene::Camera* currentCamera;
+    map<string, Camera*>::const_iterator itC;
+    Camera* currentCamera;
 
     for (itC = camerasMap.begin(); itC != camerasMap.end(); itC++) {
 	currentCamera = (itC)->second;
@@ -282,13 +282,12 @@ void Scene::init() {
 
     if(this->initial == "")
     {
-        this->currentCameraId = "activeCGFcamera0"; // the id of the default camera
+        CGFscene::activeCamera->applyView();
+        //this->currentCameraId = "activeCGFcamera0"; // the id of the default camera
     }
     else{
     this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
     }
-    this->cameraLeftAspect = 1.0;
-    this->cameraRightAspect = 1.0;
 
     //    float amb[3] = {0.0, 0.05, 0.05};
     //    float dif[3] = {0.4, 0.5, 0.5};
@@ -320,36 +319,11 @@ void Scene::display() {
     //CGFscene::activeCamera->applyView();
 
     // change to the current camera
-    if(this->currentCameraId == "activeCGFcamera0")
-    {
-        CGFscene::activeCamera->applyView();
-    }
-    else
-    {
-        changeCamera(this->currentCameraId);
-    }
-    
-    
-    /*activeCamera = new CGFcamera();
-    
-    scene::Camera* currentCamera = camerasMap[currentCameraId];
-    //activeCamera->moveTo(currentCamera->getAngle, currentCamera->get)
-    float far = currentCamera->getFar();
-    float near = currentCamera->getNear();
-    
-    activeCamera->updateProjectionMatrix(near, far);
-    
-    float* pos = currentCamera->getPos();
-    activeCamera->setX(pos[0]);
-    activeCamera->setX(pos[1]);
-    activeCamera->setX(pos[2]);
-    
-    float* target = currentCamera->getTarget();
-    
-    float left = currentCamera->getLeft();
-    float right = currentCamera->getRight();
-    float top = currentCamera->getTop();
-    float bottom = currentCamera->getBottom();*/
+    changeCamera(this->currentCameraId);
+    //CGFscene::activeCamera->applyView();
+    //int WindowId = CGFscene::iface->glui_window->get_glut_window_id();
+
+    this->cameraAspect = CGFapplication::xy_aspect;
     
     // Uncomment below to enable normalization of lighting normal vectors
     //glEnable(GL_NORMALIZE);
@@ -528,8 +502,8 @@ void Scene::setLights(map<string, Lighting*> lightingMap) {
     this->lightingMap.insert(lightingMap.begin(), lightingMap.end());
 }
 
-void Scene::setCameras(map<string, scene::Camera*> camerasMap) {
-    this->camerasMap = map<string, scene::Camera*>();
+void Scene::setCameras(map<string, Camera*> camerasMap) {
+    this->camerasMap = map<string, Camera*>();
     this->camerasMap.insert(camerasMap.begin(), camerasMap.end());
 }
 
@@ -599,7 +573,7 @@ map<string, Lighting*> Scene::getLights() {
     return this->lightingMap;
 }
 
-map<string, scene::Camera*> Scene::getCameras() {
+map<string, Camera*> Scene::getCameras() {
     return this->camerasMap;
 }
 
@@ -659,50 +633,15 @@ void Scene::changeCamera(string cameraId) {
     if (camerasId.find(cameraId) != camerasId.end()) // check if the camera exists
     {
 
-	scene::Camera* currentCamera = camerasMap[cameraId];
-
-	if (currentCamera->getType() == "perspective") {
+        Camera* currentCamera = camerasMap[cameraId];
+        currentCamera->setAspect(this->cameraAspect);
         
-        glMatrixMode(GL_PROJECTION);
-        // Clear image and depth buffer everytime we update the scene
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    glLoadIdentity();
-	    gluPerspective(currentCamera->getAngle(), 1.0, currentCamera->getNear(), currentCamera->getFar());
-        glMatrixMode( GL_MODELVIEW );
-        // Clear image and depth buffer everytime we update the scene
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glLoadIdentity();
+        CGFcamera* currentCGFcamera = currentCamera;
+        currentCGFcamera->updateProjectionMatrix(1.0, 1.0);
         
-	    float* pos = currentCamera->getPos();
-	    float* target = currentCamera->getTarget();
-        
-        /*if((target[0] == pos[0]) && (target[2] == pos[2]))
-        {
-	    gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 1.0, 0.0, 0.0);
-        }
-        else
-        {
-            gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 0.0, 1.0, 0.0);
-        }*/
-        
-        gluLookAt(pos[0], pos[1], pos[2], target[0], target[1], target[2], 0.0, 1.0, 0.0);
-
-	} else
-	    if (currentCamera->getType() == "ortho") {
-	    glMatrixMode(GL_PROJECTION);
-	    // Clear image and depth buffer everytime we update the scene
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    glLoadIdentity();
-
-	    glOrtho(currentCamera->getLeft()*(this->cameraLeftAspect), currentCamera->getRight()*(this->cameraLeftAspect), currentCamera->getBottom(), currentCamera->getTop(), currentCamera->getNear(), currentCamera->getFar());
-
-            // Clear image and depth buffer everytime we update the scene
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            
-            // Initialize Model-View matrix as identity
-            glMatrixMode(GL_MODELVIEW);
-            glLoadIdentity();
-	}
-        
+        activeCamera = currentCamera;
+        CGFscene::activeCamera->applyView();
+		CGFapplication::activeApp->forceRefresh();
+	        
     }
 }

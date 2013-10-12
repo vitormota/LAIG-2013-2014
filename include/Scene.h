@@ -6,18 +6,6 @@
 #ifndef __LAIG___P1__Scene__
 #define __LAIG___P1__Scene__
 
-#include <string>
-#ifdef __APPLE__
-#include <GLUT/GLUT.h>
-#else
-#include <GL/glut.h>
-#endif
-#ifdef __APPLE__
-#include <gl/glui.h>
-#else
-#include <GL/glui.h>
-#endif
-
 #if __APPLE__
 #include "CGFscene.h"
 #include "CGFappearance.h"
@@ -25,6 +13,7 @@
 #include "CGFaxis.h"
 #include "CGFapplication.h"
 #include "CGFobject.h"
+#include "CGFcamera.h"
 #elif __unix
 #include "CGF/CGFscene.h"
 #include "CGF/CGFappearance.h"
@@ -33,12 +22,12 @@
 #include "CGF/CGFapplication.h"
 #include "CGF/CGFobject.h"
 #elif _WIN32
-#include "CGFscene.h"
-#include "CGFappearance.h"
-#include "CGFscene.h"
-#include "CGFaxis.h"
-#include "CGFapplication.h"
-#include "CGFobject.h"
+#include "CGF\CGFscene.h"
+#include "CGF\CGFappearance.h"
+#include "CGF\CGFscene.h"
+#include "CGF\CGFaxis.h"
+#include "CGF\CGFapplication.h"
+#include "CGF\CGFobject.h"
 #endif
 
 
@@ -53,12 +42,25 @@
 #include "Camera.h"
 
 #include <stack>
+#include <string>
+
+#ifdef __APPLE__
+#include <GLUT/GLUT.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#ifdef __APPLE__
+#include <gl/glui.h>
+#else
+#include <GL/glui.h>
+#endif
 
 using std::map;
 using std::string;
 
 
-class Scene : public CGFscene {
+class Scene: public CGFscene {
 private:
 
 public:
@@ -69,7 +71,7 @@ public:
     void setAppearances(map<string,Appearance*> appearancesMap);
     void setTextures(map<string,Texture*> texturesMap);
     void setLights(map<string,Lighting*> lightningMap);
-    void setCameras(map<string,scene::Camera*> camerasMap);
+    void setCameras(map<string,Camera*> camerasMap);
     void setCamerasId(map<string, unsigned int> camerasId);
     void setBackground(float* background);
     void setDrawmode(string drawmode);
@@ -88,7 +90,7 @@ public:
     map<string,Appearance*> getAppearances();
     map<string,Texture*> getTextures();
     map<string,Lighting*> getLights();
-    map<string,scene::Camera*> getCameras();
+    map<string,Camera*> getCameras();
     map<string, unsigned int> getCamerasId();
     float* getBackground();
     string getDrawmode();
@@ -153,7 +155,7 @@ public:
     
     void setCurrentCameraId(string currentCameraId);
     
-    float cameraLeftAspect, cameraRightAspect;
+    float cameraAspect; // aspect = GLUwindowWidth/GLUwindowHeight
     
     float txt_s, txt_t; // texlength_s/texlength_t
     
@@ -161,7 +163,7 @@ public:
     map<string,Appearance*> appearancesMap;
     map<string,Texture*> texturesMap;
     map<string,Lighting*> lightingMap;
-    map<string, scene::Camera*> camerasMap;
+    map<string,Camera*> camerasMap;
     map<string, unsigned int> camerasId; // camera attribute id and Interface id
     
     map<string, CGFappearance*> appearances;
