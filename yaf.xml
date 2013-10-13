@@ -156,7 +156,7 @@
         shininess="32.0" />
         
         <!-- Pearl Appearance -->
-        <appearance id="app_perl"
+        <appearance id="app_pearl"
         emissive="0.0 0.0 0.0 1.0"
         ambient=" 0.05375 0.05 0.06625 0.82"
         diffuse="0.18275 0.17 0.22525 0.82"
@@ -277,7 +277,6 @@
                 <noderef id="west_wall_supports" />
                 <noderef id="door_gutter_west_wall" />
             </children>
-            <appearanceref id="wood_text" />
         </node>
         <!-- Door Gutter -->
         <node id="door_gutter_west_wall">
