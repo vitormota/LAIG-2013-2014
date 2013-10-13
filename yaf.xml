@@ -8,7 +8,7 @@
     <globals background="0.1 0.1 0.1 0.1" drawmode="fill" shading="gouraud" cullface="back" cullorder="CCW" />
     <cameras initial="cam1" >
         
-        <perspective id="cam1" near="0.1" far="1000" angle="60" pos="15 15 15" target="0 0.0 0" />
+        <perspective id="cam1" near="0.01" far="1500" angle="90" pos="15.0 20.0 15.0" target="0.0 0.0 0.0" />
         
     </cameras>
     
