@@ -28,7 +28,7 @@ void Graph::addNode(Node* newNode)
 
 Node* Graph::getNodeById(string id)
 {
-    Node* nodeFound = new Node();
+    Node* nodeFound = NULL;
     map<string, Node*>::const_iterator pos = nodesMap.find(id);
     
     if (pos == nodesMap.end()) {

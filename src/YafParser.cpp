@@ -1143,7 +1143,7 @@ namespace Parser {
                         }
                         
                         // create and save child/primitive
-                        scene::Primitive* newPrimitive = new scene::Triangle(node_id, xyz1[0], xyz1[1], xyz1[2], xyz2[0], xyz2[1], xyz2[2], xyz3[0], xyz3[1], xyz3[0]);
+                        scene::Primitive* newPrimitive = new scene::Triangle(node_id, xyz1[0], xyz1[1], xyz1[2], xyz2[0], xyz2[1], xyz2[2], xyz3[0], xyz3[1], xyz3[2]);
                         
                         primitives.push_back(newPrimitive);
                         
