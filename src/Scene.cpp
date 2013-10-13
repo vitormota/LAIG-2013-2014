@@ -1,8 +1,3 @@
-//
-//  Scene.cpp
-//  LAIG - P1
-//
-
 #include "Scene.h"
 
 void Scene::init() {
@@ -305,24 +300,8 @@ void Scene::display() {
     //CGFscene::activeCamera->applyView();
     
     // change to the current camera
-    if(this->currentCameraId == "activeCGFcamera0")
-   {
-       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-       glMatrixMode(GL_MODELVIEW);
-       glLoadIdentity();
-       CGFscene::initCameras();
-       //activeCamera = CGFscene::scene_cameras[0];
-       //this->cameraAspect = CGFapplication::xy_aspect;
-       changeCamera(this->currentCameraId); // default camera
-       //CGFscene::activeCamera->applyView();
-    }
-    else
-    {
-     // change to the default camera
      this->cameraAspect = CGFapplication::xy_aspect;
      changeCamera(this->currentCameraId);
-    }
-
 
     // Draw axis
     axis.draw();
@@ -629,7 +608,7 @@ void Scene::changeCamera(string cameraId) {
     if (camerasId.find(cameraId) != camerasId.end()) // check if the camera exists
     {
         
-        if(currentCameraId != "activeCGFcamera0")
+        if(cameraId != "activeCGFcamera0")
         {
         Camera* currentCamera = camerasMap[cameraId];
         currentCamera->setAspect(this->cameraAspect);
@@ -643,14 +622,8 @@ void Scene::changeCamera(string cameraId) {
             CGFapplication::activeApp->forceRefresh();
         }
         else{
-            
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glMatrixMode(GL_MODELVIEW);
-            glLoadIdentity();
-            CGFscene::initCameras();
-            //activeCamera = CGFscene::scene_cameras[0];
+            activeCamera = CGFscene::scene_cameras[0];
             CGFscene::activeCamera->applyView();
-            //CGFapplication::activeApp->forceRefresh();
         }
     }
 }
