@@ -1,8 +1,3 @@
-//
-//  Scene.h
-//  LAIG - P1
-//
-
 #ifndef __LAIG___P1__Scene__
 #define __LAIG___P1__Scene__
 
@@ -30,10 +25,10 @@
 #include "CGF\CGFobject.h"
 #endif
 
-
 #include <iostream>
 #include <vector>
 #include <map>
+
 #include "Primitive.h"
 #include "Graph.h"
 #include "Lighting.h"

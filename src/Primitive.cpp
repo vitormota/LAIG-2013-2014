@@ -247,7 +247,7 @@ namespace scene {
     float *Primitive::get_normal_newell(float **vertices, int size) {
 	float *normal = (float*) malloc(sizeof (float)*3);
 	float *vertex_act, *vertex_next;
-	int count = 0;
+	
 	/*while(vertices[count]){
 	cout << vertices[count][0] << "," << vertices[count][1] << "," << vertices[count][2] << endl;
 	count++;

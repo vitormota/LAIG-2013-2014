@@ -1,8 +1,3 @@
-//
-//  YafParser.h
-//  LAIG - P1
-//
-
 #ifndef __LAIG___P1__YafParser__
 #define __LAIG___P1__YafParser__
 
@@ -85,8 +80,6 @@ namespace Parser {
         bool loadTextures(TiXmlElement* texturesElement);
         bool loadAppearances(TiXmlElement* appearancesElement);
         bool loadGraph(TiXmlElement* graphElement);
-        
-    private:
     
         /* cameras */
         map<string, Camera*> camerasMap;

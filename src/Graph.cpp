@@ -37,7 +37,7 @@ Node* Graph::getNodeById(string id)
         
     } else {
         // node found
-        //nodeFound = pos->second; // the node with the wanted id
+        // the node with the wanted id
         nodeFound = nodesMap[id];
     }
     

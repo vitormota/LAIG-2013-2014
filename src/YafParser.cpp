@@ -1,8 +1,3 @@
-//
-//  YafParser.cpp
-//  LAIG - P1
-//
-
 #include "YafParser.h"
 #include "Scene.h"
 
@@ -24,8 +19,13 @@ namespace Parser {
         "graph", "node", "transforms", "translate", "rotate", "scale", "appearanceref",
         "children", "rectangle", "triangle", "cylinder", "sphere", "torus", "noderef"};
     
+    /* errors messages */
+    const bool showErrors = false; // change this value to see errors
+    const bool showOkValues = false; // change this value to see valid values
+    
     YafParser::YafParser() {
         this->_filename = "yaf.xml";
+    
     }
     
     YafParser::YafParser(string filename) {
@@ -114,7 +114,11 @@ namespace Parser {
         attributeStr = (char*) globalsElement->Attribute("drawmode");
         
         if (strcmp(attributeStr, "fill") != 0 && strcmp(attributeStr, "line") != 0 && strcmp(attributeStr, "point") != 0) {
+            
+            if(showErrors)
+            {
             cout << "Invalid drawmode..." << endl;
+            }
             error = true;
         } else {
             this->drawmode = attributeStr;
@@ -124,7 +128,10 @@ namespace Parser {
         attributeStr = (char*) globalsElement->Attribute("shading");
         
         if (strcmp(attributeStr, "flat") != 0 && strcmp(attributeStr, "gouraud") != 0) {
+            if(showErrors)
+            {
             cout << "Invalid shading..." << endl;
+            }
             error = true;
         } else {
             this->shading = attributeStr;
@@ -134,7 +141,8 @@ namespace Parser {
         attributeStr = (char*) globalsElement->Attribute("cullface");
         
         if (strcmp(attributeStr, "none") != 0 && strcmp(attributeStr, "back") != 0 && strcmp(attributeStr, "front") != 0 && strcmp(attributeStr, "both") != 0) {
-            cout << "Invalid cullface..." << endl;
+            if(showErrors)
+            {cout << "Invalid cullface..." << endl;}
             error = true;
         } else {
             this->cullface = attributeStr;
@@ -143,7 +151,8 @@ namespace Parser {
         // cullorder attribute
         attributeStr = (char*) globalsElement->Attribute("cullorder");
         if (strcmp(attributeStr, "CCW") != 0 && strcmp(attributeStr, "CW") != 0) {
-            cout << "Invalid cullorder..." << endl;
+            if(showErrors)
+            {cout << "Invalid cullorder..." << endl;}
             error = true;
         } else {
             this->cullorder = attributeStr;
@@ -159,28 +168,33 @@ namespace Parser {
     bool YafParser::loadCameras(TiXmlElement* camerasElement) {
         
         if (camerasElement == NULL) {
-            cout <<
+            if(showErrors)
+            {cout <<
 		    element_not_found <<
 		    node_names[CAMERAS] <<
-		    endl;
+                endl;}
             return false;
         }
         
         TiXmlElement *cameraElement = camerasElement->FirstChildElement();
         
         if (cameraElement == NULL) {
-            cout << element_not_found <<
+            if(showErrors)
+            {cout << element_not_found <<
 		    node_names[PERSPECTIVE] <<
 		    "," <<
 		    node_names[ORTHO] <<
-		    endl;
+                endl;}
             return false;
         }
         
         char *initialElementStr = (char*) camerasElement->Attribute("initial");
         if (initialElementStr == NULL) {
-            cout << "Initial camera not found, using first read."
-		    << endl;
+            {
+                if(showErrors)
+                {cout << "Initial camera not found, using first read."
+                    << endl;}
+            }
         }
         else{
             this->initial = initialElementStr;
@@ -191,17 +205,14 @@ namespace Parser {
         bool error = true;
         char *id;
         Camera* newCamera;
-        
-        //TiXmlNode *x = camerasElement->FirstChild("perspective");
+        unsigned int count = 0;
         
         while (cameraElement) {
             
             float near = 0, far = 0, angle = 0, pos[3], target[3], left = 0, right = 0, top = 0, bottom = 0;
             
             id = (char*) cameraElement->Attribute("id");
-            //int number = perspectiveElement->QueryFloatAttribute("angle", &angle);
-            //BUG ---->   if((char*) perspectiveElement->ToText() == node_names[PERSPECTIVE]){ ??
-            //if (strcmp(perspectiveElement->Value(), node_names[PERSPECTIVE]) == 0) {
+            
             if (cameraElement->QueryFloatAttribute("angle", &angle) == TIXML_SUCCESS) {
                 //perspective found
                 if (!id ||
@@ -211,10 +222,12 @@ namespace Parser {
                     StringParsing::FloatReader(cameraElement->Attribute("pos"), pos) != 3 ||
                     StringParsing::FloatReader(cameraElement->Attribute("target"), target) != 3) {
                     //bad perspective found
-                    cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), FAIL.\n";
+                    if(showErrors)
+                    {cout << node_names[PERSPECTIVE] << " id: " << id << " has invalid field(s), FAIL.\n";}
                 } else {
-                    cout << node_names[PERSPECTIVE] <<
-                    " id: " << id << ", OK." << endl;
+                    if(showOkValues)
+                    {cout << node_names[PERSPECTIVE] <<
+                        " id: " << id << ", OK." << endl;}
                     //pre-requesite, at least one so, flag off
                     if (error) error = false;
                     
@@ -225,8 +238,12 @@ namespace Parser {
                     newCamera->setPos(pos);
                     newCamera->setTarget(target);
                     
+                    // save camera
+                    camerasMap.insert(std::pair<string, Camera*>(newCamera->getId(), newCamera));
+                    
+                    count++;
+                    
                 }
-                //} else if (strcmp(perspectiveElement->Value(), node_names[ORTHO]) == 0) {
             } else if (cameraElement->QueryFloatAttribute("left", &left) == TIXML_SUCCESS) {
                 //ortho found
                 if (!id ||
@@ -237,16 +254,19 @@ namespace Parser {
                     cameraElement->QueryFloatAttribute("top", &top) != TIXML_SUCCESS ||
                     cameraElement->QueryFloatAttribute("bottom", &bottom) != TIXML_SUCCESS) {
                     //bad ortho found
-                    cout << node_names[ORTHO] <<
+                    if(showErrors)
+                    {cout << node_names[ORTHO] <<
                     " id: " <<
                     id <<
-                    " has invalid field(s), FAIL.\n";
+                        " has invalid field(s), FAIL.\n";}
                 } else {
+                    if(showOkValues)
+                    {
                     cout << node_names[ORTHO] <<
                     " id: " <<
                     id <<
                     ", OK." <<
-                    endl;
+                        endl;}
                     //pre-requesite, at least one so, flag off
                     if (error) error = false;
                     
@@ -257,35 +277,41 @@ namespace Parser {
                     newCamera->setRight(right);
                     newCamera->setTop(top);
                     newCamera->setBottom(bottom);
+                    
+                    // save camera
+                    camerasMap.insert(std::pair<string, Camera*>(newCamera->getId(), newCamera));
+                    
+                    count++;
                 }
             }
-            
-            // save camera
-            camerasMap.insert(std::pair<string, Camera*>(newCamera->getId(), newCamera));
             
             //next sibling camera
             cameraElement = cameraElement->NextSiblingElement();
         }
         if (error)return false;
-        cout << endl;
+        cout << "Found " <<
+		count <<
+		" cameras(s)\n\n";
         return true;
     }
     
     bool YafParser::loadLighting(TiXmlElement *lightingElement) {
         if (lightingElement == NULL) {
-            cout <<
+            if(showErrors)
+            {cout <<
 		    element_not_found <<
 		    node_names[LIGHTING] <<
-		    endl;
+                endl;}
             return false;
         }
         TiXmlElement *lightElement = lightingElement->FirstChildElement();
         if (!lightElement) {
-            cout << element_not_found <<
+            if(showErrors)
+            {cout << element_not_found <<
 		    node_names[OMNI] <<
 		    "," <<
 		    node_names[SPOT] <<
-		    endl;
+                endl;}
             return false;
         }
         
@@ -314,7 +340,8 @@ namespace Parser {
         
         if (StringParsing::FloatReader(lightingElement->Attribute("ambient"), ambient) != 4) {
             //error ambient attr does not have at least 4 values
-            cout << "Bad ambient attribute\n";
+            if(showErrors)
+            {cout << "Bad ambient attribute\n";}
         } else {
             //memcpy(this->ambient, ambient, 4*sizeof(float));
             for(unsigned int i = 0; i < 4; i++)
@@ -387,7 +414,8 @@ namespace Parser {
             
             if (!error) {
                 
-                cout << type << " id: " << id << " OK.\n";
+                if(showOkValues)
+                {cout << type << " id: " << id << " OK.\n";}
                 
                 //save light
                 lightingMap.insert(std::pair<string, Lighting*>(newLighting->getId(), newLighting));
@@ -395,10 +423,11 @@ namespace Parser {
                 count++;
                 
             } else {
-                cout << type <<
+                if(showErrors)
+                {cout << type <<
                 " id: " <<
                 id <<
-                " has invalid field(s), FAIL.\n";
+                    " has invalid field(s), FAIL.\n";}
             }
             
             lightElement = lightElement->NextSiblingElement();
@@ -412,10 +441,11 @@ namespace Parser {
     
     bool YafParser::loadTextures(TiXmlElement *texturesElement) {
         if (texturesElement == NULL) {
-            cout <<
+            if(showErrors)
+            {cout <<
 		    element_not_found <<
 		    node_names[TEXTURE] <<
-		    endl;
+                endl;}
             return false;
         }
         int count = 0;
@@ -430,18 +460,20 @@ namespace Parser {
             file = (char*) textureElement->Attribute("file");
             if (!id || !file) {
                 //Bad texture
-                cout << node_names[TEXTURE] <<
+                if(showErrors)
+                {cout << node_names[TEXTURE] <<
                 " id: " <<
-                " has invalid field(s), FAIL.\n";
+                    " has invalid field(s), FAIL.\n";}
             } else {
                 //valid texture
                 //this id must be saved, for cross-reference
                 //with an appearance with same id
-                cout << node_names[TEXTURE] <<
+                if(showOkValues)
+                {cout << node_names[TEXTURE] <<
                 " id: " <<
                 id <<
                 ", OK." <<
-                endl;
+                    endl;}
                 count++;
                 
                 // create and save texture
@@ -465,10 +497,11 @@ namespace Parser {
     bool YafParser::loadAppearances(TiXmlElement *appearancesElement) {
         
         if (appearancesElement == NULL) {
-            cout <<
+            if(showErrors)
+            {cout <<
 		    element_not_found <<
 		    node_names[TEXTURE] <<
-		    endl;
+                endl;}
             return false;
         }
         
@@ -495,11 +528,12 @@ namespace Parser {
         
         // check if there is at least one appearance element
         if (appearanceElement == NULL) {
-            cout << element_not_found <<
+            if(showErrors)
+            {cout << element_not_found <<
 		    node_names[APPEARANCES] <<
 		    "," <<
 		    node_names[APPEARANCE] <<
-		    endl;
+                endl;}
             return false;
         }
         
@@ -521,11 +555,13 @@ namespace Parser {
             if (!id) {
                 
                 // invalid id
-                cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " id: " << " has invalid field(s), FAIL.\n";}
                 error = true;
             } else {
                 // valid id
-                cout << node_names[APPEARANCE] << " id: " << id << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " id: " << id << ", OK." << endl;}
                 
             }
             
@@ -535,12 +571,14 @@ namespace Parser {
             if (!emissiveStr || (StringParsing::FloatReader(emissiveStr, emissive) != 4)) {
                 error = true;
                 // invalid emission
-                cout << node_names[APPEARANCE] << " emissive: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " emissive: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid emission
-                cout << node_names[APPEARANCE] << " emissive: " << emissiveStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " emissive: " << emissiveStr << ", OK." << endl;}
                 
             }
             
@@ -549,12 +587,14 @@ namespace Parser {
             if (!ambientStr || (StringParsing::FloatReader(ambientStr, ambientApp)) != 4) {
                 error = true;
                 // invalid ambient
-                cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " ambient: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid ambient
-                cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " ambient: " << ambientStr << ", OK." << endl;}
                 
             }
             
@@ -563,12 +603,14 @@ namespace Parser {
             if (!diffuseStr || (StringParsing::FloatReader(diffuseStr, diffuse)) != 4) {
                 error = true;
                 // invalid diffuse
-                cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " diffuse: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid diffuse
-                cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " diffuse: " << diffuseStr << ", OK." << endl;}
                 
             }
             
@@ -577,79 +619,86 @@ namespace Parser {
             if (!specularStr || (StringParsing::FloatReader(specularStr, specular)) != 4) {
                 error = true;
                 // invalid specular
-                cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " specular: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid specular
-                cout << node_names[APPEARANCE] << " specular: " << specularStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " specular: " << specularStr << ", OK." << endl;}
                 
             }
             
             // shininess attribute
             
-            // if (!shininessStr || (StringParsing::FloatReader(shininessStr, shininess)) != 1) {
             if (appearanceElement->QueryFloatAttribute("shininess", &shininess) != TIXML_SUCCESS) {
                 error = true;
                 // invalid shininess
-                cout << node_names[APPEARANCE] << " shininess: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " shininess: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid shininess
-                cout << node_names[APPEARANCE] << " shininess: " << shininessStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " shininess: " << shininessStr << ", OK." << endl;}
                 
             }
             
-            // textureref attribute TODO: se não existir textura na appearance, textureref, texlength_s e texlength_s são opcionais
+            // textureref attribute
             
             bool noTexture = false;
             
             if (!textureref) {
                 // invalid textureref
-                //cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), FAIL.\n";
-                // TEXTURE DOESN't EXISTS
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " textureref: " << " has invalid field(s), FAIL.\n";}
+                // texture doesn't exist
                 noTexture = true;
                 
             } else {
                 
                 // valid textureref
-                cout << node_names[APPEARANCE] << " textureref: " << textureref << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " textureref: " << textureref << ", OK." << endl;}
                 
             }
-            
             
             if(noTexture == false)
             {
             // texlength_s attribute
             
             int ret1 = appearanceElement->QueryFloatAttribute("texlength_s", &texlength_s);
-            //if (!texlength_sStr || (StringParsing::FloatReader(texlength_sStr, texlength_s)) != 1) {
+            
             if (ret1 != TIXML_SUCCESS) {
                 // invalid texlength_s
-                cout << node_names[APPEARANCE] << " texlength_s: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " texlength_s: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid texlength_s
-                cout << node_names[APPEARANCE] << " texlength_s: " << texlength_sStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " texlength_s: " << texlength_sStr << ", OK." << endl;}
                 
             }
             
             // texlength_t attribute
             int ret2 = appearanceElement->QueryFloatAttribute("texlength_t", &texlength_t);
-            //if (!texlength_tStr || (StringParsing::FloatReader(texlength_tStr, texlength_t)) != 1) {
+            
             if (ret2 != TIXML_SUCCESS) {
                 // invalid texlength_t
-                cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[APPEARANCE] << " texlength_t: " << " has invalid field(s), FAIL.\n";}
                 
             } else {
                 
                 // valid texlength_t
-                cout << node_names[APPEARANCE] << " texlength_t: " << texlength_tStr << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[APPEARANCE] << " texlength_t: " << texlength_tStr << ", OK." << endl;}
                 
             }
-                
             }
             
             // next appearance
@@ -677,20 +726,19 @@ namespace Parser {
                 count++;
                 
             }
-            
-            // print how many where read
-            cout << "Found " << count << " appearance(s).\n\n";
-            
         }
+        // print how many where read
+        cout << "Found " << count << " appearance(s).\n\n";
         
         return true;
     }
     
     bool YafParser::loadGraph(TiXmlElement * graphElement) {
         if (graphElement == NULL) {
-            cout << element_not_found
+            if(showErrors)
+            {cout << element_not_found
 		    << node_names[GRAPH]
-		    << endl;
+                << endl;}
             return false;
         }
         
@@ -702,10 +750,12 @@ namespace Parser {
         if (!rootid) {
             
             // invalid rootid
-            cout << node_names[GRAPH] << " rootid: " << " has invalid field(s), FAIL.\n";
+            if(showErrors)
+            {cout << node_names[GRAPH] << " rootid: " << " has invalid field(s), FAIL.\n";}
         } else {
             // valid rootid
-            cout << node_names[GRAPH] << " rootid: " << rootid << ", OK." << endl;
+            if(showOkValues)
+            {cout << node_names[GRAPH] << " rootid: " << rootid << ", OK." << endl;}
             
             
             // create graph with the rootid
@@ -713,9 +763,11 @@ namespace Parser {
             
             
             if (this->sceneGraph->getRootId() == rootid) {
-                cout << "Saving rootid OK." << endl;
+                if(showOkValues)
+                {cout << "Saving rootid OK." << endl;}
             } else {
-                cout << "Saving rootid FAILED." << endl;
+                if(showErrors)
+                {cout << "Saving rootid FAILED." << endl;}
             }
             
         }
@@ -726,11 +778,12 @@ namespace Parser {
         
         // check if there is at least one node element
         if (nodeElement == NULL) {
-            cout << element_not_found <<
+            if(showErrors)
+            {cout << element_not_found <<
 		    node_names[GRAPH] <<
 		    "," <<
 		    node_names[NODE] <<
-		    endl;
+                endl;}
             return false;
         }
         
@@ -745,10 +798,12 @@ namespace Parser {
             if (!node_id) {
                 
                 // invalid id
-                cout << node_names[NODE] << " id: " << " has invalid field(s), FAIL.\n";
+                if(showErrors)
+                {cout << node_names[NODE] << " id: " << " has invalid field(s), FAIL.\n";}
             } else {
                 // valid id
-                cout << node_names[NODE] << " id: " << node_id << ", OK." << endl;
+                if(showOkValues)
+                {cout << node_names[NODE] << " id: " << node_id << ", OK." << endl;}
                 
             }
             
@@ -757,9 +812,11 @@ namespace Parser {
             
             
             if (this->sceneGraph->getRootId() == rootid) {
-                cout << "Saving rootid OK." << endl;
+                if(showErrors)
+                {cout << "Saving rootid OK." << endl;}
             } else {
-                cout << "Saving rootid FAILED." << endl;
+                if(showOkValues)
+                {cout << "Saving rootid FAILED." << endl;}
             }
             
             
@@ -768,9 +825,10 @@ namespace Parser {
             TiXmlElement* transformsElement = nodeElement->FirstChildElement("transforms");
             
             if (transformsElement == NULL) {
-                cout << element_not_found
+                if(showErrors)
+                {cout << element_not_found
                 << node_names[TRANSFORMS]
-                << endl;
+                    << endl;}
                 return false;
             }
             
@@ -798,12 +856,14 @@ namespace Parser {
                     if (!toStr || (StringParsing::FloatReader(toStr, to) != 3)) {
                         
                         // invalid to
-                        cout << node_names[TRANSLATE] << " to: " << " has invalid field(s), FAIL.\n";
+                        if(showErrors)
+                        {cout << node_names[TRANSLATE] << " to: " << " has invalid field(s), FAIL.\n";}
                         
                     } else {
                         
                         // valid to
-                        cout << node_names[TRANSLATE] << " to: " << toStr << ", OK." << endl;
+                        if(showOkValues)
+                        {cout << node_names[TRANSLATE] << " to: " << toStr << ", OK." << endl;}
                         
                         glTranslated(to[0], to[1], to[2]);
                         
@@ -822,13 +882,15 @@ namespace Parser {
                         if (axis || (strcmp("x", axis) == 0) || (strcmp("y", axis) == 0) || (strcmp("z", axis) == 0)) {
                             
                             // valid axis
-                            cout << node_names[ROTATE] << " axis: " << axis << ", OK." << endl;
+                            if(showOkValues)
+                            {cout << node_names[ROTATE] << " axis: " << axis << ", OK." << endl;}
                             
                             
                         } else {
                             
                             // invalid axis
-                            cout << node_names[ROTATE] << " axis: " << " has invalid field(s), FAIL.\n";
+                            if(showErrors)
+                            {cout << node_names[ROTATE] << " axis: " << " has invalid field(s), FAIL.\n";}
                             
                             error = true;
                         }
@@ -843,13 +905,15 @@ namespace Parser {
                         if (!angleStr || (StringParsing::FloatReader(angleStr, angle)) != 1) {
                             
                             // invalid angle
-                            cout << node_names[ROTATE] << " angle: " << " has invalid field(s), FAIL.\n";
+                            if(showErrors)
+                            {cout << node_names[ROTATE] << " angle: " << " has invalid field(s), FAIL.\n";}
                             error = true;
                             
                         } else {
                             
                             // valid angle
-                            cout << node_names[ROTATE] << " angle: " << angleStr << ", OK." << endl;
+                            if(showOkValues)
+                            {cout << node_names[ROTATE] << " angle: " << angleStr << ", OK." << endl;}
                             
                         }
                         
@@ -883,13 +947,15 @@ namespace Parser {
                             if (!factorStr || (StringParsing::FloatReader(factorStr, factor) != 3)) {
                                 
                                 // invalid factor
-                                cout << node_names[SCALE] << " factor: " << " has invalid field(s), FAIL.\n";
+                                if(showErrors)
+                                {cout << node_names[SCALE] << " factor: " << " has invalid field(s), FAIL.\n";}
                                 
                                 
                             } else {
                                 
                                 // valid factor
-                                cout << node_names[SCALE] << " factor: " << factorStr << ", OK." << endl;
+                                if(showOkValues)
+                                {cout << node_names[SCALE] << " factor: " << factorStr << ", OK." << endl;}
                                 
                                 glScaled(factor[0], factor[1], factor[2]);
                                 
@@ -907,7 +973,8 @@ namespace Parser {
             glGetFloatv(GL_MODELVIEW_MATRIX, m);
             newNode->setMatrix(m);
             
-            cout << "Saving transform matrix OK." << endl;
+            if(showOkValues)
+            {cout << "Saving transform matrix OK." << endl;}
             
             glPopMatrix();
             
@@ -923,17 +990,16 @@ namespace Parser {
                 if (!appearanceref_id) {
                     
                     // invalid appearanceref_id
-                    cout << node_names[APPEARANCEREF] << " id: " << " has invalid field(s), FAIL.\n";
+                    if(showErrors)
+                    {cout << node_names[APPEARANCEREF] << " id: " << " has invalid field(s), FAIL.\n";}
                 } else {
                     // valid appearanceref_id
-                    cout << node_names[APPEARANCEREF] << " id: " << appearanceref_id << ", OK." << endl;
+                    if(showOkValues)
+                    {cout << node_names[APPEARANCEREF] << " id: " << appearanceref_id << ", OK." << endl;}
                     
                     newNode->setAppearanceRef(appearanceref_id);
-                    
                 }
-                
             }
-            
             
             // children element
             
@@ -944,15 +1010,14 @@ namespace Parser {
             TiXmlElement* childrenElement = nodeElement->FirstChildElement("children");
             
             if (childrenElement == NULL) {
-                cout << element_not_found
+                if(showErrors)
+                {cout << element_not_found
                 << node_names[CHILDREN]
-                << endl;
+                    << endl;}
                 return false;
             }
             
-            
             // check all children (rectangle, triangle, cylinder, sphere, torus or noderef)
-            
             TiXmlElement* childElement = childrenElement->FirstChildElement();
             
             
@@ -970,12 +1035,14 @@ namespace Parser {
                     if (!xy1Str || (StringParsing::FloatReader(xy1Str, xy1)) != 2) {
                         
                         // invalid xy1
-                        cout << node_names[RECTANGLE] << " xy1: " << " has invalid field(s), FAIL.\n";
+                        if(showErrors)
+                        {cout << node_names[RECTANGLE] << " xy1: " << " has invalid field(s), FAIL.\n";}
                         
                     } else {
                         
                         // valid xy1
-                        cout << node_names[RECTANGLE] << " xy1: " << xy1Str << ", OK." << endl;
+                        if(showOkValues)
+                        {cout << node_names[RECTANGLE] << " xy1: " << xy1Str << ", OK." << endl;}
                         
                     }
                     
@@ -989,12 +1056,14 @@ namespace Parser {
                     if (!xy2Str || (StringParsing::FloatReader(xy2Str, xy2)) != 2) {
                         
                         // invalid xy2
-                        cout << node_names[RECTANGLE] << " xy2: " << " has invalid field(s), FAIL.\n";
+                        if(showErrors)
+                        {cout << node_names[RECTANGLE] << " xy2: " << " has invalid field(s), FAIL.\n";}
                         
                     } else {
                         
                         // valid xy2
-                        cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", OK." << endl;
+                        if(showOkValues)
+                        {cout << node_names[RECTANGLE] << " xy2: " << xy2Str << ", OK." << endl;}
                         
                     }
                     
@@ -1003,7 +1072,8 @@ namespace Parser {
                     
                     primitives.push_back(newPrimitive);
                     
-                    cout << "Children saved: rectangle." << endl;
+                    if(showOkValues)
+                    {cout << "Children saved: rectangle." << endl;}
                     
                     
                 }// if the element is "triangle"
@@ -1019,12 +1089,14 @@ namespace Parser {
                         if (!xyz1Str || (StringParsing::FloatReader(xyz1Str, xyz1)) != 3) {
                             
                             // invalid xyz1
-                            cout << node_names[TRIANGLE] << " xyz1: " << " has invalid field(s), FAIL.\n";
+                            if(showErrors)
+                            {cout << node_names[TRIANGLE] << " xyz1: " << " has invalid field(s), FAIL.\n";}
                             
                         } else {
                             
                             // valid xyz1
-                            cout << node_names[TRIANGLE] << " xyz1: " << xyz1Str << ", OK." << endl;
+                            if(showOkValues)
+                            {cout << node_names[TRIANGLE] << " xyz1: " << xyz1Str << ", OK." << endl;}
                             
                         }
                         
@@ -1038,12 +1110,14 @@ namespace Parser {
                         if (!xyz2Str || (StringParsing::FloatReader(xyz2Str, xyz2)) != 3) {
                             
                             // invalid xyz2
-                            cout << node_names[TRIANGLE] << " xyz2: " << " has invalid field(s), FAIL.\n";
+                            if(showErrors)
+                            {cout << node_names[TRIANGLE] << " xyz2: " << " has invalid field(s), FAIL.\n";}
                             
                         } else {
                             
                             // valid xyz2
-                            cout << node_names[TRIANGLE] << " xyz2: " << xyz2Str << ", OK." << endl;
+                            if(showOkValues)
+                            {cout << node_names[TRIANGLE] << " xyz2: " << xyz2Str << ", OK." << endl;}
                             
                         }
                         
@@ -1057,12 +1131,14 @@ namespace Parser {
                         if (!xyz3Str || (StringParsing::FloatReader(xyz3Str, xyz3)) != 3) {
                             
                             // invalid xyz3
-                            cout << node_names[TRIANGLE] << " xyz3: " << " has invalid field(s), FAIL.\n";
+                            if(showErrors)
+                            {cout << node_names[TRIANGLE] << " xyz3: " << " has invalid field(s), FAIL.\n";}
                             
                         } else {
                             
                             // valid xyz3
-                            cout << node_names[TRIANGLE] << " xyz3: " << xyz3Str << ", OK." << endl;
+                            if(showOkValues)
+                            {cout << node_names[TRIANGLE] << " xyz3: " << xyz3Str << ", OK." << endl;}
                             
                         }
                         
@@ -1071,7 +1147,8 @@ namespace Parser {
                         
                         primitives.push_back(newPrimitive);
                         
-                        cout << "Children saved: triangle." << endl;
+                        if(showOkValues)
+                        {cout << "Children saved: triangle." << endl;}
                         
                     }// if the element is "cylinder"
                     else
@@ -1086,12 +1163,14 @@ namespace Parser {
                             if (!baseStr || (StringParsing::FloatReader(baseStr, base)) != 1) {
                                 
                                 // invalid base
-                                cout << node_names[CYLINDER] << " base: " << " has invalid field(s), FAIL.\n";
+                                if(showErrors)
+                                {cout << node_names[CYLINDER] << " base: " << " has invalid field(s), FAIL.\n";}
                                 
                             } else {
                                 
                                 // valid base
-                                cout << node_names[CYLINDER] << " base: " << baseStr << ", OK." << endl;
+                                if(showOkValues)
+                                {cout << node_names[CYLINDER] << " base: " << baseStr << ", OK." << endl;}
                                 
                             }
                             
@@ -1105,12 +1184,14 @@ namespace Parser {
                             if (!topStr || (StringParsing::FloatReader(topStr, top)) != 1) {
                                 
                                 // invalid top
-                                cout << node_names[CYLINDER] << " top: " << " has invalid field(s), FAIL.\n";
+                                if(showErrors)
+                                {cout << node_names[CYLINDER] << " top: " << " has invalid field(s), FAIL.\n";}
                                 
                             } else {
                                 
                                 // valid top
-                                cout << node_names[CYLINDER] << " top: " << topStr << ", OK." << endl;
+                                if(showOkValues)
+                                {cout << node_names[CYLINDER] << " top: " << topStr << ", OK." << endl;}
                                 
                             }
                             
@@ -1124,12 +1205,14 @@ namespace Parser {
                             if (!heightStr || (StringParsing::FloatReader(heightStr, height)) != 1) {
                                 
                                 // invalid height
-                                cout << node_names[CYLINDER] << " height: " << " has invalid field(s), FAIL.\n";
+                                if(showErrors)
+                                {cout << node_names[CYLINDER] << " height: " << " has invalid field(s), FAIL.\n";}
                                 
                             } else {
                                 
                                 // valid height
-                                cout << node_names[CYLINDER] << " height: " << heightStr << ", OK." << endl;
+                                if(showOkValues)
+                                {cout << node_names[CYLINDER] << " height: " << heightStr << ", OK." << endl;}
                                 
                             }
                             
@@ -1143,12 +1226,14 @@ namespace Parser {
                             if (slices <= 0 || (retSlices != TIXML_SUCCESS)) {
                                 
                                 // invalid slices
-                                cout << node_names[CYLINDER] << " slices: " << " has invalid field(s), FAIL.\n";
+                                if(showErrors)
+                                {cout << node_names[CYLINDER] << " slices: " << " has invalid field(s), FAIL.\n";}
                                 
                             } else {
                                 
                                 // valid slices
-                                cout << node_names[CYLINDER] << " slices: " << slices << ", OK." << endl;
+                                if(showOkValues)
+                                {cout << node_names[CYLINDER] << " slices: " << slices << ", OK." << endl;}
                                 
                             }
                             
@@ -1162,12 +1247,14 @@ namespace Parser {
                             if (slices <= 0 || (retStacks != TIXML_SUCCESS)) {
                                 
                                 // invalid stacks
-                                cout << node_names[CYLINDER] << " stacks: " << " has invalid field(s), FAIL.\n";
+                                if(showErrors)
+                                {cout << node_names[CYLINDER] << " stacks: " << " has invalid field(s), FAIL.\n";}
                                 
                             } else {
                                 
                                 // valid stacks
-                                cout << node_names[CYLINDER] << " stacks: " << stacks << ", OK." << endl;
+                                if(showOkValues)
+                                {cout << node_names[CYLINDER] << " stacks: " << stacks << ", OK." << endl;}
                                 
                             }
                             
@@ -1178,7 +1265,8 @@ namespace Parser {
                             
                             primitives.push_back(newPrimitive);
                             
-                            cout << "Children saved: cylinder." << endl;
+                            if(showOkValues)
+                            {cout << "Children saved: cylinder." << endl;}
                             
                         } else
                             // if the element is "sphere"
@@ -1194,12 +1282,14 @@ namespace Parser {
                                 if (!radiusStr || (StringParsing::FloatReader(radiusStr, radius)) != 1) {
                                     
                                     // invalid radius
-                                    cout << node_names[SPHERE] << " radius: " << " has invalid field(s), FAIL.\n";
+                                    if(showErrors)
+                                    {cout << node_names[SPHERE] << " radius: " << " has invalid field(s), FAIL.\n";}
                                     
                                 } else {
                                     
                                     // valid radius
-                                    cout << node_names[SPHERE] << " radius: " << radiusStr << ", OK." << endl;
+                                    if(showOkValues)
+                                    {cout << node_names[SPHERE] << " radius: " << radiusStr << ", OK." << endl;}
                                     
                                 }
                                 
@@ -1213,12 +1303,14 @@ namespace Parser {
                                 if (slices <= 0 || (retSlices != TIXML_SUCCESS)) {
                                     
                                     // invalid slices
-                                    cout << node_names[SPHERE] << " slices: " << " has invalid field(s), FAIL.\n";
+                                    if(showErrors)
+                                    {cout << node_names[SPHERE] << " slices: " << " has invalid field(s), FAIL.\n";}
                                     
                                 } else {
                                     
                                     // valid slices
-                                    cout << node_names[SPHERE] << " slices: " << slices << ", OK." << endl;
+                                    if(showOkValues)
+                                    {cout << node_names[SPHERE] << " slices: " << slices << ", OK." << endl;}
                                     
                                 }
                                 
@@ -1232,12 +1324,14 @@ namespace Parser {
                                 if (slices <= 0 || (retStacks != TIXML_SUCCESS)) {
                                     
                                     // invalid stacks
-                                    cout << node_names[SPHERE] << " stacks: " << " has invalid field(s), FAIL.\n";
+                                    if(showErrors)
+                                    {cout << node_names[SPHERE] << " stacks: " << " has invalid field(s), FAIL.\n";}
                                     
                                 } else {
                                     
                                     // valid stacks
-                                    cout << node_names[SPHERE] << " stacks: " << stacks << ", OK." << endl;
+                                    if(showOkValues)
+                                    {cout << node_names[SPHERE] << " stacks: " << stacks << ", OK." << endl;}
                                     
                                 }
                                 
@@ -1248,7 +1342,8 @@ namespace Parser {
                                 
                                 primitives.push_back(newPrimitive);
                                 
-                                cout << "Children saved: sphere." << endl;
+                                if(showOkValues)
+                                {cout << "Children saved: sphere." << endl;}
                                 
                             } else
                                 // if the element is "torus"
@@ -1263,12 +1358,14 @@ namespace Parser {
                                     if (!innerStr || (StringParsing::FloatReader(innerStr, inner)) != 1) {
                                         
                                         // invalid inner
-                                        cout << node_names[TORUS] << " inner: " << " has invalid field(s), FAIL.\n";
+                                        if(showErrors)
+                                        {cout << node_names[TORUS] << " inner: " << " has invalid field(s), FAIL.\n";}
                                         
                                     } else {
                                         
                                         // valid inner
-                                        cout << node_names[TORUS] << " inner: " << innerStr << ", OK." << endl;
+                                        if(showOkValues)
+                                        {cout << node_names[TORUS] << " inner: " << innerStr << ", OK." << endl;}
                                         
                                     }
                                     
@@ -1282,12 +1379,14 @@ namespace Parser {
                                     if (!outerStr || (StringParsing::FloatReader(outerStr, outer)) != 1) {
                                         
                                         // invalid outer
-                                        cout << node_names[TORUS] << " outer: " << " has invalid field(s), FAIL.\n";
+                                        if(showErrors)
+                                        {cout << node_names[TORUS] << " outer: " << " has invalid field(s), FAIL.\n";}
                                         
                                     } else {
                                         
                                         // valid outer
-                                        cout << node_names[TORUS] << " outer: " << outerStr << ", OK." << endl;
+                                        if(showOkValues)
+                                        {cout << node_names[TORUS] << " outer: " << outerStr << ", OK." << endl;}
                                         
                                     }
                                     
@@ -1301,12 +1400,14 @@ namespace Parser {
                                     if (slices <= 0 || (retSlices != TIXML_SUCCESS)) {
                                         
                                         // invalid slices
-                                        cout << node_names[TORUS] << " slices: " << " has invalid field(s), FAIL.\n";
+                                        if(showErrors)
+                                        {cout << node_names[TORUS] << " slices: " << " has invalid field(s), FAIL.\n";}
                                         
                                     } else {
                                         
                                         // valid slices
-                                        cout << node_names[TORUS] << " slices: " << slices << ", OK." << endl;
+                                        if(showErrors)
+                                        {cout << node_names[TORUS] << " slices: " << slices << ", OK." << endl;}
                                         
                                     }
                                     
@@ -1320,12 +1421,14 @@ namespace Parser {
                                     if (loops <= 0 || (retLoops != TIXML_SUCCESS)) {
                                         
                                         // invalid loops
-                                        cout << node_names[TORUS] << " loops: " << " has invalid field(s), FAIL.\n";
+                                        if(showErrors)
+                                        {cout << node_names[TORUS] << " loops: " << " has invalid field(s), FAIL.\n";}
                                         
                                     } else {
                                         
                                         // valid loops
-                                        cout << node_names[TORUS] << " loops: " << loops << ", OK." << endl;
+                                        if(showOkValues)
+                                        {cout << node_names[TORUS] << " loops: " << loops << ", OK." << endl;}
                                         
                                     }
                                     
@@ -1336,8 +1439,9 @@ namespace Parser {
                                     
                                     primitives.push_back(newPrimitive);
                                     
-                                    cout << "Children saved: torus." << endl;
-                                    
+                                    if(showOkValues)
+                                    {cout << "Children saved: torus." << endl;
+                                    }
                                 } else
                                     // if the element is "noderef"
                                     if (strcmp(childElement->Value(), "noderef") == 0) {
@@ -1350,17 +1454,20 @@ namespace Parser {
                                         if (!noderef_id) {
                                             
                                             // invalid noderef_id
-                                            cout << node_names[NODEREF] << " id: " << " has invalid field(s), FAIL.\n";
+                                            if(showErrors)
+                                            {cout << node_names[NODEREF] << " id: " << " has invalid field(s), FAIL.\n";}
                                         } else {
                                             // valid noderef_id
-                                            cout << node_names[NODEREF] << " id: " << noderef_id << ", OK." << endl;
+                                            if(showOkValues)
+                                            {cout << node_names[NODEREF] << " id: " << noderef_id << ", OK." << endl;}
                                             
                                         }
                                         
                                         // save child/noderef
                                         childrenNodeRef.push_back(noderef_id);
                                         
-                                        cout << "Children saved: noderef." << endl;
+                                        if(showOkValues)
+                                        {cout << "Children saved: noderef." << endl;}
                                         
                                     }
                 
@@ -1373,7 +1480,8 @@ namespace Parser {
             // save children in the node
             newNode->setChildrenNodeRef(childrenNodeRef);
             newNode->setPrimitives(primitives);
-            cout << "Saving children OK." << endl;
+            if(showOkValues)
+            {cout << "Saving children OK." << endl;}
             
             // save node in the graph
             this->sceneGraph->addNode(newNode);

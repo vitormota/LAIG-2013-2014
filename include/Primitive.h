@@ -46,7 +46,7 @@ namespace scene{
 
 	};
 
-	// RECTANGLE
+	/* Rectangle */
 	class Rectangle: public Primitive{
 
 	private:
@@ -60,7 +60,7 @@ namespace scene{
 		virtual void draw();
 	};
 
-	// TRIANGLE
+	/* Triangle */
 	class Triangle: public Primitive{
 
 	private:
@@ -71,7 +71,7 @@ namespace scene{
 		virtual void draw();
 	};
 
-	// CYLINDER
+	/* Cylinder */
 	class Cylinder: public Primitive{
 
 	private:
@@ -85,7 +85,7 @@ namespace scene{
 		virtual void draw();
 	};
 
-	// SPHERE
+	/* Sphere */
 	class Sphere: public Primitive{
 
 	private:
@@ -98,7 +98,7 @@ namespace scene{
 		virtual void draw();
 	};
 
-	// TORUS
+	/* Torus */
 	class Torus: public Primitive{
 
 	private:

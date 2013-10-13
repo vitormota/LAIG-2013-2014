@@ -1,11 +1,3 @@
-//
-//  Appearance.cpp
-//  LAIG - P1
-//
-//  Created by Maria Araújo on 03/10/13.
-//  Copyright (c) 2013 me. All rights reserved.
-//
-
 #include "Appearance.h"
 #if __unix
 #include <cstring>
@@ -17,9 +9,9 @@ Appearance::Appearance()
 }
 
 Appearance::Appearance(string id,
-           float emissive[4], float ambient[4], float diffuse[4],
-           float specular[4], float shininess, string textureref,
-           float texlength_s, float texlength_t)
+                       float emissive[4], float ambient[4], float diffuse[4],
+                       float specular[4], float shininess, string textureref,
+                       float texlength_s, float texlength_t)
 {
     this->id = id;
     memcpy(this->emissive, emissive,4*sizeof(float));

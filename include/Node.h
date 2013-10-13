@@ -14,7 +14,8 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+using std::string;
+using std::vector;
 
 	enum primitives{
 		COMPLEX, RECTANGLE, TRIANGLE, SPHERE, CYLINDER, TORUS

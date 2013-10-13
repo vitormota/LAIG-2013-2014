@@ -1,8 +1,3 @@
-//
-//  Interface.h
-//  LAIG - P1
-//
-
 #ifndef Interface_H
 #define Interface_H
 

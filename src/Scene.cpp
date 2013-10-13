@@ -8,7 +8,7 @@
 void Scene::init() {
 
     // Uncomment below to enable normalization of lighting normal vectors
-    //glEnable(GL_NORMALIZE);
+    glEnable(GL_NORMALIZE);
 
     /* ------- Initialization of variables ------- */
 
@@ -176,7 +176,7 @@ void Scene::init() {
 	} else {
 	    glDisable(light_id);
         
-        // disabled the lights with enabled = false
+        // disable the lights with enabled = false
         if(light_id == GL_LIGHT0)
         {
             *this->light_0 = 0;
@@ -232,9 +232,6 @@ void Scene::init() {
 	Appearance* appearance = (itA)->second;
 	newAppearance = new CGFappearance(appearance->getAmbient(), appearance->getDiffuse(), appearance->getSpecular(), appearance->getShininess());
 
-	// emissive attribute of the CGFappearance
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, appearance->getEmissive());
-
 	// find the texture with the textureref
 	string textureref = appearance->getTextureref();
 
@@ -265,8 +262,7 @@ void Scene::init() {
 	appearances.insert(std::pair<string, CGFappearance*>(appearance->getId(), newAppearance));
 
     }
-
-
+    
     // initialize cameras id's
 
     unsigned int id = 1;
@@ -283,23 +279,10 @@ void Scene::init() {
     if(this->initial == "")
     {
         CGFscene::activeCamera->applyView();
-        //this->currentCameraId = "activeCGFcamera0"; // the id of the default camera
     }
     else{
     this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
     }
-
-    //    float amb[3] = {0.0, 0.05, 0.05};
-    //    float dif[3] = {0.4, 0.5, 0.5};
-    //    float spec[3] = {0.01, 0.1, 0.1};
-    //    float shininess = 100.f;
-    //    mat_wall = new CGFappearance(amb, dif, spec, shininess);
-    //
-    //    float light2_pos[4] = {5, 5, 5, 1.0};
-    //    light2 = new CGFlight(GL_LIGHT1, light2_pos);
-    //    float ambNull[4] = {0, 0, 0, 1};
-    //    light2->setAmbient(ambNull);
-    //    light2->enable();
 
     // ------- Initialization of variables ------- END
 
@@ -320,13 +303,7 @@ void Scene::display() {
 
     // change to the current camera
     changeCamera(this->currentCameraId);
-    //CGFscene::activeCamera->applyView();
-    //int WindowId = CGFscene::iface->glui_window->get_glut_window_id();
-
     this->cameraAspect = CGFapplication::xy_aspect;
-    
-    // Uncomment below to enable normalization of lighting normal vectors
-    //glEnable(GL_NORMALIZE);
 
     // Draw axis
     axis.draw();
@@ -384,7 +361,7 @@ void Scene::display() {
 	    glDisable(GL_LIGHT7);
 	}
     
-    
+    // Process all the nodes of the graph (depth-first search)
     processGraph();
 
     // ---- END Primitive drawing section
@@ -410,7 +387,7 @@ void Scene::processNode(string id) {
 
     bool pop = false;
 
-    // IR BUSCAR NÓ DE ROOT/ACTUAL (com o id = id)
+    // Search current node (with id = id)
     Node* currentNode = sceneGraph->getNodeById(id);
 
     if (currentNode == NULL) {
@@ -457,7 +434,7 @@ void Scene::processNode(string id) {
 	    (*itP)->draw();
 	}
 
-	// CHAMAR ESTA FUNÇÃO ATÉ PERCORRER TODOS OS NÓS REFERENCIADOS NESTE NÓ
+	// Call this function untill all the nodes with the children ref are visited
 	vector<string> childrenNodeRef = currentNode->getChildrenNodeRef();
 
 	vector<string>::const_iterator itRef;
@@ -469,7 +446,7 @@ void Scene::processNode(string id) {
 	    glPopMatrix();
 	}
 
-	//Reaching here means all children processed
+	//Reaching here means all children are processed
 	//so we need previous appearance
 	if (pop && app_stack.size() > 1) {
 	    app_stack.pop();
@@ -632,7 +609,6 @@ unsigned int Scene::getDrawingMode() {
 void Scene::changeCamera(string cameraId) {
     if (camerasId.find(cameraId) != camerasId.end()) // check if the camera exists
     {
-
         Camera* currentCamera = camerasMap[cameraId];
         currentCamera->setAspect(this->cameraAspect);
         
@@ -642,6 +618,5 @@ void Scene::changeCamera(string cameraId) {
         activeCamera = currentCamera;
         CGFscene::activeCamera->applyView();
 		CGFapplication::activeApp->forceRefresh();
-	        
     }
 }

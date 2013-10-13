@@ -1,8 +1,3 @@
-//
-//  Interface.cpp
-//  LAIG - P1
-//
-
 #include "Interface.h"
 
 #include "Scene.h"
@@ -37,53 +32,50 @@ void Interface::initGUI()
     
     if(((Scene *) scene)->light0Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 1", ((Scene *) scene)->light_0, 2);
+        addCheckboxToPanel(lightsPanel, "Light 1", ((Scene *) scene)->light_0, 2);
     }
     
     if(((Scene *) scene)->light1Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 2", ((Scene *) scene)->light_1, 3);
+        addCheckboxToPanel(lightsPanel, "Light 2", ((Scene *) scene)->light_1, 3);
     }
     
     if(((Scene *) scene)->light2Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 3", ((Scene *) scene)->light_2, 4);
+        addCheckboxToPanel(lightsPanel, "Light 3", ((Scene *) scene)->light_2, 4);
     }
     
     if(((Scene *) scene)->light3Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 4", ((Scene *) scene)->light_3, 5);
+        addCheckboxToPanel(lightsPanel, "Light 4", ((Scene *) scene)->light_3, 5);
     }
     
     if(((Scene *) scene)->light4Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 5", ((Scene *) scene)->light_4, 6);
+        addCheckboxToPanel(lightsPanel, "Light 5", ((Scene *) scene)->light_4, 6);
     }
     
     if(((Scene *) scene)->light5Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 6", ((Scene *) scene)->light_5, 7);
+        addCheckboxToPanel(lightsPanel, "Light 6", ((Scene *) scene)->light_5, 7);
     }
     
     if(((Scene *) scene)->light6Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 7", ((Scene *) scene)->light_6, 8);
+        addCheckboxToPanel(lightsPanel, "Light 7", ((Scene *) scene)->light_6, 8);
     }
     
     if(((Scene *) scene)->light7Exists)
     {
-    addCheckboxToPanel(lightsPanel, "Light 8", ((Scene *) scene)->light_7, 9);
+        addCheckboxToPanel(lightsPanel, "Light 8", ((Scene *) scene)->light_7, 9);
     }
-
     
     addColumnToPanel(mainPanel);
     
     // Cameras
     GLUI_Panel *camerasPanel= addPanelToPanel(mainPanel, "Cameras", GLUI_PANEL_EMBOSSED);
-     
-    GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
     
-    //cameraListBox->add_item(0,"Default"); // default active camera
+    GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
     
     map<string, Camera*> cameras = ((Scene *) scene)->getCameras();
     map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
@@ -91,7 +83,6 @@ void Interface::initGUI()
     map<string, Camera*>::const_iterator itC;
     Camera* currentCamera;
     
-    // fixed cameras
     for (itC = cameras.begin(); itC != cameras.end(); itC++)
     {
         currentCamera = (itC)->second;
@@ -118,7 +109,8 @@ void Interface::initGUI()
 void Interface::processGUI(GLUI_Control *ctrl)
 {
 	
-    printf ("GUI control id: %d\n  ",ctrl->user_id);
+    // Uncomment to see if the id's of the elements of the GUI are correct
+    //printf ("GUI control id: %d\n  ",ctrl->user_id);
     
 	switch (ctrl->user_id)
 	{
@@ -127,8 +119,8 @@ void Interface::processGUI(GLUI_Control *ctrl)
             if(cameraID > 0)
             {
                 
-            map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
-            
+                map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
+                
                 string cameraIDStr;
                 
                 map<string, unsigned int>::const_iterator itC;
@@ -141,9 +133,9 @@ void Interface::processGUI(GLUI_Control *ctrl)
                     }
                 }
                 
-            ((Scene *) scene)->setCurrentCameraId(cameraIDStr);
+                ((Scene *) scene)->setCurrentCameraId(cameraIDStr);
             }
-
+            
             break;
         };
             
@@ -161,9 +153,6 @@ void Interface::processGUI(GLUI_Control *ctrl)
         {
             break;
         };
-            
-            
 	};
-    
 }
 

@@ -41,10 +41,7 @@ public:
     float getExponent();
     float* getDirection();
 
-    virtual bool isEnabled()
-    {
-        return this->enabled;
-    };
+    bool isEnabled();
    
 private:
     // omni and spot

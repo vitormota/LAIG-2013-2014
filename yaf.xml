@@ -9,7 +9,6 @@
     <cameras initial="cam1" >
         
         <perspective id="cam1" near="0.1" far="1000" angle="60" pos="15 15 15" target="0 0.0 0" />
-         <perspective id="cam1" near="0.1" far="1000" angle="0" pos="15 15 15" target="0 0.0 0" />
         
     </cameras>
     
@@ -286,6 +285,7 @@
                 <translate to="0.45 9.5 17.5"/>
                 <scale factor="1.0 1.0 23.3"/>
             </transforms>
+            <appearanceref id="app_wood" />
             <children>
                 <noderef id="door_gutter_back" />
                 <noderef id="door_gutter_top" />

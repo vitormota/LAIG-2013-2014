@@ -115,11 +115,7 @@ void Lighting::setExponent(float exponent)
 
 void Lighting::setDirection(float* direction)
 {
-    //memcpy(this->direction, direction, 3*sizeof(float));
-    for(unsigned int i = 0; i < 3; i++)
-    {
-        this->direction[i] = direction[i];
-    }
+    memcpy(this->direction, direction, 3*sizeof(float));
 }
 
 float Lighting::getAngle()
@@ -136,4 +132,9 @@ float* Lighting::getDirection()
 {
     return this->direction;
 }
+
+bool Lighting::isEnabled()
+{
+    return this->enabled;
+};
 

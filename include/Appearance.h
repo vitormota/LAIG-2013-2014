@@ -1,20 +1,5 @@
-/* 
- * File:   Appearance.h
- * Author: vitor-mota
- *
- * Created on September 29, 2013, 2:00 PM
- */
-
 #ifndef APPEARANCE_H
 #define	APPEARANCE_H
-
-/*#if __unix
-#include <CGF/CGFappearance.h>
-#elif __APPLE__
-#include "CGFappearance.h"
-#endif*/
-
-
 
 #include <string>
 #ifdef __APPLE__
@@ -29,7 +14,6 @@
 #endif
 
 using std::string;
-
 
 class Appearance {
     

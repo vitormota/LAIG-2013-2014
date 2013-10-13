@@ -57,11 +57,7 @@ vector<scene::Primitive*> Node::getPrimitives()
 
 void Node::setMatrix(float* matrix)
 {
-    //memcpy(this->matrix, matrix,16*sizeof(float));
-    for(unsigned int i = 0; i < 16; i++)
-    {
-        this->matrix[i] = matrix[i];
-    }
+    memcpy(this->matrix, matrix,16*sizeof(float));
 }
 
 float* Node::getMatrix()
