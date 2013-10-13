@@ -186,6 +186,7 @@
                 <noderef id="floor" />
                 <noderef id="walls" />
                 <noderef id="objects" />
+                
             </children>
         </node>
         <!-- Floor -->
@@ -213,7 +214,7 @@
                 <noderef id="corner_lamp_NE" />
                 <noderef id="corner_lamp_SE" />
                 <noderef id="television" />
-                <noderef id="living_room_small_table"/>
+                <noderef id="living_room"/>
                 <noderef id="rug"/>
             </children>
         </node>
@@ -227,7 +228,7 @@
                 <noderef id="north_wall" />
                 <noderef id="east_wall" />
                 <noderef id="glass_wall" />
-             </children>
+            </children>
         </node>
         <node id="wall">
             <transforms>
@@ -618,153 +619,153 @@
                 <noderef id="chair"/>
             </children>
         </node>
-                <node id="chair">
-                    <transforms>
-                        <translate to="0.0 2.0 0.0"/>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_back" />
-                        <noderef id="chair_sit" />
-                        <noderef id="chair_legs" />
-                    </children>
-                </node>
-                <node id="chair_legs">
-                    <transforms>
-                    </transforms>
-                    <appearanceref id="app_metal"/>
-                    <children>
-                        <noderef id="chair_leg1" />
-                        <noderef id="chair_leg2" />
-                        <noderef id="chair_leg3" />
-                        <noderef id="chair_leg4" />
-                    </children>
-                </node>
-                <node id="chair_back_torus">
-                    <transforms>
-                    </transforms>
-                    <children>
-                        <torus inner="0.15" outer="0.9" slices="12" loops="12" />
-                    </children>
-                </node>
-                <node id="chair_back">
-                    <transforms>
-                        <rotate axis="x" angle="-100"/>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_support_bars_top" />
-                        <noderef id="chair_support_back" />
-                    </children>
-                </node>
-                <node id="chair_support_back">
-                    <transforms>
-                        <rotate axis="x" angle="-260"/>
-                        <translate to="0.0 2.2 -0.2"/>
-                        <scale factor="0.8 0.4 0.5"/>
-                        <rotate axis="x" angle="-8"/>
-                    </transforms>
-                    <appearanceref id="app_red"/>
-                    <children>
-                        <noderef id="chair_back_torus" />
-                    </children>
-                </node>
-                <node id="chair_support_bars_top">
-                    <transforms>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_support_bars_top_left" />
-                        <noderef id="chair_support_bars_top_right" />
-                    </children>
-                </node>
-                <node id="chair_support_bars_top_left">
-                    <transforms>
-                        <translate to="-0.85 -0.15 0.0"/>
-                        <scale factor="0.1 0.1 2.5"/>
-                    </transforms>
-                    <children>
-                        <noderef id="unit_cylinder" />
-                    </children>
-                </node>
-                <node id="chair_support_bars_top_right">
-                    <transforms>
-                        <translate to="0.85 -0.15 0.0"/>
-                        <scale factor="0.1 0.1 2.5"/>
-                    </transforms>
-                    <children>
-                        <noderef id="unit_cylinder" />
-                    </children>
-                </node>
-                <node id="chair_sit">
-                    <transforms>
-                        <scale factor="1.0 0.15 2.0"/>
-                        
-                    </transforms>
-                    <children>
-                        <noderef id="unit_cylinder" />
-                    </children>
-                </node>
-                <node id="chair_leg">
-                    <transforms>
-                    </transforms>
-                    <children>
-                        <noderef id="unit_cylinder" />
-                    </children>
-                </node>
-                <node id="chair_leg1">
-                    <transforms>
-                        <rotate axis="x" angle="90"/>
-                        <translate to="0.85 0.15 0.0"/>
-                        <scale factor="0.1 0.1 2.0"/>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_leg" />
-                    </children>
-                </node>
-                <node id="chair_leg2">
-                    <transforms>
-                        <rotate axis="x" angle="90"/>
-                        <translate to="-0.85 0.15 0.0"/>
-                        <scale factor="0.1 0.1 2.0"/>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_leg" />
-                    </children>
-                </node>
-                <node id="chair_leg3">
-                    <transforms>
-                        <rotate axis="x" angle="90"/>
-                        <translate to="-0.85 1.85 0.0"/>
-                        <scale factor="0.1 0.1 2.0"/>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_leg" />
-                    </children>
-                </node>
-                <node id="chair_leg4">
-                    <transforms>
-                        <rotate axis="x" angle="90"/>
-                        <translate to="0.85 1.85 0.0"/>
-                        <scale factor="0.1 0.1 2.0"/>
-                    </transforms>
-                    <children>
-                        <noderef id="chair_leg" />
-                    </children>
-                </node>
-                <!-- Rug -->
-                <node id="rug">
-                    <transforms>
-                        <rotate axis="x" angle="-90"/>
-                        <rotate axis="z" angle="-90"/>
-                        <translate to="16.5 8.5 0.1"/>
-                        <scale factor="26.0 10.0 0.2"/>
-                    </transforms>
-                    <appearanceref id="app_rug"/>
-                    <children>
-                        <noderef id="unit_rectangle"/>
-                    </children>
-                </node>
-
-                <!-- Television -->
-                <node id="television">
+        <node id="chair">
+            <transforms>
+                <translate to="0.0 2.0 0.0"/>
+            </transforms>
+            <children>
+                <noderef id="chair_back" />
+                <noderef id="chair_sit" />
+                <noderef id="chair_legs" />
+            </children>
+        </node>
+        <node id="chair_legs">
+            <transforms>
+            </transforms>
+            <appearanceref id="app_metal"/>
+            <children>
+                <noderef id="chair_leg1" />
+                <noderef id="chair_leg2" />
+                <noderef id="chair_leg3" />
+                <noderef id="chair_leg4" />
+            </children>
+        </node>
+        <node id="chair_back_torus">
+            <transforms>
+            </transforms>
+            <children>
+                <torus inner="0.15" outer="0.9" slices="12" loops="12" />
+            </children>
+        </node>
+        <node id="chair_back">
+            <transforms>
+                <rotate axis="x" angle="-100"/>
+            </transforms>
+            <children>
+                <noderef id="chair_support_bars_top" />
+                <noderef id="chair_support_back" />
+            </children>
+        </node>
+        <node id="chair_support_back">
+            <transforms>
+                <rotate axis="x" angle="-260"/>
+                <translate to="0.0 2.2 -0.2"/>
+                <scale factor="0.8 0.4 0.5"/>
+                <rotate axis="x" angle="-8"/>
+            </transforms>
+            <appearanceref id="app_red"/>
+            <children>
+                <noderef id="chair_back_torus" />
+            </children>
+        </node>
+        <node id="chair_support_bars_top">
+            <transforms>
+            </transforms>
+            <children>
+                <noderef id="chair_support_bars_top_left" />
+                <noderef id="chair_support_bars_top_right" />
+            </children>
+        </node>
+        <node id="chair_support_bars_top_left">
+            <transforms>
+                <translate to="-0.85 -0.15 0.0"/>
+                <scale factor="0.1 0.1 2.5"/>
+            </transforms>
+            <children>
+                <noderef id="unit_cylinder" />
+            </children>
+        </node>
+        <node id="chair_support_bars_top_right">
+            <transforms>
+                <translate to="0.85 -0.15 0.0"/>
+                <scale factor="0.1 0.1 2.5"/>
+            </transforms>
+            <children>
+                <noderef id="unit_cylinder" />
+            </children>
+        </node>
+        <node id="chair_sit">
+            <transforms>
+                <scale factor="1.0 0.15 2.0"/>
+                
+            </transforms>
+            <children>
+                <noderef id="unit_cylinder" />
+            </children>
+        </node>
+        <node id="chair_leg">
+            <transforms>
+            </transforms>
+            <children>
+                <noderef id="unit_cylinder" />
+            </children>
+        </node>
+        <node id="chair_leg1">
+            <transforms>
+                <rotate axis="x" angle="90"/>
+                <translate to="0.85 0.15 0.0"/>
+                <scale factor="0.1 0.1 2.0"/>
+            </transforms>
+            <children>
+                <noderef id="chair_leg" />
+            </children>
+        </node>
+        <node id="chair_leg2">
+            <transforms>
+                <rotate axis="x" angle="90"/>
+                <translate to="-0.85 0.15 0.0"/>
+                <scale factor="0.1 0.1 2.0"/>
+            </transforms>
+            <children>
+                <noderef id="chair_leg" />
+            </children>
+        </node>
+        <node id="chair_leg3">
+            <transforms>
+                <rotate axis="x" angle="90"/>
+                <translate to="-0.85 1.85 0.0"/>
+                <scale factor="0.1 0.1 2.0"/>
+            </transforms>
+            <children>
+                <noderef id="chair_leg" />
+            </children>
+        </node>
+        <node id="chair_leg4">
+            <transforms>
+                <rotate axis="x" angle="90"/>
+                <translate to="0.85 1.85 0.0"/>
+                <scale factor="0.1 0.1 2.0"/>
+            </transforms>
+            <children>
+                <noderef id="chair_leg" />
+            </children>
+        </node>
+        <!-- Rug -->
+        <node id="rug">
+            <transforms>
+                <rotate axis="x" angle="-90"/>
+                <rotate axis="z" angle="-90"/>
+                <translate to="16.5 8.5 0.1"/>
+                <scale factor="26.0 10.0 0.2"/>
+            </transforms>
+            <appearanceref id="app_rug"/>
+            <children>
+                <noderef id="unit_rectangle"/>
+            </children>
+        </node>
+        
+        <!-- Television -->
+        <node id="television">
             <transforms>
                 <rotate axis="y" angle="-90"/>
                 <translate to="18.5 7.0 -30.0"/>
@@ -787,10 +788,28 @@
             </children>
         </node>
         <!-- Small Table -->
+        
+        <node id="living_room">
+            <transforms>
+                <rotate axis="y" angle="90"/>
+                <translate to="-18.5 1.0 25.0"/>
+            </transforms>
+            <children>
+                <noderef id="living_room_small_table"/>
+                <noderef id="living_room_sofa"/>
+            </children>
+        </node>
+        <node id="living_room_sofa">
+            <transforms>
+                <translate to="0.0 0.0 -5.0"/>
+                <scale factor="2.0 1.0 1.0"/>
+            </transforms>
+            <children>
+                <noderef id="sofa"/>
+            </children>
+        </node>
         <node id="living_room_small_table">
             <transforms>
-                <rotate axis="y" angle="-90"/>
-                <translate to="18.5 1.0 -25.0"/>
             </transforms>
             <appearanceref id="app_brass"/>
             <children>
@@ -960,7 +979,6 @@
                 <torus inner="1.0" outer="1.0" slices="12" loops="12" />
             </children>
         </node>
-        
         <node id="dinner_table_lamp_set_2">
             <transforms>
                 <translate to="0.0 0.0 7.0"/>
@@ -976,6 +994,98 @@
             <children>
                 <noderef id="dinner_table"/>
                 <noderef id="lamp"/>
+            </children>
+        </node>
+        <node id="sofa">
+            <transforms>
+                <appearanceref id="app_pearl"/>
+            </transforms>
+            <children>
+                <noderef id="sofa_sit"/>
+                <noderef id="sofa_back"/>
+                <noderef id="sofa_shoulders"/>
+                <noderef id="sofa_bottom"/>
+                <noderef id="sofa_pillows"/>
+            </children>
+        </node>
+        <node id="sofa_sit">
+            <transforms>
+            </transforms>
+            <children>
+                <noderef id="sofa_sit_1"/>
+                <noderef id="sofa_sit_2"/>
+            </children>
+        </node>
+        <node id="sofa_sit_1">
+            <transforms>
+                <translate to="-1.0 0.4 0.0"/>
+                <scale factor="1.95 0.5 3.0"/>
+            </transforms>
+            <children>
+                <noderef id="unit_cube"/>
+            </children>
+        </node>
+        <node id="sofa_sit_2">
+            <transforms>
+                <translate to="1.0 0.4 0.0"/>
+                <scale factor="1.95 0.5 3.0"/>
+            </transforms>
+            <children>
+                <noderef id="unit_cube"/>
+            </children>
+        </node>
+        <node id="sofa_shoulders">
+            <transforms>
+                <scale factor="0.5 1.8 3.0"/>
+            </transforms>
+            <children>
+                <noderef id="sofa_shoulders_1"/>
+                <noderef id="sofa_shoulders_2"/>
+            </children>
+        </node>
+        <node id="sofa_shoulders_1">
+            <transforms>
+                <translate to="-4.5 0.55 0.0"/>
+            </transforms>
+            <children>
+                <noderef id="unit_cube"/>
+            </children>
+        </node>
+        <node id="sofa_shoulders_2">
+            <transforms>
+                <translate to="4.5 0.55 0.0"/>
+                
+            </transforms>
+            <children>
+                <noderef id="unit_cube"/>
+            </children>
+        </node>
+        <node id="sofa_bottom">
+            <transforms>
+                <scale factor="1.0 1.5 1.0"/>
+            </transforms>
+            <children>
+                <noderef id="small_table"/>
+            </children>
+        </node>
+        <node id="sofa_back">
+            <transforms>
+                <translate to="0.0 1.1 -1.25"/>
+                <scale factor="4.0 2.0 0.5"/>
+            </transforms>
+            <children>
+                <noderef id="unit_cube"/>
+            </children>
+        </node>
+        <node id="sofa_pillows">
+            <transforms>
+                <rotate axis="x" angle="-40"/>
+                <translate to="-1.0 1.2 0.4"/>
+                <scale factor="0.3 0.4 0.2"/>
+            </transforms>
+            <appearanceref id="app_red"/>
+            <children>
+                <noderef id="unit_torus"/>
             </children>
         </node>
     </graph>
