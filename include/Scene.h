@@ -142,6 +142,7 @@ public:
     float ambient[4];
     
     stack<CGFappearance*> app_stack;
+    stack<string> app_refStack; // references of the appearances in the app_stack (app_stack.top reference == app_refStack.top)
     
     /* cameras element attribute */
     string initial;

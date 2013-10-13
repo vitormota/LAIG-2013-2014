@@ -295,9 +295,6 @@ void Scene::display() {
     // Initialize Model-View matrix as identity
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-    // Apply transformations corresponding to the camera position relative to the origin
-    //CGFscene::activeCamera->applyView();
     
     // change to the current camera
      this->cameraAspect = CGFapplication::xy_aspect;
@@ -415,6 +412,7 @@ void Scene::processNode(string id) {
 	    glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[appearanceref]->getEmissive()); // emissive
 	    appearances[appearanceref]->apply();
 	    app_stack.push(appearances[appearanceref]);
+        app_refStack.push(appearanceref);
 	    txt_s = appearancesMap[appearanceref]->getTexlength_s();
 	    txt_t = appearancesMap[appearanceref]->getTexlength_t();
 	}
@@ -448,9 +446,11 @@ void Scene::processNode(string id) {
 	//so we need previous appearance
 	if (pop && app_stack.size() > 1) {
 	    app_stack.pop();
-	    app_stack.top()->apply();
+        app_refStack.pop();
+	    app_stack.top()->apply(); // apply appearance
+    
+	    glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[app_refStack.top()]->getEmissive()); // emissive
 	}
-
     }
 }
 
@@ -613,16 +613,22 @@ void Scene::changeCamera(string cameraId) {
         Camera* currentCamera = camerasMap[cameraId];
         currentCamera->setAspect(this->cameraAspect);
         
-        
         CGFcamera* currentCGFcamera = currentCamera;
         currentCGFcamera->updateProjectionMatrix(1.0, 1.0);
             
             activeCamera = currentCamera;
+            // Apply transformations corresponding to the camera position relative to the origin
             CGFscene::activeCamera->applyView();
             CGFapplication::activeApp->forceRefresh();
         }
         else{
+            // Initialize Model-View matrix as identity
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
+
+            CGFscene::initCameras();
             activeCamera = CGFscene::scene_cameras[0];
+            // Apply transformations corresponding to the camera position relative to the origin
             CGFscene::activeCamera->applyView();
         }
     }

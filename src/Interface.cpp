@@ -4,8 +4,8 @@
 
 Interface::Interface()
 {
-	viewID = 0;
-    cameraID = 0;
+	this->viewID = 0;
+    this->cameraID = 0;
 }
 
 void Interface::processKeyboard(unsigned char key, int x, int y)
@@ -151,11 +151,6 @@ void Interface::processGUI(GLUI_Control *ctrl)
                 ((Scene *) scene)->setDrawingMode(viewID);
                 
             }
-            break;
-        };
-            
-        case 12:
-        {
             break;
         };
 	};
