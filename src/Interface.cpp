@@ -77,6 +77,8 @@ void Interface::initGUI()
     
     GLUI_Listbox *cameraListBox = addListboxToPanel(camerasPanel, "Choose camera: ",&this->cameraID, 10);
     
+    cameraListBox->add_item(0,"Default"); // default active camera
+    
     map<string, Camera*> cameras = ((Scene *) scene)->getCameras();
     map<string, unsigned int> camerasId = ((Scene *) scene)->getCamerasId();
     
@@ -134,6 +136,9 @@ void Interface::processGUI(GLUI_Control *ctrl)
                 }
                 
                 ((Scene *) scene)->setCurrentCameraId(cameraIDStr);
+            }
+            else {
+                    ((Scene *) scene)->setCurrentCameraId("activeCGFcamera0");
             }
             
             break;
