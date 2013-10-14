@@ -182,21 +182,6 @@ namespace scene {
     
     void Triangle::draw() {
         
-        /*
-         float acN= sqrt( (x3-x1)*(x3-x1) + (y3-y1)*(y3-y1) + (z3-z1)*(z3-z1));
-         float abN= sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) + (z2-z1)*(z2-z1));
-         float ab[3],ac[3];
-         ab[0]=(x2-x1)/abN;
-         ab[1]=(y2-y1)/abN;
-         ab[2]=(z2-z1)/abN;
-         ac[0]=(x3-x1)/acN;
-         ac[1]=(y3-y1)/acN;
-         ac[2]=(z3-z1)/acN;
-         
-         float cosAlfa =abs(ab[0]*ac[0]+ab[1]*ac[1]+ab[2]*ac[2]);
-         float AD = abN*cosAlfa;
-         float AE = abN*sin(acos(cosAlfa));*/
-        
         glBegin(GL_TRIANGLES);
         
         glNormal3f(normalTriangle[0], normalTriangle[1], normalTriangle[2]);
@@ -255,10 +240,6 @@ namespace scene {
         float *normal = (float*) malloc(sizeof (float)*3);
         float *vertex_act, *vertex_next;
         
-        /*while(vertices[count]){
-         cout << vertices[count][0] << "," << vertices[count][1] << "," << vertices[count][2] << endl;
-         count++;
-         } */
         for (int vert = 0; vert < size; ++vert) {
             vertex_act = vertices[vert];
             vertex_next = vertices[(vert + 1) % size];
