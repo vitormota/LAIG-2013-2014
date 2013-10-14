@@ -1,6 +1,7 @@
 #include "Interface.h"
 
 #include "Scene.h"
+#include <sstream>
 
 Interface::Interface()
 {
@@ -32,42 +33,82 @@ void Interface::initGUI()
     
     if(((Scene *) scene)->light0Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 1", ((Scene *) scene)->light_0, 2);
+        string lightStr = "Light 1: ";
+        string id = ((Scene *) scene)->lightsId[0];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_0, 2);
     }
     
     if(((Scene *) scene)->light1Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 2", ((Scene *) scene)->light_1, 3);
+        string lightStr = "Light 2: ";
+        string id = ((Scene *) scene)->lightsId[1];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_1, 3);
     }
     
     if(((Scene *) scene)->light2Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 3", ((Scene *) scene)->light_2, 4);
+        string lightStr = "Light 3: ";
+        string id = ((Scene *) scene)->lightsId[2];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_2, 4);
     }
     
     if(((Scene *) scene)->light3Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 4", ((Scene *) scene)->light_3, 5);
+        string lightStr = "Light 4: ";
+        string id = ((Scene *) scene)->lightsId[3];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_3, 5);
     }
     
     if(((Scene *) scene)->light4Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 5", ((Scene *) scene)->light_4, 6);
+        string lightStr = "Light 5: ";
+        string id = ((Scene *) scene)->lightsId[4];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_4, 6);
     }
     
     if(((Scene *) scene)->light5Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 6", ((Scene *) scene)->light_5, 7);
+        string lightStr = "Light 6: ";
+        string id = ((Scene *) scene)->lightsId[5];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_5, 7);
     }
     
     if(((Scene *) scene)->light6Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 7", ((Scene *) scene)->light_6, 8);
+        string lightStr = "Light 7: ";
+        string id = ((Scene *) scene)->lightsId[6];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_6, 8);
     }
     
     if(((Scene *) scene)->light7Exists)
     {
-        addCheckboxToPanel(lightsPanel, "Light 8", ((Scene *) scene)->light_7, 9);
+        string lightStr = "Light 8: ";
+        string id = ((Scene *) scene)->lightsId[7];
+        stringstream tmp;
+        tmp << lightStr << id;
+        
+        addCheckboxToPanel(lightsPanel, (char*) tmp.str().c_str(), ((Scene *) scene)->light_7, 9);
     }
     
     addColumnToPanel(mainPanel);

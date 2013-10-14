@@ -163,7 +163,7 @@ public:
     map<string, unsigned int> camerasId; // camera attribute id and Interface id
     
     map<string, CGFappearance*> appearances;
-    vector<CGFlight*> lights;
+    vector<string> lightsId;
     vector<CGFtexture*> textures;
     
     void setDrawingMode(unsigned int mode);

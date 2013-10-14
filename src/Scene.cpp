@@ -107,6 +107,7 @@ void Scene::init() {
 
     // create and save lights
 
+    this->lightsId = vector<string>();
     map<string, Lighting*>::const_iterator itL = lightingMap.begin();
 
     GLenum light_id = GL_LIGHT0;
@@ -114,7 +115,7 @@ void Scene::init() {
     unsigned int lightCount = 0;
 
     for (itL = lightingMap.begin(); itL != lightingMap.end(); itL++) {
-
+        
 	// OpenGL allows a maximum of 8 light sources in a scene at once
 	if (lightCount == 0) {
 	    light_id = GL_LIGHT0;
@@ -153,6 +154,8 @@ void Scene::init() {
 	}
 
 	Lighting* light = (itL)->second;
+        
+    this->lightsId.push_back(light->getId());
 
 	// light values
 	glLightfv(light_id, GL_POSITION, light->getLocation()); // position
@@ -623,13 +626,17 @@ void Scene::changeCamera(string cameraId) {
         }
         else{
             // Initialize Model-View matrix as identity
-            glMatrixMode(GL_MODELVIEW);
+            glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
+            glFrustum(-(this->cameraAspect)*0.04, (this->cameraAspect)*0.04, -0.04, 0.04, 0.1, 500.0);
 
-            CGFscene::initCameras();
             activeCamera = CGFscene::scene_cameras[0];
             // Apply transformations corresponding to the camera position relative to the origin
             CGFscene::activeCamera->applyView();
+            
+            // Initialize Model-View matrix as identity
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
         }
     }
 }

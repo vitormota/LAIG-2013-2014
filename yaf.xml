@@ -6,15 +6,17 @@
 
 <yaf>
     <globals background="0.1 0.1 0.1 0.1" drawmode="fill" shading="gouraud" cullface="back" cullorder="CCW" />
-    <cameras initial="cam1" >
+    <cameras initial="perspective2" >
         
-        <perspective id="cam1" near="0.01" far="1500" angle="90" pos="15.0 20.0 15.0" target="0.0 0.0 0.0" />
+        <perspective id="perspective1" near="0.01" far="1500" angle="90" pos="15.0 20.0 15.0" target="0.0 0.0 0.0" />
+        <perspective id="perspective2" near="2.0" far="150.0" angle="90" pos="35.0 15.0 15.0" target="0.0 0.0 0.0" />
+        <ortho id="ortho1" near="3.9" far="2000.0" left="0.0" right="30.0" top="10.0" bottom="0.0" />
         
     </cameras>
     
     <lighting doublesided="true" local="true" enabled="true" ambient="0 0 0 1.0" >
         
-        <omni id="light1" enabled="true"
+        <omni id="light1" enabled="false"
         location="5.0 5.0 5.0"
         ambient="0.7 0.8 0.7 1.0"
         diffuse="0.5 0.5 0.5 1.0"
@@ -28,21 +30,39 @@
         specular="0.2 0.2 0.3 1"
         />
         
-        <omni id="light3" enabled="false"
+        <omni id="light3" enabled="true"
         location="11.25 7.3 3.75"
         ambient="0.1 0.03 0.03 0.03"
         diffuse="0.5 0.6 0.8 1"
         specular="0.2 0.2 0.3 1"
         />
         
-        <spot id="light4" enabled="false"
-        location="5 7.5 5"
-        ambient="0.1 0.2 0.3 0.5"
-        diffuse="0.55 0.65 0.85 1"
-        specular="0.7 0.7 0.7 1"
-        angle="45"
-        exponent="2"
-        direction="5 0 5"
+        <omni id="lamp_NW" enabled="true"
+        location="1.5 8.0 1.5"
+        ambient="0.30 0.30 0.30 0.30"
+        diffuse="0.3 0.3 0.3 1.0"
+        specular="0.5 0.5 0.5 1.0"
+        />
+        
+        <omni id="lamp_NE" enabled="true"
+        location="28.5 8.0 1.5"
+        ambient="0.30 0.30 0.30 0.30"
+        diffuse="0.3 0.3 0.3 1.0"
+        specular="0.5 0.5 0.5 1.0"
+        />
+        
+        <omni id="lamp_SE" enabled="true"
+        location="28.5 8.0 28.5"
+        ambient="0.30 0.30 0.30 0.30"
+        diffuse="0.3 0.3 0.3 1.0"
+        specular="0.5 0.5 0.5 1.0"
+        />
+        
+        <omni id="lamp_SW" enabled="true"
+        location="1.5 8.0 28.5"
+        ambient="0.30 0.30 0.30 0.30"
+        diffuse="0.3 0.3 0.3 1.0"
+        specular="0.5 0.5 0.5 1.0"
         />
         
     </lighting>

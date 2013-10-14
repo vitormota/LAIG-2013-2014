@@ -38,12 +38,7 @@ namespace scene{
         float getTexlength_t();
 		virtual void draw(){}
         float *get_normal_newell(float **vertices, int size);
-        
-        float **verticesRectangle; // vertices of the rectangle primitive
-        float **verticesTriangle; // vertices of the triangle primitive
-        float *normalRectangle; // normal of the rectangle primitive
-        float *normalTriangle; // normal of the triangle primitive
-
+        float *getSurfaceNormalTriangle (const float x[], const float y[], const float z[], int numPontos);
 	};
 
 	/* Rectangle */
@@ -51,8 +46,8 @@ namespace scene{
 
 	private:
 		float x1, y1, x2, y2;
-		float **vertices;
-		float *normal;
+        float **verticesRectangle; // vertices of the rectangle primitive
+        float *normalRectangle; // normal of the rectangle primitive
         float height,length;
 
 	public:
@@ -65,6 +60,11 @@ namespace scene{
 
 	private:
 		float x1, y1, z1, x2, y2, z2, x3, y3, z3;
+        float **verticesTriangle; // vertices of the triangle primitive
+        float *normalTriangle; // normal of the triangle primitive
+        float a,b,c;
+        float cos_beta, sin_beta;
+        float p0[2], p1[2], p2[2];
 
 	public:
 		Triangle(string id, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
