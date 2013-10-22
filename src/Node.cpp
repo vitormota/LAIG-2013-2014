@@ -5,9 +5,10 @@ Node::Node()
     
 }
 
-Node::Node(string id)
-{
-    this->id = id;
+Node::Node(string id,bool display_list){
+	this->use_list = display_list;
+	this->id=id;
+	this->the_object = 0x0;
 }
 
 Node::~Node()

@@ -2,7 +2,6 @@
 #define _PRIMITIVE_H
 
 #include <string>
-#include <string>
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
@@ -22,6 +21,7 @@ namespace scene{
 	class Primitive
 	{
 	private:
+
 		string id;
         float texlength_s;
         float texlength_t;

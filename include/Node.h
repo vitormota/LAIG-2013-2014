@@ -25,7 +25,7 @@ using std::vector;
 	
     public:
         Node();
-        Node(string id);
+        Node(string id,bool display_list);
         ~Node();
         void setId(string id);
         void setAppearanceRef(string appearanceref);
@@ -36,11 +36,21 @@ using std::vector;
         string getAppearanceRef();
         vector<string> getChildrenNodeRef();
         vector<scene::Primitive*> getPrimitives();
-        float* getMatrix();
+        
+		//-----> NEW (TP02-Display Lists)
+		//the list identifier where the
+		//object will be cached
+		GLuint the_object;
+		//flag to specify the use of list
+		bool use_list;
+		//-----> END NEW
+
+		float* getMatrix();
         
 		virtual void draw(){}
 	
 	private:
+
         string id;
         string appearanceref;
         vector<string> childrenNodeRef; // noderef's of the children

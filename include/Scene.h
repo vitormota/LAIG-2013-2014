@@ -105,6 +105,11 @@ public:
     
     void changeCamera(string cameraId);
 
+	//----> NEW (TP02- Display Lists)
+	vector<int*> diplay_lists;
+	int current_list_index;
+	//----> END NEW
+
     ~Scene();
 
     Graph* sceneGraph;

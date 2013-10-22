@@ -28,7 +28,7 @@
 #if __unix
 #include <CGF/CGFapplication.h>
 #elif _WIN32
-#include <CGFapplication.h>
+#include <CGF/CGFapplication.h>
 #endif
 #include "Scene.h"
 #include "Appearance.h"

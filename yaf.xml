@@ -199,18 +199,19 @@
     <graph rootid="root">
         <!-- Root Node -->
         <node id="root">
+
             <transforms>
             </transforms>
             <appearanceref id="app_default"/>
             <children>
                 <noderef id="floor" />
-                <noderef id="walls" />
-                <noderef id="objects" />
+                <!-- <noderef id="walls" />
+                <noderef id="objects" /> -->
                 
             </children>
         </node>
         <!-- Floor -->
-        <node id="floor">
+        <node id="floor" displaylist="true">
             <transforms>
                 <translate to="15.0 0.0 17.5"/>
                 <scale factor="30.0 1.0 35.0"/>
