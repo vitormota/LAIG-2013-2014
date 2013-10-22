@@ -161,6 +161,44 @@ namespace scene {
         glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
     }
     
+    Plane::Plane(string id, int parts) : Primitive(id)
+    {
+        this->parts = parts;
+    }
+    
+    Patch::Patch(string id, int order, int partsU, int partsV, string compute, vector<float*> controlPoints) : Primitive(id)
+    {
+        this->order = order;
+        this->partsU = partsU;
+        this->partsV = partsV;
+        this->compute = compute;
+        setControlPoints(controlPoints);
+    }
+    
+    void Patch::setControlPoints(vector<float*> controlPoints)
+    {
+        this->controlPoints = vector<float*>();
+        this->controlPoints = controlPoints;
+    }
+    
+    vector<float*> Patch::getControlPoints()
+    {
+        return controlPoints;
+    }
+    
+    Vehicle::Vehicle(string id) : Primitive(id)
+    {
+        
+    }
+    
+    Waterline::Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader) : Primitive(id)
+    {
+        this->heightmap = heightmap;
+        this->texturemap = texturemap;
+        this->fragmentshader = fragmentshader;
+        this->vertexshader = vertexshader;
+    }
+    
     void Rectangle::draw() {
         
         glBegin(GL_QUADS);
@@ -233,6 +271,30 @@ namespace scene {
         
         glDisable(GL_TEXTURE_GEN_S);
         glDisable(GL_TEXTURE_GEN_T);
+        
+    }
+    
+    void Plane::draw() {
+        
+        // TODO
+        
+    }
+
+    void Patch::draw() {
+        
+        // TODO
+        
+    }
+    
+    void Vehicle::draw() {
+        
+        // TODO
+        
+    }
+    
+    void Waterline::draw() {
+        
+        // TODO
         
     }
     

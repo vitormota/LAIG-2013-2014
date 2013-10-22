@@ -2,6 +2,7 @@
 #define _PRIMITIVE_H
 
 #include <string>
+#include <string>
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
@@ -15,13 +16,13 @@
 
 
 using std::string;
+using std::vector;
 
 namespace scene{
 
 	class Primitive
 	{
 	private:
-
 		string id;
         float texlength_s;
         float texlength_t;
@@ -107,6 +108,53 @@ namespace scene{
 
 	public:
 		Torus(string id, float inner, float outer, int slices, int loops);
+		virtual void draw();
+	};
+    
+    /* Plane */
+	class Plane: public Primitive{
+        
+	private:
+		int parts;
+        
+	public:
+		Plane(string id, int parts);
+		virtual void draw();
+	};
+    
+    /* Patch */
+	class Patch: public Primitive{
+        
+	private:
+		int order, partsU, partsV;
+        string compute;
+        vector<float*> controlPoints;
+        
+	public:
+		Patch(string id, int order, int partsU, int partsV, string compute, vector<float*> controlPoints);
+		void setControlPoints(vector<float*> controlPoints);
+        vector<float*> getControlPoints();
+        virtual void draw();
+	};
+    
+    /* Vehicle */
+	class Vehicle: public Primitive{
+        
+	private:
+        
+	public:
+		Vehicle(string id);
+		virtual void draw();
+	};
+    
+    /* Waterline */
+	class Waterline: public Primitive{
+        
+	private:
+        string heightmap, texturemap, fragmentshader, vertexshader;
+        
+	public:
+		Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader);
 		virtual void draw();
 	};
 

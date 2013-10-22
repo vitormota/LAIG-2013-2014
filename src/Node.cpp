@@ -6,9 +6,9 @@ Node::Node()
 }
 
 Node::Node(string id,bool display_list){
-	this->use_list = display_list;
-	this->id=id;
-	this->the_object = 0x0;
+    this->use_list = display_list;
+    this->id=id;
+    this->the_object = 0x0;
 }
 
 Node::~Node()
@@ -31,9 +31,18 @@ void Node::setAppearanceRef(string appearanceref)
     this->appearanceref = appearanceref;
 }
 
+void Node::setAnimationRef(string animationref)
+{
+    this->animationref = animationref;
+}
+
 string Node::getAppearanceRef()
 {
     return this->appearanceref;
+}
+string Node::getAnimationRef()
+{
+    return this->animationref;
 }
 
 void Node::setChildrenNodeRef(vector<string> childrenNodeRef)
