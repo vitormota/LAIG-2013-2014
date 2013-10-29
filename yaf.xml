@@ -205,6 +205,7 @@
             <appearanceref id="app_default"/>
             <children>
                 <noderef id="floor" />
+	        <noderef id="big_dinner_table"/>
                 <!-- <noderef id="walls" />
                 <noderef id="objects" /> -->
                 
@@ -454,7 +455,7 @@
             </children>
         </node>
         <!-- Big Dinner Table -->
-        <node id="big_dinner_table">
+        <node id="big_dinner_table" displaylist="true">
             <transforms>
                 <translate to="8.5 2.0 8.0"/>
             </transforms>
@@ -464,7 +465,7 @@
                 <noderef id="dinner_table_S_3"/>
             </children>
         </node>
-        <node id="dinner_table_S_1">
+        <node id="dinner_table_S_1" displaylist="true">
             <transforms>
                 <translate to="0.0 0.0 0.0"/>
             </transforms>

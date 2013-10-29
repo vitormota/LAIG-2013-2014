@@ -35,12 +35,15 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/Cameras.o \
+	${OBJECTDIR}/src/Appearance.o \
+	${OBJECTDIR}/src/Camera.o \
 	${OBJECTDIR}/src/Graph.o \
-	${OBJECTDIR}/src/Lightning.o \
+	${OBJECTDIR}/src/Interface.o \
+	${OBJECTDIR}/src/Lighting.o \
 	${OBJECTDIR}/src/Node.o \
 	${OBJECTDIR}/src/Primitive.o \
 	${OBJECTDIR}/src/Scene.o \
+	${OBJECTDIR}/src/Texture.o \
 	${OBJECTDIR}/src/YafParser.o \
 	${OBJECTDIR}/src/main.o
 
@@ -59,55 +62,74 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lglut -lCGF -ltinyxml `pkg-config --libs gl` `pkg-config --libs glew` `pkg-config --libs glu` `pkg-config --libs glui`  
+LDLIBSOPTIONS=-lglut lib/libCGF.a `pkg-config --libs glew` `pkg-config --libs gl` `pkg-config --libs glu` `pkg-config --libs glui` lib/TinyXML.a  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014
 
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014: lib/libCGF.a
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014: lib/TinyXML.a
+
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/laig-2013-2014 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/src/Cameras.o: src/Cameras.cpp 
+${OBJECTDIR}/src/Appearance.o: src/Appearance.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Cameras.o src/Cameras.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Appearance.o src/Appearance.cpp
+
+${OBJECTDIR}/src/Camera.o: src/Camera.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Camera.o src/Camera.cpp
 
 ${OBJECTDIR}/src/Graph.o: src/Graph.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Graph.o src/Graph.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Graph.o src/Graph.cpp
 
-${OBJECTDIR}/src/Lightning.o: src/Lightning.cpp 
+${OBJECTDIR}/src/Interface.o: src/Interface.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Lightning.o src/Lightning.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Interface.o src/Interface.cpp
+
+${OBJECTDIR}/src/Lighting.o: src/Lighting.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Lighting.o src/Lighting.cpp
 
 ${OBJECTDIR}/src/Node.o: src/Node.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Node.o src/Node.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Node.o src/Node.cpp
 
 ${OBJECTDIR}/src/Primitive.o: src/Primitive.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Primitive.o src/Primitive.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Primitive.o src/Primitive.cpp
 
 ${OBJECTDIR}/src/Scene.o: src/Scene.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Scene.o src/Scene.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Scene.o src/Scene.cpp
+
+${OBJECTDIR}/src/Texture.o: src/Texture.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Texture.o src/Texture.cpp
 
 ${OBJECTDIR}/src/YafParser.o: src/YafParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/YafParser.o src/YafParser.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/YafParser.o src/YafParser.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags gl` `pkg-config --cflags glew` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -Iinclude `pkg-config --cflags glew` `pkg-config --cflags gl` `pkg-config --cflags glu` `pkg-config --cflags glui`   -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 # Subprojects
 .build-subprojects:

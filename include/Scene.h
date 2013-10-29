@@ -54,8 +54,7 @@
 using std::map;
 using std::string;
 
-
-class Scene: public CGFscene {
+class Scene : public CGFscene {
 private:
 
 public:
@@ -63,57 +62,57 @@ public:
     void init();
     void display();
     void setGraph(Graph* sceneGraph);
-    void setAppearances(map<string,Appearance*> appearancesMap);
-    void setTextures(map<string,Texture*> texturesMap);
-    void setLights(map<string,Lighting*> lightningMap);
-    void setCameras(map<string,Camera*> camerasMap);
+    void setAppearances(map<string, Appearance*> appearancesMap);
+    void setTextures(map<string, Texture*> texturesMap);
+    void setLights(map<string, Lighting*> lightningMap);
+    void setCameras(map<string, Camera*> camerasMap);
     void setCamerasId(map<string, unsigned int> camerasId);
     void setBackground(float* background);
     void setDrawmode(string drawmode);
     void setShading(string shading);
     void setCullface(string cullface);
     void setCullorder(string cullorder);
-    
+
     void setDoublesided(bool doublesided);
     void setLocal(bool local);
     void setEnabled(bool enabled);
     void setAmbient(float* ambient);
-    
+
     void setInitial(string initial);
-    
+
     Graph* getGraph();
-    map<string,Appearance*> getAppearances();
-    map<string,Texture*> getTextures();
-    map<string,Lighting*> getLights();
-    map<string,Camera*> getCameras();
+    map<string, Appearance*> getAppearances();
+    map<string, Texture*> getTextures();
+    map<string, Lighting*> getLights();
+    map<string, Camera*> getCameras();
     map<string, unsigned int> getCamerasId();
     float* getBackground();
     string getDrawmode();
     string getShading();
     string getCullface();
     string getCullorder();
-    
+
     bool getDoublesided();
     bool getLocal();
     bool getEnabled();
     float* getAmbient();
-    
+
     string getInitial();
-    
+
     void processGraph(); // process all the nodes of the graph in order
-    void processNode(string id);
-    
+    void processNode(string id, bool onList);
+
     void changeCamera(string cameraId);
 
     //----> NEW (TP02- Display Lists)
     vector<int*> diplay_lists;
     int current_list_index;
     //----> END NEW
-    
+
     ~Scene();
 
     Graph* sceneGraph;
-    
+
     // 1 if light is enabled, 0 if light is disabled
     int* light_0;
     int* light_1;
@@ -123,7 +122,7 @@ public:
     int* light_5;
     int* light_6;
     int* light_7;
-    
+
     bool light0Exists;
     bool light1Exists;
     bool light2Exists;
@@ -139,43 +138,43 @@ public:
     string shading;
     string cullface;
     string cullorder;
-    
+
     /* lighting element attributes */
     bool doublesided;
     bool local;
     bool enabled;
     float ambient[4];
-    
+
     stack<CGFappearance*> app_stack;
     stack<string> app_refStack; // references of the appearances in the app_stack (app_stack.top reference == app_refStack.top)
-    
+
     /* cameras element attribute */
     string initial;
-    
+
     string currentCameraId;
-    
+
     void setCurrentCameraId(string currentCameraId);
-    
+
     float cameraAspect; // aspect = GLUwindowWidth/GLUwindowHeight
-    
+
     float txt_s, txt_t; // texlength_s/texlength_t
-    
-    map<string,Texture*> texture_mapping;
-    map<string,Appearance*> appearancesMap;
-    map<string,Texture*> texturesMap;
-    map<string,Lighting*> lightingMap;
-    map<string,Camera*> camerasMap;
+
+    map<string, Texture*> texture_mapping;
+    map<string, Appearance*> appearancesMap;
+    map<string, Texture*> texturesMap;
+    map<string, Lighting*> lightingMap;
+    map<string, Camera*> camerasMap;
     map<string, unsigned int> camerasId; // camera attribute id and Interface id
-    
+
     map<string, CGFappearance*> appearances;
     vector<string> lightsId;
     vector<CGFtexture*> textures;
-    
+
     void setDrawingMode(unsigned int mode);
     unsigned int getDrawingMode();
     int mode;
     void changeLightEnableDisable(unsigned int light_id); // enable/disable light with the id = light_id
-   
+
 };
 
 #endif /* defined(__LAIG___P1__Scene__) */

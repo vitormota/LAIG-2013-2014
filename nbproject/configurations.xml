@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>include/Appearance.h</itemPath>
-      <itemPath>include/Cameras.h</itemPath>
+      <itemPath>include/Camera.h</itemPath>
       <itemPath>include/Graph.h</itemPath>
-      <itemPath>include/Lightning.h</itemPath>
+      <itemPath>include/Interface.h</itemPath>
+      <itemPath>include/Lighting.h</itemPath>
       <itemPath>include/Node.h</itemPath>
       <itemPath>include/Primitive.h</itemPath>
       <itemPath>include/Scene.h</itemPath>
@@ -24,12 +25,15 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>src/Cameras.cpp</itemPath>
+      <itemPath>src/Appearance.cpp</itemPath>
+      <itemPath>src/Camera.cpp</itemPath>
       <itemPath>src/Graph.cpp</itemPath>
-      <itemPath>src/Lightning.cpp</itemPath>
+      <itemPath>src/Interface.cpp</itemPath>
+      <itemPath>src/Lighting.cpp</itemPath>
       <itemPath>src/Node.cpp</itemPath>
       <itemPath>src/Primitive.cpp</itemPath>
       <itemPath>src/Scene.cpp</itemPath>
+      <itemPath>src/Texture.cpp</itemPath>
       <itemPath>src/YafParser.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
@@ -52,7 +56,6 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -66,22 +69,24 @@
         <linkerTool>
           <linkerLibItems>
             <linkerLibLibItem>glut</linkerLibLibItem>
-            <linkerLibLibItem>CGF</linkerLibLibItem>
-            <linkerLibLibItem>tinyxml</linkerLibLibItem>
-            <linkerOptionItem>`pkg-config --libs gl`</linkerOptionItem>
+            <linkerLibFileItem>lib/libCGF.a</linkerLibFileItem>
             <linkerOptionItem>`pkg-config --libs glew`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs gl`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs glu`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs glui`</linkerOptionItem>
+            <linkerLibFileItem>lib/TinyXML.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="include/Appearance.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Cameras.h" ex="false" tool="3" flavor2="0">
+      <item path="include/Camera.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Graph.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Lightning.h" ex="false" tool="3" flavor2="0">
+      <item path="include/Interface.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Lighting.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Node.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -97,17 +102,23 @@
       </item>
       <item path="include/tinyxml.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/Cameras.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Appearance.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Graph.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Lightning.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Interface.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Lighting.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Node.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Primitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Scene.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Texture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/YafParser.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -118,7 +129,6 @@
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -139,11 +149,13 @@
       </compileType>
       <item path="include/Appearance.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Cameras.h" ex="false" tool="3" flavor2="0">
+      <item path="include/Camera.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Graph.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Lightning.h" ex="false" tool="3" flavor2="0">
+      <item path="include/Interface.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Lighting.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Node.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -159,17 +171,23 @@
       </item>
       <item path="include/tinyxml.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/Cameras.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Appearance.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Graph.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Lightning.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Interface.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Lighting.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Node.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Primitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Scene.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Texture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/YafParser.cpp" ex="false" tool="1" flavor2="0">
       </item>

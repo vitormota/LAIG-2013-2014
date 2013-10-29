@@ -36,9 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/Appearance.o \
-	${OBJECTDIR}/src/Cameras.o \
+	${OBJECTDIR}/src/Camera.o \
 	${OBJECTDIR}/src/Graph.o \
-	${OBJECTDIR}/src/Lightning.o \
+	${OBJECTDIR}/src/Interface.o \
+	${OBJECTDIR}/src/Lighting.o \
 	${OBJECTDIR}/src/Node.o \
 	${OBJECTDIR}/src/Primitive.o \
 	${OBJECTDIR}/src/Scene.o \
@@ -76,20 +77,25 @@ ${OBJECTDIR}/src/Appearance.o: src/Appearance.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Appearance.o src/Appearance.cpp
 
-${OBJECTDIR}/src/Cameras.o: src/Cameras.cpp 
+${OBJECTDIR}/src/Camera.o: src/Camera.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Cameras.o src/Cameras.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Camera.o src/Camera.cpp
 
 ${OBJECTDIR}/src/Graph.o: src/Graph.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Graph.o src/Graph.cpp
 
-${OBJECTDIR}/src/Lightning.o: src/Lightning.cpp 
+${OBJECTDIR}/src/Interface.o: src/Interface.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Lightning.o src/Lightning.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Interface.o src/Interface.cpp
+
+${OBJECTDIR}/src/Lighting.o: src/Lighting.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Lighting.o src/Lighting.cpp
 
 ${OBJECTDIR}/src/Node.o: src/Node.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
