@@ -65,6 +65,7 @@ int main(int argc, char* argv[]) {
         map<string, Texture*> texturesMap = f->getTextures();
         map<string, Lighting*> lightningMap = f->getLights();
         map<string,Camera*> camerasMap = f->getCameras();
+        map<string,Animation*> animationsMap = f->getAnimations();
         string initial = f->getInitial();
         
         Scene* newScene = new Scene();
@@ -73,6 +74,7 @@ int main(int argc, char* argv[]) {
         newScene->setTextures(texturesMap);
         newScene->setLights(lightningMap);
         newScene->setCameras(camerasMap);
+        newScene->setAnimations(animationsMap);
         newScene->setBackground(f->background);
         newScene->setDrawmode(f->drawmode);
         newScene->setShading(f->shading);

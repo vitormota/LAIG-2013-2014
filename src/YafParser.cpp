@@ -14,8 +14,8 @@ namespace Parser {
     
     const char attribute_not_found[] = "No such attribute";
     const char element_not_found[] = "No such element";
-    const char *node_names[29] = {"globals", "cameras", "lighting", "omni",
-        "spot", "perspective", "ortho", "texture", "appearances", "appearance",
+    const char *node_names[31] = {"globals", "cameras", "lighting", "omni",
+        "spot", "perspective", "ortho", "texture", "appearances", "appearance", "animations", "animation",
         "graph", "node", "transforms", "translate", "rotate", "scale", "appearanceref", "animationref",
         "children", "rectangle", "triangle", "cylinder", "sphere", "torus", "plane", "patch", "vehicle", "waterline", "noderef"};
     
@@ -60,6 +60,7 @@ namespace Parser {
         lightingElement = yafElement->FirstChildElement("lighting");
         texturesElement = yafElement->FirstChildElement("textures");
         appearancesElement = yafElement->FirstChildElement("appearances");
+        animationsElement = yafElement->FirstChildElement("animations");
         graphElement = yafElement->FirstChildElement("graph");
         
         if (!loadGlobals(globalsElement)) return globals_error;
@@ -83,6 +84,10 @@ namespace Parser {
         cout << "-------------------\n";
         cout << "- appearances OK. -\n";
         cout << "-------------------\n\n";
+        if (!loadAnimations(animationsElement)) return animations_error;
+        cout << "------------------\n";
+        cout << "- animations OK. -\n";
+        cout << "------------------\n\n";
         if (!loadGraph(graphElement)) return graph_error;
         cout << "----------------\n";
         cout << "-   graph OK.  -\n";
@@ -728,6 +733,165 @@ namespace Parser {
         }
         // print how many where read
         cout << "Found " << count << " appearance(s).\n\n";
+        
+        return true;
+    }
+    
+    bool YafParser::loadAnimations(TiXmlElement * animationsElement) {
+        
+        // check all animation elements
+        TiXmlElement* animationElement = animationsElement->FirstChildElement();
+        
+        while (animationElement) {
+            
+            bool error = false;
+            
+            char *animation_id;
+            
+            // id attribute of the element animation
+            if (animationElement) {
+                animation_id = (char*) animationElement->Attribute("id");
+                if (!animation_id) {
+                    
+                    // invalid animation_id
+                    if(showErrors)
+                    {cout << node_names[ANIMATION] << " id: " << " has invalid field(s), FAIL.\n";
+                        error = true;
+                    }
+                } else {
+                    // valid animation_id
+                    if(showOkValues)
+                    {cout << node_names[ANIMATION] << " id: " << animation_id << ", OK." << endl;}
+                }
+            }
+            
+            // span attribute
+            
+            float span[1];
+            char *spanStr;
+            
+            spanStr = (char*) animationElement->Attribute("span");
+            
+            if (!spanStr || (StringParsing::FloatReader(spanStr, span)) != 1) {
+                
+                // invalid span
+                if(showErrors)
+                {cout << " span: " << " has invalid field(s), FAIL.\n";}
+                error = true;
+                
+            } else {
+                
+                // valid span
+                if(showOkValues)
+                {cout << " span: " << spanStr << ", OK." << endl;}
+                
+            }
+
+            
+            // control points of the animation
+            vector<float*> controlPoints = vector<float*>();
+            
+                //int numControlPoints = pow(order+1,2);
+                int controlPointsCounter = 0;
+                
+                // check all control points
+                TiXmlElement* controlPointElement = animationElement->FirstChildElement();
+                
+                while(controlPointElement)
+                {
+                    // xx attribute
+                    
+                    float xx[1];
+                    char *xxStr;
+                    
+                    xxStr = (char*) controlPointElement->Attribute("xx");
+                    
+                    if (!xxStr || (StringParsing::FloatReader(xxStr, xx)) != 1) {
+                        
+                        // invalid xx
+                        if(showErrors)
+                        {cout << "Control point " << controlPointsCounter << " xx: " << " has invalid field(s), FAIL.\n";}
+                        error = true;
+                        
+                    } else {
+                        
+                        // valid xx
+                        if(showOkValues)
+                        {cout << "Control point " << controlPointsCounter << " xx: " << xxStr << ", OK." << endl;}
+                        
+                    }
+                    
+                    // yy attribute
+                    
+                    float yy[1];
+                    char *yyStr;
+                    
+                    yyStr = (char*) controlPointElement->Attribute("yy");
+                    
+                    if (!yyStr || (StringParsing::FloatReader(yyStr, yy)) != 1) {
+                        
+                        // invalid yy
+                        if(showErrors)
+                        {cout << "Control point " << controlPointsCounter << " yy: " << " has invalid field(s), FAIL.\n";}
+                        error = true;
+                        
+                    } else {
+                        
+                        // valid yy
+                        if(showOkValues)
+                        {cout << "Control point " << controlPointsCounter << " yy: " << yyStr << ", OK." << endl;}
+                        
+                    }
+                    
+                    // zz attribute
+                    
+                    float zz[1];
+                    char *zzStr;
+                    
+                    zzStr = (char*) controlPointElement->Attribute("zz");
+                    
+                    if (!zzStr || (StringParsing::FloatReader(zzStr, zz)) != 1) {
+                        
+                        // invalid zz
+                        if(showErrors)
+                        {cout << "Control point " << controlPointsCounter << " zz: " << " has invalid field(s), FAIL.\n";}
+                        error = true;
+                        
+                    } else {
+                        
+                        // valid zz
+                        if(showOkValues)
+                        {cout << "Control point " << controlPointsCounter << " zz: " << zzStr << ", OK." << endl;}
+                        
+                    }
+                    
+                    // create and save control point
+                    float controlPoint[3];
+                    
+                    controlPoint[0] = xx[0];
+                    controlPoint[1] = yy[0];
+                    controlPoint[2] = zz[0];
+                    
+                    controlPoints.push_back(controlPoint);
+                    
+                    controlPointsCounter++;
+                    
+                    // next control point
+                    controlPointElement = controlPointElement->NextSiblingElement();
+                }
+            
+            
+        // create and save animation
+            if(!error)
+            {
+                Animation* newAnimation = new LinearAnimation(animation_id, span[0], "linear", controlPoints);
+                animationsMap[animation_id] = newAnimation;
+            }
+            
+        // next animation
+        animationElement = animationElement->NextSiblingElement();
+        
+        }
         
         return true;
     }
@@ -1885,6 +2049,11 @@ namespace Parser {
     map<string,Camera*> YafParser::getCameras()
     {
         return this->camerasMap;
+    }
+    
+    map<string,Animation*> YafParser::getAnimations()
+    {
+        return this->animationsMap;
     }
     
     string YafParser::getInitial()

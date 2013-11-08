@@ -19,13 +19,12 @@ namespace Parser {
 
     enum ERRORS {
         globals_error = 1, cameras_error, lighting_error, textures_error,
-        appearances_error, graph_error, file_not_found
+        appearances_error, animations_error, graph_error, file_not_found
     };
 
     enum node_i {
         GLOBALS, CAMERAS, LIGHTING, OMNI, SPOT, PERSPECTIVE, ORTHO, TEXTURE, APPEARANCES,
-        APPEARANCE, GRAPH, NODE, TRANSFORMS, TRANSLATE, ROTATE, SCALE, APPEARANCEREF, ANIMATIONREF, CHILDREN,
-        RECTANGLE, TRIANGLE, CYLINDER, SPHERE, TORUS, PLANE, PATCH, VEHICLE, WATERLINE, NODEREF
+        APPEARANCE, ANIMATIONS, ANIMATION, GRAPH, NODE, TRANSFORMS, TRANSLATE, ROTATE, SCALE, APPEARANCEREF, ANIMATIONREF, CHILDREN, RECTANGLE, TRIANGLE, CYLINDER, SPHERE, TORUS, PLANE, PATCH, VEHICLE, WATERLINE, NODEREF
     };
 
     class YafParser {
@@ -43,6 +42,7 @@ namespace Parser {
         map<string, Texture*> getTextures();
         map<string, Lighting*> getLights();
         map<string,Camera*> getCameras();
+        map<string,Animation*> getAnimations();
         string getInitial();
         
         /* globals */
@@ -73,6 +73,7 @@ namespace Parser {
         TiXmlElement* lightingElement;
         TiXmlElement* texturesElement;
         TiXmlElement* appearancesElement;
+        TiXmlElement* animationsElement;
         TiXmlElement* graphElement;
 
         bool loadGlobals(TiXmlElement* globalsElement);
@@ -80,6 +81,7 @@ namespace Parser {
         bool loadLighting(TiXmlElement* lightingElement);
         bool loadTextures(TiXmlElement* texturesElement);
         bool loadAppearances(TiXmlElement* appearancesElement);
+        bool loadAnimations(TiXmlElement* animationsElement);
         bool loadGraph(TiXmlElement* graphElement);
     
         /* cameras */
@@ -93,6 +95,9 @@ namespace Parser {
 
         /* appearances */
         map<string, Appearance*> appearancesMap;
+        
+        /* animations */
+        map<string, Animation*> animationsMap;
         
         /* graph */
         Graph* sceneGraph;
