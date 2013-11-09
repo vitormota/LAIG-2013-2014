@@ -36,6 +36,7 @@
 #include "Appearance.h"
 #include "Camera.h"
 #include "Animation.h"
+#include "CGF\CGFshader.h"
 
 #include <stack>
 #include <string>
@@ -43,6 +44,7 @@
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
+#include <GL\glew.h>
 #include <GL/glut.h>
 #endif
 
@@ -94,6 +96,7 @@ public:
     string getShading();
     string getCullface();
     string getCullorder();
+
     
     bool getDoublesided();
     bool getLocal();
@@ -110,6 +113,9 @@ public:
     //----> NEW (TP02- Display Lists)
     vector<int*> diplay_lists;
     int current_list_index;
+
+	scene::Waterline *wl;
+	CGFshader *s;
     //----> END NEW
     
     ~Scene();

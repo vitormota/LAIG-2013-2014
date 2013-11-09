@@ -6,6 +6,7 @@
 #elif __unix
 #include <CGF/CGFinterface.h>
 #elif _WIN32
+#include <GL\glew.h>
 #include "CGF\CGFinterface.h"
 #endif
 

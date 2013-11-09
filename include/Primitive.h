@@ -6,6 +6,7 @@
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #else
+#include <GL\glew.h>
 #include <GL/glut.h>
 #endif
 #ifdef __APPLE__
@@ -148,13 +149,14 @@ namespace scene{
 	};
     
     /* Waterline */
-	class Waterline: public Primitive{
+	class Waterline: public Plane{
         
 	private:
         string heightmap, texturemap, fragmentshader, vertexshader;
         
 	public:
 		Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader);
+		Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader,int parts);
 		virtual void draw();
 	};
 

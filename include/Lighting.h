@@ -7,6 +7,7 @@
 #elif __unix
 #include <CGF/CGFlight.h>
 #else
+#include <GL\glew.h>
 #include "CGF\CGFlight.h"
 #endif
 

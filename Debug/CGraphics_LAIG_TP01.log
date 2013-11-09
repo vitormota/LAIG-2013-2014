@@ -1,9 +1,25 @@
-﻿Build started 22/10/2013 12:31:16.
-     1>Project "C:\Users\vitor_000\Documents\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         CGraphics_LAIG_TP01.vcxproj -> C:\Users\vitor_000\Documents\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe
-     1>Done Building Project "C:\Users\vitor_000\Documents\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Build target(s)).
+﻿Build started 08/11/2013 16:53:32.
+     1>Project "C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\CGRA_LIBS\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /D _MBCS /D GLUT_BUILDING_LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Shader.cpp
+         Shader.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe" /INCREMENTAL /NOLOGO /LIBPATH:lib /LIBPATH:C:\Windows\CGRA_lib\lib /LIBPATH:C:\CGRA_LIBS\lib glew32.lib CGFlibd.lib TinyXML.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCMT.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.lib" /MACHINE:X86 Debug\Animation.obj
+         Debug\Appearance.obj
+         Debug\Camera.obj
+         Debug\Graph.obj
+         Debug\Interface.obj
+         Debug\Lighting.obj
+         Debug\main.obj
+         Debug\Node.obj
+         Debug\Primitive.obj
+         Debug\Scene.obj
+         Debug\Shader.obj
+         Debug\Texture.obj
+         Debug\YafParser.obj
+         CGraphics_LAIG_TP01.vcxproj -> C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe
+     1>Done Building Project "C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\CGraphics_LAIG_TP01.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.11
+Time Elapsed 00:00:01.25

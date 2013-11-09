@@ -6,6 +6,7 @@
 #elif __APPLE__
 #include "CGFtexture.h"
 #else
+#include <GL\glew.h>
 #include "CGF\CGFtexture.h"
 #endif
 

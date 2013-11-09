@@ -16,14 +16,14 @@
     
     <lighting doublesided="true" local="true" enabled="true" ambient="0 0 0 1.0" >
         
-        <omni id="light1" enabled="false"
+        <omni id="light1" enabled="true"
         location="5.0 5.0 5.0"
         ambient="0.7 0.8 0.7 1.0"
         diffuse="0.5 0.5 0.5 1.0"
         specular="0 0 0 1"
         />
         
-        <omni id="light2" enabled="false"
+        <omni id="light2" enabled="true"
         location="11.25 7.3 3.75"
         ambient="0.1 0.03 0.03 0.03"
         diffuse="0.5 0.6 0.8 1"
@@ -72,6 +72,7 @@
         <texture id="table_wood" file="black_wood.jpg" />
         <texture id="wall" file="wall.jpg" />
         <texture id="glass" file="frosted_glass.jpg" />
+        <texture id="water" file="water.jpg" />
         <texture id="floor" file="floor.jpg" />
         <texture id="movie_picture" file="tv_screen.jpg" />
         <texture id="rug" file="rug.jpg" />
@@ -118,7 +119,7 @@
         specular="0 0 0 0"
         shininess="0"
         textureref="glass"
-        texlength_s="0.5"
+        texlength_s="1"
         texlength_t="1.0" />
         
         <!-- Brass Appearance -->
@@ -196,16 +197,31 @@
         
     </appearances>
     
+    <!-- informacao de animacao -->
+    <animations>
+        <!-- pode não existir qualquer nó “animation” se a cena nao tiver animacoes -->
+        <!-- span e' o tempo, em segundos, que a animacao deve demorar →
+         <!-- nesta versão do formato LSF, type tem o valor “linear” hardcoded -->
+        <animation id=”ss” span="10.0" type="linear">
+            <controlpoint xx="0.0" yy="10.0" zz="0.0" />
+            <controlpoint xx="1.0"  yy="7.0"  zz="1.0" />
+            <controlpoint xx="2.0"  yy="5.0"  zz="2.0" />
+            <controlpoint xx="3.0"  yy="3.0"  zz="3.0" />
+            <controlpoint xx="4.0"  yy="1.0"  zz="4.0" />
+            <controlpoint xx="5.0"  yy="0.0"  zz="5.0" />
+        </animation>
+    </animations>
+    
     <graph rootid="root">
         <!-- Root Node -->
         <node id="root">
-
             <transforms>
             </transforms>
-            <appearanceref id="app_default"/>
             <children>
+                
+                <patch order="1" partsU="1" partsV="1" compute="fill"/>
                 <noderef id="floor" />
-	        <noderef id="big_dinner_table"/>
+	       		<noderef id="big_dinner_table"/>
                 <!-- <noderef id="walls" />
                 <noderef id="objects" /> -->
                 

@@ -6,12 +6,12 @@
 -> .yaf parser
 
  */
-
 #include <string>
 #ifdef __APPLE__
 #include <GLUT/GLUT.h>
 #include "CGFapplication.h"
 #else
+#include <GL\glew.h>
 #include <GL/glut.h>
 #endif
 
@@ -20,6 +20,7 @@
 #else
 #include <GL/glui.h>
 #endif
+
 
 #include <string>
 #include <iostream>

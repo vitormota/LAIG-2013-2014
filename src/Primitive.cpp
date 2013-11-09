@@ -211,7 +211,15 @@ namespace scene {
         
     }
     
-    Waterline::Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader) : Primitive(id)
+	Waterline::Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader) : Plane(id,10)
+    {
+        this->heightmap = heightmap;
+        this->texturemap = texturemap;
+        this->fragmentshader = fragmentshader;
+        this->vertexshader = vertexshader;
+    }
+
+    Waterline::Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader,int parts) : Plane(id,parts)
     {
         this->heightmap = heightmap;
         this->texturemap = texturemap;
@@ -294,8 +302,6 @@ namespace scene {
         
     }
     
-    
-    
     void Plane::draw() {
         
         
@@ -365,7 +371,7 @@ namespace scene {
         glEnable(GL_MAP2_TEXTURE_COORD_2);
         glEnable(GL_TEXTURE_2D);
         
-        glBindTexture(GL_TEXTURE_2D, 3);
+        //glBindTexture(GL_TEXTURE_2D, 8);
         
          //After this setup is performed, a single OpenGL command evaluates and renders the specified grid as an evaluator mesh:
         glEvalMesh2(GL_FILL, 0.0, 1.0*parts, 0.0, 1.0*parts);
@@ -517,8 +523,7 @@ namespace scene {
     }
     
     void Waterline::draw() {
-        
-        // TODO
+        Plane::draw();
         
     }
     

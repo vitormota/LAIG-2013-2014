@@ -1,4 +1,9 @@
+#if _WIN32 
+#include <GL\glew.h> 
+#endif
 #include "Scene.h"
+
+#include "Shader.h"
 
 void Scene::init() {
 
@@ -285,6 +290,9 @@ void Scene::init() {
 		this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
 	}
 
+	wl = new scene::Waterline("id","","","","",10);
+	s = new Shader();
+
 	// ------- Initialization of variables ------- END
 
 }
@@ -360,7 +368,16 @@ void Scene::display() {
 	}
 
 	// Process all the nodes of the graph (depth-first search)
-	processGraph();
+	//processGraph();
+
+
+	s->bind();
+
+	glScalef(2.0,1.0,6.0);
+	glTranslatef(-0.5,0.0,0.5);
+	wl->draw();
+
+	s->unbind();
 
 	// ---- END Primitive drawing section
 
@@ -517,7 +534,7 @@ void Scene::setCamerasId(map<string, unsigned int> camerasId) {
 
 void Scene::setAnimations(map<string,Animation*> animations)
 {
-    this->animations = map<string,Animation*>();
+	this->animations = map<string,Animation*>();
 	this->animations.insert(animations.begin(), animations.end());
 }
 

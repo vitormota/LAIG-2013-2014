@@ -1,3 +1,6 @@
+#if _WIN32 
+#include <GL\glew.h> 
+#endif
 #include "Camera.h"
 #include "Scene.h"
 

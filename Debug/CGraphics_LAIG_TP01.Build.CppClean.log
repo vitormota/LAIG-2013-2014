@@ -1,38 +1,26 @@
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\CAMERAS.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\GRAPH.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\LIGHTNING.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\MAIN.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\NODE.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\PRIMITIVE.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\SCENE.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\TRANSFORM.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\YAFPARSER.OBJ
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\VC110.PDB
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\CGRAPHICS_LAIG_TP01.ILK
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\CGRAPHICS_LAIG_TP01.EXE
-C:\USERS\VITOR_000\DOCUMENTS\GITHUB\LAIG-2013-2014\DEBUG\CGRAPHICS_LAIG_TP01.PDB
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Cameras.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Graph.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Lightning.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\main.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Node.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Primitive.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Scene.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\Transform.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\YafParser.obj
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.ilk
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\cl.command.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CL.read.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CL.write.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link-cvtres.read.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link-cvtres.write.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link-rc.read.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link-rc.write.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link.command.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link.read.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link.read.2.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\link.write.1.tlog
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\vc110.idb
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.pdb
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\vc110.pdb
-C:\Users\vitor_000\Documents\GitHub\LAIG-2013-2014\Debug\CGraphics_LAIG_TP01.exe
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\ANIMATION.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\APPEARANCE.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\GRAPH.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\INTERFACE.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\LIGHTING.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\NODE.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\PRIMITIVE.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\SHADER.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\TEXTURE.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\YAFPARSER.OBJ
+C:\USERS\VITOR_000\DOCUMENTS\VISUAL STUDIO 2012\PROJECTS\LAIG-2013-2014\DEBUG\VC110.PDB
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Animation.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Appearance.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Graph.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Interface.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Lighting.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Node.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Primitive.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Shader.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\Texture.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\YafParser.obj
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\cl.command.1.tlog
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\CL.read.1.tlog
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\CL.write.1.tlog
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\vc110.idb
+C:\Users\vitor_000\Documents\Visual Studio 2012\Projects\LAIG-2013-2014\Debug\vc110.pdb
