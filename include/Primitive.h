@@ -19,6 +19,9 @@
 using std::string;
 using std::vector;
 
+typedef GLfloat vecPoints[3];
+typedef GLfloat vecText[2];
+
 namespace scene{
 
 	class Primitive
@@ -130,6 +133,8 @@ namespace scene{
 		int order, partsU, partsV;
         string compute;
         vector<float*> controlPoints;
+        vecPoints * controlPointsArray;
+        vecText * textpoints;
         
 	public:
 		Patch(string id, int order, int partsU, int partsV, string compute, vector<float*> controlPoints);

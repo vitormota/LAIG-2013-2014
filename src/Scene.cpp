@@ -5,6 +5,19 @@
 
 #include "Shader.h"
 
+void Scene::updateAnimations(int dummy){
+    
+    
+        map<string, Animation*>::const_iterator itA;
+        
+        /*for(itA = animations.begin(); itA != animations.end(); itA++)
+        {
+            (itA*)->updatePrimitivePos();
+        }*/
+    
+    glutTimerFunc(100, updateAnimations, dummy);
+}
+
 void Scene::init() {
 
 	// Uncomment below to enable normalization of lighting normal vectors
@@ -292,6 +305,8 @@ void Scene::init() {
 
 	wl = new scene::Waterline("id","","","","",10);
 	s = new Shader();
+    
+    glutTimerFunc(100, updateAnimations, 0); // animations timer
 
 	// ------- Initialization of variables ------- END
 
@@ -481,6 +496,13 @@ void Scene::processNode(string id) {
 			//node uses a list and it is defined
 			glCallList(current_list_index);
 		}
+        
+        // Animations
+        
+         void initValues(vector<float*> controlPoints);
+        
+        
+        
 		//next list
 		current_list_index++;
 		//----> END NEW

@@ -4,6 +4,7 @@ Shader::Shader()
 {
 	//init("data/appValues.vert", "data/dualVaryingColor.frag");
 	init("data/textureDemo2.vert", "data/textureDemo2.frag");
+    /*init("textureDemo2.vert", "textureDemo2.frag"); */// MAC OS X version
 
 	CGFshader::bind();
 
@@ -15,6 +16,10 @@ Shader::Shader()
 
 	baseTexture=new CGFtexture("data/water.jpg");
 	secTexture=new CGFtexture("data/watermap.jpg");
+    
+    /* MAC OS X version
+    baseTexture=new CGFtexture("water.jpg");
+	secTexture=new CGFtexture("watermap.jpg");*/
 
 	// get the uniform location for the sampler
 	baseImageLoc = glGetUniformLocation(id(), "baseImage");

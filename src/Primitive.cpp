@@ -193,6 +193,48 @@ namespace scene {
         this->partsV = partsV;
         this->compute = compute;
         setControlPoints(controlPoints);
+        
+        int arraySize = 0;
+      
+        if(this->order == 1)
+        {
+                arraySize = 2;
+        }
+        else
+            if(this->order == 2)
+            {
+                arraySize = 3;
+            }
+            else
+                if(this->order == 3)
+                {
+                    arraySize = 4;
+                }
+        
+        int totalArraySize = arraySize * arraySize;
+        
+        this->controlPointsArray = new vecPoints[totalArraySize];
+        this->textpoints = new vecText[4];
+        
+        /** Defines the control points */
+        for (int i = 0; i < arraySize; i++)
+        {
+            for (int k = 0; k < arraySize; k++)
+            {
+                this->controlPointsArray[i][k] = *(controlPoints[4*i + k]);
+            }
+        }
+        
+        /** Defines the texture points */
+        textpoints[1][0] = 0;
+        textpoints[1][1] = 0;
+        textpoints[0][0] = 0;
+        textpoints[0][1] = 1;
+        textpoints[3][0] = 1;
+        textpoints[3][1] = 0;
+        textpoints[2][0] = 1;
+        textpoints[2][1] = 1;
+        
     }
     
     void Patch::setControlPoints(vector<float*> controlPoints)
@@ -400,93 +442,41 @@ namespace scene {
 
     void Patch::draw() {
         
-        
-        // DECLARACOES RELACIONADAS COM OS "EVALUATORS"
-        //   atenção à ordem dos pontos que nao e' circular...
-        // Coordenadas dos 4 pontos de controlo (podem ser entendidas como
-        //   sendo as coordenadas dos cantos do polígono a visualizar):
-        
-        // deslocamento em cada eixo
-        float x = -0.5;
-        float y = 0.0;
-        float z = -0.5;
-        
-        // NOTA: eixo z é o V, eixo x é o U
-        
-        float gridSide = 1.0;
-        
-        GLdouble ctrlpoints[4][3] = {
-            {(x+gridSide), y, (z+gridSide)},
-            {x, y, (z+gridSide)},
-            
-            {(x+gridSide), y, z},
-            {x, y, z}
-        };
-        
-        GLfloat textpoints[4][2] = {        {(gridSide)*this->partsU, 0.0},
-            {0.0, 0.0},
-            {(x+gridSide)*this->partsU, gridSide*this->partsV},
-            {0.0, gridSide*this->partsV} };
+        GLint cull_face_mode;
+        glGetIntegerv(GL_CULL_FACE_MODE, &cull_face_mode);
         
         
-        // permissao de atribuicao directa de cores
-        // para objectos que nao tem material atribuido, como
-        // e' o caso dos eixos e da esfera que simboliza a fonte de luz...
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-        glEnable(GL_COLOR_MATERIAL);
+        glMap2f(GL_MAP2_VERTEX_3, 0.0, 1.0, 3, this->order+1, 0.0, 1.0, 3*(this->order+1), this->order+1, &controlPointsArray[0][0]);
         
-        // INICIALIZACOES RELACIONADAS COM OS "EVALUATORS"
-        
-        // declaram-se quatro interpoladores, de coordenadas, de
-        //     normais, de cores e de texturas:
-        // o parâmetro de controlo dos interpoladors varia de 0 a 1,
-        //     tanto em U como em V
-        // os strides (ordem de visita no array de dados final) são:
-        //     3 e 6 para o interpol. de coord. (respectivamente U e V)
-        //     3 e 6 para o interpol. de normais (respectivamente U e V)
-        //     4 e 8 para o interpolador de cores (respectivamente U e V)
-        //     2 e 4 para o interpolador de texturas (respectivamente U e V)
-        // a interpolação é linear (de grau 1) pelo que se coloca o
-        //     valor "2" (grau + 1) nos quatro casos
-        
-        glColor3f(1.0,1.0,1.0);
-        
-        
-        glMap2d(GL_MAP2_VERTEX_3, 0.0, 1.0, 3, 2, 0.0, 1.0, 3*(this->order+1), this->order+1, &ctrlpoints[0][0]);
-        glMap2f(GL_MAP2_NORMAL,   0.0, 1.0, 3, 2,  0.0, 1.0, 3*(this->order+1), this->order+1,  &planeNormals[0][0]);
         glMap2f(GL_MAP2_COLOR_4,  0.0, 1.0, 4, 2,  0.0, 1.0, 4*(this->order+1), this->order+1,  &planeColors[0][0]);
-        glMap2f(GL_MAP2_TEXTURE_COORD_2,  0.0, 1.0, 2, 2, 0.0, 1.0, 2*(this->order+1), this->order+1,  &textpoints[0][0]);
+        glMap2f(GL_MAP2_TEXTURE_COORD_2, 0.0, 1.0, 2, 2, 0.0, 1.0, 4, 2, &textpoints[0][0]);
         
-        
-        // When we actually go to evaluate and render the evaluator map as a 2D mesh, we need to indicate the number of partitions of U and V (number of grid rows and columns) and over what region of the parametric U and V domain we will iterate across. So we tell OpenGL to iterate across the full 0.0 to 1.0 range setup above with 5 rows and 6 columns. This is done with glMapGrid2f:
-        glMapGrid2d( 1*this->partsU, 0.0, 1.0,
-                    1*this->partsV, 0.0, 1.0);
-        
-        // os interpoladores activam-se:
-        glEnable(GL_MAP2_VERTEX_3);
+       
         glEnable(GL_MAP2_NORMAL);
-        glEnable(GL_MAP2_COLOR_4);
+        glEnable(GL_AUTO_NORMAL);
+        glEnable(GL_MAP2_VERTEX_3);
         glEnable(GL_MAP2_TEXTURE_COORD_2);
         glEnable(GL_TEXTURE_2D);
-        
         glBindTexture(GL_TEXTURE_2D, 3);
+    
+        glMapGrid2f(this->partsU, 0.0, 1.0, this->partsV, 0.0, 1.0);
         
-        //After this setup is performed, a single OpenGL command evaluates and renders the specified grid as an evaluator mesh:
         
-        if(this->compute == "point")
+         //After this setup is performed, a single OpenGL command evaluates and renders the specified grid as an evaluator mesh:
+         if(this->compute == "point")
+         {
+        glEvalMesh2(GL_POINT, 0.0, this->partsU, 0.0, this->partsV);
+         }
+         else
+        if(this->compute == "line")
         {
-        glEvalMesh2(GL_POINT, 0.0, 1.0*this->partsU, 0.0, 1.0*this->partsV);
+            glEvalMesh2(GL_LINE, 0.0, this->partsU, 0.0, this->partsV);
         }
-        else
-            if(this->compute == "line")
-            {
-                glEvalMesh2(GL_LINE, 0.0, 1.0*this->partsU, 0.0, 1.0*this->partsV);
-            }
         else if(this->compute == "fill")
         {
-            glEvalMesh2(GL_FILL, 0.0, 1.0*this->partsU, 0.0, 1.0*this->partsV);
+            glEvalMesh2(GL_FILL, 0.0, this->partsU, 0.0, this->partsV);
         }
-        
+    
         glDisable(GL_MAP2_VERTEX_3);
         glDisable(GL_MAP2_NORMAL);
         glDisable(GL_MAP2_TEXTURE_COORD_2);
@@ -495,18 +485,18 @@ namespace scene {
         
         // so' para referencia visual... onde estao os quatro pontos
         // de controlo:
-        glDisable(GL_TEXTURE_2D);
         glColor3f(1.0, 1.0, 0.0);
+        
         for (int i = 0; i < 4; i++)
         {
-            glRasterPos3f(ctrlpoints[i][0],ctrlpoints[i][1],ctrlpoints[i][2]);
+            glRasterPos3f(controlPointsArray[i][0],controlPointsArray[i][1],controlPointsArray[i][2]);
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, '0'+i);
         }
         
-        
-        
         glDisable(GL_COLOR_MATERIAL);
-
+        
+        if (glIsEnabled(GL_CULL_FACE))
+            glCullFace(cull_face_mode);
         
     }
     
