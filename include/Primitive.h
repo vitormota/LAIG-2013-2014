@@ -23,6 +23,8 @@
 #include "CGF\CGFshader.h"
 #endif
 
+#include "Shader.h"
+
 
 using std::string;
 using std::vector;
@@ -172,12 +174,13 @@ namespace scene{
         
 	private:
         string heightmap, texturemap, fragmentshader, vertexshader;
-        CGFshader *s;
+        Shader *s;
         
 	public:
 		Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader);
 		Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader,int parts);
 		virtual void draw();
+		void updateShader(float time);
 	};
 
 }

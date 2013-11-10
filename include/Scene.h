@@ -190,6 +190,7 @@ public:
     int mode;
     void changeLightEnableDisable(unsigned int light_id); // enable/disable light with the id = light_id
    
+	void update(unsigned long t);
 };
 
 #endif /* defined(__LAIG___P1__Scene__) */

@@ -20,6 +20,8 @@ void Scene::updateAnimations(int dummy){
 
 void Scene::init() {
 
+	setUpdatePeriod(100);
+
 	// Uncomment below to enable normalization of lighting normal vectors
 	glEnable(GL_NORMALIZE);
 
@@ -303,7 +305,7 @@ void Scene::init() {
 		this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
 	}
 
-	wl = new scene::Waterline("id","","","","",10);
+	wl = new scene::Waterline("id","data/watermap.jpg","data/water.jpg","data/texshader.vert","data/texshader.frag",50);
 	s = new Shader();
     
     glutTimerFunc(100, updateAnimations, 0); // animations timer
@@ -385,15 +387,20 @@ void Scene::display() {
 	// Process all the nodes of the graph (depth-first search)
 	processGraph();
 
-
-	s->bind();
-
-	glScalef(2.0,0.5,6.0);
-	glTranslatef(0.5,0.0,0.5);
+	
+	//s->bind();
+	
+	//glRotatef(-90,0,1,0);
+	glPushMatrix();
+	glScalef(10.0,1.0,16.0);
+	glRotatef(-90,0.0,1.0,0.0);
+	glTranslatef(0.5,1.0,0.5);
+	//glTranslatef(-0.5,0.0,0.5);
+	
 	wl->draw();
-
-	s->unbind();
-
+	glPopMatrix();
+	//s->unbind();
+	
 	// ---- END Primitive drawing section
 
 	// We have been drawing in a memory area that is not visible - the back buffer,
@@ -519,6 +526,10 @@ void Scene::processNode(string id) {
 			glMaterialfv(GL_FRONT, GL_EMISSION, appearancesMap[app_refStack.top()]->getEmissive()); // emissive
 		}
 	}
+}
+
+void Scene::update(unsigned long t){
+	wl->updateShader((float) t/1000.0);
 }
 
 Scene::~Scene() {

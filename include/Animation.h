@@ -9,6 +9,9 @@
 #ifndef __LAIG___P2__Animation__
 #define __LAIG___P2__Animation__
 
+#if _WIN32
+#include <GL\glew.h>
+#endif
 #include <iostream>
 #include <vector>
 

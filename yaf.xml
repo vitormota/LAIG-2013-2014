@@ -219,7 +219,7 @@
             </transforms>
             <children>
                 
-                <patch order="1" partsU="1" partsV="1" compute="fill"/>
+                <!-- <patch order="1" partsU="1" partsV="1" compute="fill"/>
                 <noderef id="floor" />
 	       		<noderef id="big_dinner_table"/>
                 <!-- <noderef id="walls" />

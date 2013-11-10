@@ -21,10 +21,13 @@ class Shader :	public CGFshader
 {
 public:
 	Shader();
+	Shader(string basetext,string secondText,string vertex,string frag);
 	virtual void bind(void);
 	~Shader(void);
 	void setScale(float s);
 	float normScale;
+
+	void update(float time);
 
 protected:
 	CGFtexture * baseTexture;
@@ -32,6 +35,8 @@ protected:
 
 	GLint baseImageLoc;
 	GLint secImageLoc;
+	float tempo;
+	int timeLoc; 
 
 	GLint scaleLoc;
 };

@@ -344,13 +344,18 @@ namespace scene {
         this->vertexshader = vertexshader;
     }
 
-    Waterline::Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader,int parts) : Plane(id,parts)
+    Waterline::Waterline(string id, string heightmap, string texturemap,string vertexshader, string fragmentshader, int parts) : Plane(id,parts)
     {
         this->heightmap = heightmap;
         this->texturemap = texturemap;
         this->fragmentshader = fragmentshader;
         this->vertexshader = vertexshader;
+		this->s = new Shader(texturemap,heightmap,vertexshader,fragmentshader);
     }
+
+	void Waterline::updateShader(float time){
+		s->update(time);
+	}
     
     void Rectangle::draw() {
         
@@ -610,7 +615,9 @@ namespace scene {
     }
     
     void Waterline::draw() {
+		s->bind();
         Plane::draw();
+		s->unbind();
     }
     
     Plane::~Plane()
