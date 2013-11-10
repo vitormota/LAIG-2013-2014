@@ -324,11 +324,14 @@ namespace scene {
             {(x+gridSide), y, z},
             {x, y, z}
         };
+
+		gridSide = 1.0 / parts;
         
-        GLfloat textpoints[4][2] = {        {(gridSide)*parts, 0.0},
-            {0.0, 0.0},
-            {(x+gridSide)*parts, gridSide*parts},
-            {0.0, gridSide*parts} };
+        GLfloat textpoints[4][2] = {        
+			{0.0, 0.0},
+            {0.0, 1.0},
+            {1.0, 0.0},
+            {1.0, 1.0} };
        
         
         // permissao de atribuicao directa de cores

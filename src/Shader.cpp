@@ -3,7 +3,7 @@
 Shader::Shader()
 {
 	//init("data/appValues.vert", "data/dualVaryingColor.frag");
-	init("data/textureDemo2.vert", "data/textureDemo2.frag");
+	init("data/texshader.vert", "data/texshader.frag");
 
 	CGFshader::bind();
 

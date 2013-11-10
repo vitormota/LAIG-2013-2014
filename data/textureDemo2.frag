@@ -1,15 +1,20 @@
-uniform sampler2D baseImage;
-uniform sampler2D secondImage;
-
-void main()
-{
-	vec4 color=texture2D(baseImage, gl_TexCoord[0].st);
-
-	// notice the coordinate conversion to flip the image horizontally and vertically
-	vec4 filter=texture2D(secondImage, vec2(1.0,1.0)-gl_TexCoord[0].st);
-
-	if (filter.b > 0.5)
-		color=vec4(0.52,0.18,0.11,1.0);
-	
-	gl_FragColor = color; 
-}
+uniform sampler2DRect tex0; //  background
+    uniform sampler2DRect tex1; //  displacement
+    
+    void main(){
+        vec2 st = gl_TexCoord[0].st;
+        
+        float offsetX = texture2DRect(tex1, st + vec2(-1.0, 0.0)).r - texture2DRect(tex1, st + vec2(1.0, 0.0)).r;
+        float offsetY = texture2DRect(tex1, st + vec2(0.0,- 1.0)).r - texture2DRect(tex1, st + vec2(0.0, 1.0)).r;
+        
+        float shading = offsetX;
+        
+        vec3 pixel = texture2DRect(tex0, st + vec2(offsetX, offsetY)).rgb;
+        
+        pixel.r += shading;
+        pixel.g += shading;
+        pixel.b += shading;
+        
+        gl_FragColor.rgb =  pixel;
+        gl_FragColor.a = 1.0;
+    }

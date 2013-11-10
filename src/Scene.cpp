@@ -290,7 +290,7 @@ void Scene::init() {
 		this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
 	}
 
-	wl = new scene::Waterline("id","","","","",10);
+	wl = new scene::Waterline("id","","","","",30);
 	s = new Shader();
 
 	// ------- Initialization of variables ------- END
@@ -373,7 +373,7 @@ void Scene::display() {
 
 	s->bind();
 
-	glScalef(2.0,1.0,6.0);
+	glScalef(2.0,0.5,6.0);
 	glTranslatef(-0.5,0.0,0.5);
 	wl->draw();
 

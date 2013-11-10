@@ -1,20 +1,40 @@
-uniform float normScale;
-uniform sampler2D secondImage;
+uniform sampler2DRect prevBuffer; // previus buffer
+uniform sampler2DRect actBuffer;  // actual buffer
 
-void main() 
-{
-	vec4 offset=vec4(0.0,0.0,0.0,0.0);
-	
-	// change vertex offset based on texture information
-	if (texture2D(secondImage, vec2(1.0,1.0)-gl_MultiTexCoord0.st).b > 0.5)
-		offset.xyz=gl_Normal*normScale*0.1;
+uniform float damping;            // smoothing value between 0.0 - 1.0 
 
-	// Set the position of the current vertex 
-	gl_Position = gl_ModelViewProjectionMatrix * (gl_Vertex+offset);
+vec2 offset[4];                   // this is going to be the neighbors matrix
+void main(){
+   vec2 st = gl_TexCoord[0].st;   // store the position of the pixel we are working
 
-	// pass texture coordinates from VS to FS.
-	// "gl_MultiTexCoord0" has the texture coordinates assigned to this vertex in the first set of coordinates.
-	// This index has to do with the set of texture COORDINATES, it is NOT RELATED to the texture UNIT.
-	// "gl_TexCoord[0]" is a built-in varying that will be interpolated in the FS.
-	gl_TexCoord[0] = gl_MultiTexCoord0;
+   // Set the neighbors matrix
+   //
+   offset[0] = vec2(-1.0, 0.0);
+   offset[1] = vec2(1.0, 0.0);
+   offset[2] = vec2(0.0, 1.0);
+   offset[3] = vec2(0.0, -1.0);
+
+   // "sum" is going to store the total value of the neighbors pixels
+   //
+   vec3 sum = vec3(0.0);
+   for (int i = 0; i &lt; 4 ; i++){
+      sum += texture2DRect(actBuffer, st + offset[i]).rgb;
+   }
+
+   // make an average of this total
+   //
+   sum = sum / 4.0;
+
+   // calculate the diference between that average and the value of the center pixel 
+   // this is like adding the velocity
+   //
+   sum = sum*2.0 - texture2DRect(prevBuffer, st).rgb;
+
+   // smooth this value
+   //
+   sum = sum * damping;
+
+   // write this information on the other texture ( buffer )
+   //
+   gl_FragColor = vec4(sum, 1.0);
 }
