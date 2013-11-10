@@ -428,36 +428,7 @@ namespace scene {
     }
     
     void Plane::draw() {
-        
-        
-        // DECLARACOES RELACIONADAS COM OS "EVALUATORS"
-        //   atenção à ordem dos pontos que nao e' circular...
-        // Coordenadas dos 4 pontos de controlo (podem ser entendidas como
-        //   sendo as coordenadas dos cantos do polígono a visualizar):
-        
-        // deslocamento em cada eixo
-        float x = -0.5;
-        float y = 0.0;
-        float z = -0.5;
-        
-        float gridSide = 1.0;
-        
-        GLdouble ctrlpoints[4][3] = {
-            {(x+gridSide), y, (z+gridSide)},
-            {x, y, (z+gridSide)},
-            
-            {(x+gridSide), y, z},
-            {x, y, z}
-        };
-
-		gridSide = 1.0 / parts;
-        
-        GLfloat textpoints[4][2] = {        
-			{0.0, 0.0},
-            {0.0, 1.0},
-            {1.0, 0.0},
-            {1.0, 1.0} };
-       
+    
         
         // permissao de atribuicao directa de cores
         // para objectos que nao tem material atribuido, como
@@ -499,7 +470,7 @@ namespace scene {
         glEnable(GL_MAP2_TEXTURE_COORD_2);
         glEnable(GL_TEXTURE_2D);
         
-        glBindTexture(GL_TEXTURE_2D, 2);
+        //glBindTexture(GL_TEXTURE_2D, 2);
         
         //After this setup is performed, a single OpenGL command evaluates and renders the specified grid as an evaluator mesh:
         glEvalMesh2(GL_FILL, 0.0, parts, 0.0, parts);

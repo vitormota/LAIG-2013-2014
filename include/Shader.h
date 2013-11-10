@@ -17,7 +17,6 @@
 #include "CGFshader.h"
 #include "CGFtexture.h"
 
-/*
 class Shader :	public CGFshader
 {
 public:
@@ -35,6 +34,6 @@ protected:
 	GLint secImageLoc;
 
 	GLint scaleLoc;
-};*/
+};
 
 #endif // _DEMO_SHADER_H_

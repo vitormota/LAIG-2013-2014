@@ -1,16 +1,13 @@
 #include "Shader.h"
-/*
+
 Shader::Shader()
 {
 	//init("data/appValues.vert", "data/dualVaryingColor.frag");
-<<<<<<< HEAD
-	init("data/texshader.vert", "data/texshader.frag");
-=======
-	init("data/textureDemo2.vert", "data/textureDemo2.frag");
-    init("textureDemo2.vert", "textureDemo2.frag"); */// MAC OS X version
->>>>>>> adaecf52fc1565b8b2b5cf54ba3a221d48c4e917
+	//init("data/texshader.vert", "data/texshader.frag");
+    init("texshader.vert", "texshader.frag"); // MAC OS X version
+	//init("data/textureDemo2.vert", "data/textureDemo2.frag");
 
-	/*CGFshader::bind();
+	CGFshader::bind();
 
 	// Initialize parameter in memory
 	normScale=0.0;
@@ -18,15 +15,15 @@ Shader::Shader()
 	// Store Id for the uniform "normScale", new value will be stored on bind()
 	scaleLoc = glGetUniformLocation(id(), "normScale");
 
-	baseTexture=new CGFtexture("data/water.jpg");
-	secTexture=new CGFtexture("data/watermap.jpg");
+	/*baseTexture=new CGFtexture("data/water.jpg");
+	secTexture=new CGFtexture("data/watermap.jpg");*/
     
-    /* MAC OS X version
+    /* MAC OS X version */
     baseTexture=new CGFtexture("water.jpg");
-	secTexture=new CGFtexture("watermap.jpg");*/
+	secTexture=new CGFtexture("watermap.jpg");
 
 	// get the uniform location for the sampler
-	/*baseImageLoc = glGetUniformLocation(id(), "baseImage");
+	baseImageLoc = glGetUniformLocation(id(), "baseImage");
 
 	// set the texture id for that sampler to match the GL_TEXTUREn that you 
 	// will use later e.g. if using GL_TEXTURE0, set the uniform to 0
@@ -63,4 +60,4 @@ void Shader::bind(void)
 Shader::~Shader(void)
 {
 	delete(baseTexture);
-}*/
+}

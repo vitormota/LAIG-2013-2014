@@ -1,6 +1,8 @@
 #ifndef _NODE_H
 #define _NODE_H
 
+#include "Primitive.h"
+
 #ifdef __APPLE__
 #include "CGFobject.h"
 #elif __unix
@@ -9,8 +11,6 @@
 #include <GL\glew.h>
 #include "CGF\CGFobject.h"
 #endif
-
-#include "Primitive.h"
 
 #include <string>
 #include <vector>

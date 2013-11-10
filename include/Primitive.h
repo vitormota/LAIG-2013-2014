@@ -15,6 +15,14 @@
 #include <GL/glui.h>
 #endif
 
+#if __APPLE__
+#include "CGFshader.h"
+#elif __unix
+#include "CGF/CGFshader.h"
+#elif _WIN32
+#include "CGF\CGFshader.h"
+#endif
+
 
 using std::string;
 using std::vector;
@@ -112,20 +120,6 @@ namespace scene{
 		virtual void draw();
 	};
     
-    /* Plane */
-	class Plane: public Primitive{
-        
-	private:
-		int parts;
-        GLfloat textPoints[4][2];
-        GLdouble ctrlpoints[4][3];
-        
-	public:
-		Plane(string id, int parts);
-        ~Plane();
-		virtual void draw();
-	};
-    
     /* Patch */
 	class Patch: public Primitive{
         
@@ -143,6 +137,21 @@ namespace scene{
 		void setControlPoints(vector<vector<float>> controlPoints);
         vector<vector<float>> getControlPoints();
         virtual void draw();
+	};
+    
+    /* Plane */
+	class Plane: public Primitive{
+        
+	private:
+		int parts;
+        GLfloat textPoints[4][2];
+        GLdouble ctrlpoints[4][3];
+        Patch* planePatch;
+        
+	public:
+		Plane(string id, int parts);
+        ~Plane();
+		virtual void draw();
 	};
     
     /* Vehicle */
@@ -163,6 +172,7 @@ namespace scene{
         
 	private:
         string heightmap, texturemap, fragmentshader, vertexshader;
+        CGFshader *s;
         
 	public:
 		Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader);
