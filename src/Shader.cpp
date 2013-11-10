@@ -1,12 +1,12 @@
 #include "Shader.h"
-
+/*
 Shader::Shader()
 {
 	//init("data/appValues.vert", "data/dualVaryingColor.frag");
 	init("data/textureDemo2.vert", "data/textureDemo2.frag");
-    /*init("textureDemo2.vert", "textureDemo2.frag"); */// MAC OS X version
+    init("textureDemo2.vert", "textureDemo2.frag"); */// MAC OS X version
 
-	CGFshader::bind();
+	/*CGFshader::bind();
 
 	// Initialize parameter in memory
 	normScale=0.0;
@@ -22,7 +22,7 @@ Shader::Shader()
 	secTexture=new CGFtexture("watermap.jpg");*/
 
 	// get the uniform location for the sampler
-	baseImageLoc = glGetUniformLocation(id(), "baseImage");
+	/*baseImageLoc = glGetUniformLocation(id(), "baseImage");
 
 	// set the texture id for that sampler to match the GL_TEXTUREn that you 
 	// will use later e.g. if using GL_TEXTURE0, set the uniform to 0
@@ -59,4 +59,4 @@ void Shader::bind(void)
 Shader::~Shader(void)
 {
 	delete(baseTexture);
-}
+}*/

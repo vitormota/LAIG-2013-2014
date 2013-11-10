@@ -19,9 +19,6 @@
 using std::string;
 using std::vector;
 
-typedef GLfloat vecPoints[3];
-typedef GLfloat vecText[2];
-
 namespace scene{
 
 	class Primitive
@@ -120,9 +117,12 @@ namespace scene{
         
 	private:
 		int parts;
+        GLfloat textPoints[4][2];
+        GLdouble ctrlpoints[4][3];
         
 	public:
 		Plane(string id, int parts);
+        ~Plane();
 		virtual void draw();
 	};
     
@@ -132,14 +132,16 @@ namespace scene{
 	private:
 		int order, partsU, partsV;
         string compute;
-        vector<float*> controlPoints;
-        vecPoints * controlPointsArray;
-        vecText * textpoints;
+        vector<vector<float>> controlPoints;
+        GLfloat vecControlPointsOrder1[2][3];
+        GLfloat vecControlPointsOrder2[4][3];
+        GLfloat vecControlPointsOrder3[9][3];
+        GLfloat textPoints[4][2];
         
 	public:
-		Patch(string id, int order, int partsU, int partsV, string compute, vector<float*> controlPoints);
-		void setControlPoints(vector<float*> controlPoints);
-        vector<float*> getControlPoints();
+		Patch(string id, int order, int partsU, int partsV, string compute, vector<vector<float>> controlPoints);
+		void setControlPoints(vector<vector<float>> controlPoints);
+        vector<vector<float>> getControlPoints();
         virtual void draw();
 	};
     
@@ -147,10 +149,13 @@ namespace scene{
 	class Vehicle: public Primitive{
         
 	private:
+        vector<vector<float>> vehicleControlPoints;
         
 	public:
 		Vehicle(string id);
+        ~Vehicle();
 		virtual void draw();
+        Patch* plane1;
 	};
     
     /* Waterline */

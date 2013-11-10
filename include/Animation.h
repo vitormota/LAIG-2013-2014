@@ -20,15 +20,16 @@ class Animation
 private:
     string id; // id of the primitive to animate
     string type;
-    vector<float*> controlPoints; // control points
-    vector<vector<float*>> controlPointsPairs; // control points pairs
-    vector<float*> getControlPoints();
+    vector<vector<float>> controlPoints; // control points
+    vector<vector<vector<float>>> controlPointsPairs; // control points pairs
     
 public:
     Animation(string id, float span, string type);
     ~Animation();
     void setSpan(float span);
     float getSpan();
+    void setControlPoints(vector<vector<float>> controlPoints);
+    vector<vector<float>> getControlPoints();
     void init();
     void rotateObject();
     
@@ -39,15 +40,15 @@ public:
 class LinearAnimation: public Animation{
     
 private:
-    vector<float*> controlPointsPair; // pair of control points
+    vector<vector<float>> controlPointsPair; // pair of control points
     double dx, dy, dz; // calculated small displacements between the pair of control points
     double total_displacement; // total displacement between the pair of control points
     
 public:
-    LinearAnimation(string id, float span, string type, vector<float*> controlPointsPair);
+    LinearAnimation(string id, float span, string type, vector<vector<float>> controlPointsPair);
     ~LinearAnimation();
-    void setControlPointsPair(vector<float*> controlPointsPair);
-    vector<float*> getControlPointsPair();
+    void setControlPointsPair(vector<vector<float>> controlPointsPair);
+    vector<vector<float>> getControlPointsPair();
     void calculateDisplacements();
     void updatePrimitivePos();
 };

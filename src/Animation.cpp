@@ -15,6 +15,8 @@
 Animation::Animation(string id, float span, string type)
 {
     this->id = id;
+    this->span = span;
+    this->type = type;
 }
 
 Animation::~Animation()
@@ -34,22 +36,30 @@ float Animation::getSpan()
 void Animation::init(){
     
     
-    vector<float*> controlPointsPair = vector<float*>();
-    for(unsigned int i = 0; i <= this->controlPoints.size(); i++){
+    vector<vector<float>> controlPointsPair = vector<vector<float>>();
+    for(unsigned int i = 0; i < this->controlPoints.size() - 1; i++){
         
-        controlPointsPair[0] = this->controlPoints[i];
-        controlPointsPair[1] = this->controlPoints[i+1];
+        controlPointsPair.push_back(this->controlPoints[i]);
+        controlPointsPair.push_back(this->controlPoints[i+1]);
         
         this->controlPointsPairs.push_back(controlPointsPair);
     }
 
     
-     LinearAnimation* newLinearAnimation = new LinearAnimation(this->id, this->span, "linear", controlPointsPair);
-  //TODO
+     //LinearAnimation* newLinearAnimation = new LinearAnimation(this->id, this->span, "linear", controlPointsPair);
+  //TODO criar linear animations com os control points pair
     
 }
 
+void Animation::setControlPoints(vector<vector<float>> controlPoints)
+{
+    this->controlPoints = controlPoints;
+}
 
+vector<vector<float>> Animation::getControlPoints()
+{
+    return this->controlPoints;
+}
 
 void Animation::rotateObject(){
     
@@ -59,7 +69,7 @@ void Animation::rotateObject(){
 
 /* Linear Animation */
 
-LinearAnimation::LinearAnimation(string id, float span, string type, vector<float*> controlPointsPair): Animation(id, span, type)
+LinearAnimation::LinearAnimation(string id, float span, string type, vector<vector<float>> controlPointsPair): Animation(id, span, type)
 {
     this->controlPointsPair = controlPointsPair;
     this->dx = 0;
@@ -74,20 +84,20 @@ LinearAnimation::~LinearAnimation()
 {
 }
 
-void LinearAnimation::setControlPointsPair(vector<float*> controlPointsPair)
+void LinearAnimation::setControlPointsPair(vector<vector<float>> controlPointsPair)
 {
     this->controlPointsPair = controlPointsPair;
 }
 
-vector<float*> LinearAnimation::getControlPointsPair()
+vector<vector<float>> LinearAnimation::getControlPointsPair()
 {
     return this->controlPointsPair;
 }
 
 void LinearAnimation::calculateDisplacements(){
     
-    float* beginCP = this->controlPointsPair[0];
-    float* endCP = this->controlPointsPair[1];
+    vector<float> beginCP = this->controlPointsPair[0];
+    vector<float> endCP = this->controlPointsPair[1];
     
     float beginCP_xx = beginCP[0];
     float beginCP_yy = beginCP[1];

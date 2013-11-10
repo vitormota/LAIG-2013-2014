@@ -303,8 +303,8 @@ void Scene::init() {
 		this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
 	}
 
-	wl = new scene::Waterline("id","","","","",10);
-	s = new Shader();
+	//wl = new scene::Waterline("id","","","","",10);
+	//s = new Shader();
     
     glutTimerFunc(100, updateAnimations, 0); // animations timer
 
@@ -383,16 +383,16 @@ void Scene::display() {
 	}
 
 	// Process all the nodes of the graph (depth-first search)
-	//processGraph();
+	processGraph();
 
 
-	s->bind();
+	//s->bind();
 
 	glScalef(2.0,1.0,6.0);
 	glTranslatef(-0.5,0.0,0.5);
-	wl->draw();
+	//wl->draw();
 
-	s->unbind();
+	//s->unbind();
 
 	// ---- END Primitive drawing section
 

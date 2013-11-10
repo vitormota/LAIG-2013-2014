@@ -789,7 +789,7 @@ namespace Parser {
 
             
             // control points of the animation
-            vector<float*> controlPoints = vector<float*>();
+             vector<vector<float>> controlPoints = vector<vector<float>>();
             
                 //int numControlPoints = pow(order+1,2);
                 int controlPointsCounter = 0;
@@ -866,11 +866,11 @@ namespace Parser {
                     }
                     
                     // create and save control point
-                    float controlPoint[3];
+                    vector<float> controlPoint;
                     
-                    controlPoint[0] = xx[0];
-                    controlPoint[1] = yy[0];
-                    controlPoint[2] = zz[0];
+                    controlPoint.push_back(xx[0]);
+                    controlPoint.push_back(yy[0]);
+                    controlPoint.push_back(zz[0]);
                     
                     controlPoints.push_back(controlPoint);
                     
@@ -884,7 +884,8 @@ namespace Parser {
         // create and save animation
             if(!error)
             {
-                Animation* newAnimation = new LinearAnimation(animation_id, span[0], "linear", controlPoints);
+                Animation* newAnimation = new Animation(animation_id, span[0], "linear");
+                newAnimation->setControlPoints(controlPoints);
                 animationsMap[animation_id] = newAnimation;
             }
             
@@ -1741,7 +1742,7 @@ namespace Parser {
                                             // compute attribute
                                             char *compute;
                                             
-                                            compute = (char*) childElement->Attribute("heightmap");
+                                            compute = (char*) childElement->Attribute("compute");
                                             
                                             if ((compute != NULL) && ((strcmp(compute, "point") == 0) || (strcmp(compute, "line") == 0) || (strcmp(compute, "fill") == 0))) {
                                                 // valid compute
@@ -1756,9 +1757,9 @@ namespace Parser {
                                             }
 
                                             // control points
-                                            vector<float*> controlPoints = vector<float*>();
+                                            vector<vector<float>> controlPoints = vector<vector<float>>();
                                             
-                                            int numControlPoints = pow(order+1,2);
+                                            int numControlPoints = pow(order,2);
                                             int controlPointsCounter = 0;
                                             
                                             // check all control points
@@ -1833,11 +1834,11 @@ namespace Parser {
                                                 }
                                                 
                                                 // create and save control point
-                                                float controlPoint[3];
+                                                vector<float> controlPoint;
                                                 
-                                                controlPoint[0] = x[0];
-                                                controlPoint[1] = y[0];
-                                                controlPoint[2] = z[0];
+                                                controlPoint.push_back(x[0]);
+                                                controlPoint.push_back(y[0]);
+                                                controlPoint.push_back(z[0]);
                                                 
                                                 controlPoints.push_back(controlPoint);
 
