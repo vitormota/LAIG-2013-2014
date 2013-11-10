@@ -9,6 +9,7 @@
 #include "CGFapplication.h"
 #include "CGFobject.h"
 #include "CGFcamera.h"
+#include "CGFshader.h"
 #elif __unix
 #include "CGF/CGFscene.h"
 #include "CGF/CGFappearance.h"
@@ -16,6 +17,7 @@
 #include "CGF/CGFaxis.h"
 #include "CGF/CGFapplication.h"
 #include "CGF/CGFobject.h"
+#include "CGF/CGFshader.h"
 #elif _WIN32
 #include "CGF\CGFscene.h"
 #include "CGF\CGFappearance.h"
@@ -23,6 +25,7 @@
 #include "CGF\CGFaxis.h"
 #include "CGF\CGFapplication.h"
 #include "CGF\CGFobject.h"
+#include "CGF\CGFshader.h"
 #endif
 
 #include <iostream>
@@ -36,7 +39,6 @@
 #include "Appearance.h"
 #include "Camera.h"
 #include "Animation.h"
-#include "CGF\CGFshader.h"
 
 #include <stack>
 #include <string>
@@ -117,6 +119,9 @@ public:
 	scene::Waterline *wl;
 	CGFshader *s;
     //----> END NEW
+    
+    // Animations
+    static void updateAnimations(int dummy);
     
     ~Scene();
 

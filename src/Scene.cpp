@@ -5,6 +5,19 @@
 
 #include "Shader.h"
 
+void Scene::updateAnimations(int dummy){
+    
+    
+        map<string, Animation*>::const_iterator itA;
+        
+        /*for(itA = animations.begin(); itA != animations.end(); itA++)
+        {
+            (itA*)->updatePrimitivePos();
+        }*/
+    
+    glutTimerFunc(100, updateAnimations, dummy);
+}
+
 void Scene::init() {
 
 	// Uncomment below to enable normalization of lighting normal vectors
@@ -290,8 +303,15 @@ void Scene::init() {
 		this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
 	}
 
+<<<<<<< HEAD
 	wl = new scene::Waterline("id","","","","",30);
 	s = new Shader();
+=======
+	//wl = new scene::Waterline("id","","","","",10);
+	//s = new Shader();
+    
+    glutTimerFunc(100, updateAnimations, 0); // animations timer
+>>>>>>> adaecf52fc1565b8b2b5cf54ba3a221d48c4e917
 
 	// ------- Initialization of variables ------- END
 
@@ -368,16 +388,16 @@ void Scene::display() {
 	}
 
 	// Process all the nodes of the graph (depth-first search)
-	//processGraph();
+	processGraph();
 
 
-	s->bind();
+	//s->bind();
 
 	glScalef(2.0,0.5,6.0);
 	glTranslatef(-0.5,0.0,0.5);
-	wl->draw();
+	//wl->draw();
 
-	s->unbind();
+	//s->unbind();
 
 	// ---- END Primitive drawing section
 
@@ -481,6 +501,13 @@ void Scene::processNode(string id) {
 			//node uses a list and it is defined
 			glCallList(current_list_index);
 		}
+        
+        // Animations
+        
+         void initValues(vector<float*> controlPoints);
+        
+        
+        
 		//next list
 		current_list_index++;
 		//----> END NEW
