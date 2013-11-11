@@ -305,7 +305,13 @@ void Scene::init() {
 		this->currentCameraId = this->initial; // set the id of the current camera to the initial camera id
 	}
 
+    
+#if _WIN32
 	wl = new scene::Waterline("id","data/watermap.jpg","data/water.jpg","data/texshader.vert","data/texshader.frag",50);
+#else
+    wl = new scene::Waterline("id","watermap.jpg","water.jpg","texshader.vert","texshader.frag",50); // MAC OS X version
+#endif
+    
 	s = new Shader();
     
     glutTimerFunc(100, updateAnimations, 0); // animations timer
@@ -392,9 +398,9 @@ void Scene::display() {
 	
 	//glRotatef(-90,0,1,0);
 	glPushMatrix();
-	glScalef(10.0,1.0,16.0);
+	glScalef(16.0,1.0,16.0);
 	glRotatef(-90,0.0,1.0,0.0);
-	glTranslatef(0.5,1.0,0.5);
+	glTranslatef(0.5,0.0,-0.5);
 	//glTranslatef(-0.5,0.0,0.5);
 	
 	wl->draw();

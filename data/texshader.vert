@@ -9,7 +9,7 @@ void main()
 {
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	vec4 offset = vec4(0,0,0,0);
-	coords = gl_TexCoord[0].st  + vec2(0,time/20) ;
+	coords = gl_TexCoord[0].st  + vec2(0,time/20.0) ;
 	vec4 hcolor = texture2D(hImage, coords);
 	
 	

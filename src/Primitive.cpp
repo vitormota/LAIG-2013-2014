@@ -134,8 +134,8 @@ namespace scene {
         this->verticesRectangle[3][2] = 0;
         this->normalRectangle = get_normal_newell(verticesRectangle, 4);
         
-        this->length = abs(x2-x1);
-        this->height = abs(y2-y1);
+        this->length = fabs(x2-x1);
+        this->height = fabs(y2-y1);
         
     }
     
@@ -336,12 +336,13 @@ namespace scene {
         plane1 = new Patch("", 3, 10, 10, "fill", vehicleControlPoints);
     }
     
-	Waterline::Waterline(string id, string heightmap, string texturemap, string fragmentshader, string vertexshader) : Plane(id,10)
+	Waterline::Waterline(string id, string heightmap, string texturemap, string vertexshader, string fragmentshader) : Plane(id,10)
     {
         this->heightmap = heightmap;
         this->texturemap = texturemap;
         this->fragmentshader = fragmentshader;
         this->vertexshader = vertexshader;
+        this->s = new Shader(texturemap,heightmap,vertexshader,fragmentshader);
     }
 
     Waterline::Waterline(string id, string heightmap, string texturemap,string vertexshader, string fragmentshader, int parts) : Plane(id,parts)
