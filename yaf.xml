@@ -219,11 +219,10 @@
             </transforms>
             <children>
                 
-                <!-- <patch order="1" partsU="1" partsV="1" compute="fill"/>
+                <patch order="1" partsU="1" partsV="1" compute="fill"/>
                 <noderef id="floor" />
-	       		<noderef id="big_dinner_table"/>
-                <!-- <noderef id="walls" />
-                <noderef id="objects" /> -->
+                <noderef id="walls" />
+                <noderef id="objects" />
                 
             </children>
         </node>
@@ -244,7 +243,7 @@
             <transforms>
             </transforms>
             <children>
-                <noderef id="big_dinner_table"/>
+                <noderef id="big_dinner_table" displaylist="true"/>
                 <noderef id="chair_set_6_east_faced" />
                 <noderef id="chair_set_6_west_faced" />
                 <noderef id="corner_lamp_NW" />
@@ -471,7 +470,7 @@
             </children>
         </node>
         <!-- Big Dinner Table -->
-        <node id="big_dinner_table" displaylist="true">
+        <node id="big_dinner_table">
             <transforms>
                 <translate to="8.5 2.0 8.0"/>
             </transforms>
@@ -481,7 +480,7 @@
                 <noderef id="dinner_table_S_3"/>
             </children>
         </node>
-        <node id="dinner_table_S_1" displaylist="true">
+        <node id="dinner_table_S_1">
             <transforms>
                 <translate to="0.0 0.0 0.0"/>
             </transforms>
@@ -1115,7 +1114,7 @@
                 <noderef id="unit_cube"/>
             </children>
         </node>
-        <node id="sofa_pillows">
+        <node id="sofa_pillows" displaylist="true">
             <transforms>
                 <rotate axis="x" angle="-40"/>
                 <translate to="-1.0 1.2 0.4"/>

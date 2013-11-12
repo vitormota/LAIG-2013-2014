@@ -46,6 +46,7 @@ using std::vector;
         GLuint the_object;
         //flag to specify the use of list
         bool use_list;
+		bool init;
         //-----> END NEW
         
         float* getMatrix();

@@ -420,7 +420,7 @@ void Scene::processGraph() {
 	// process graph
 
 	string rootid = sceneGraph->getRootId();
-	this->current_list_index = 0;
+	this->current_list_index = 1;
 
 	glPushMatrix();
 	processNode(rootid);
@@ -469,7 +469,7 @@ void Scene::processNode(string id) {
 			txt_t = appearancesMap[appearanceref]->getTexlength_t();
 		}
 		//----> NEW (TP02-Display Lists)
-		if(!display_list || (display_list && currentNode->the_object==0x0)){
+		if(!display_list || (display_list && !currentNode->init)){
 			//if the node does not use a list OR 
 			//uses one but it is not defined so
 			if(display_list){
@@ -477,6 +477,7 @@ void Scene::processNode(string id) {
 				created =true;
 				currentNode->the_object=glGenLists(current_list_index);
 				glNewList(currentNode->the_object,GL_COMPILE);
+				currentNode->init = true;
 			}
 			//draw goes here
 			// Draw all the primitives of the current node
@@ -505,9 +506,10 @@ void Scene::processNode(string id) {
 				//during this flow
 				glEndList();
 			}
-		}else if(display_list && currentNode->the_object){
+		}else if(display_list && currentNode->init){
 			//node uses a list and it is defined
 			glCallList(current_list_index);
+			glFlush();
 		}
         
         // Animations
@@ -517,7 +519,7 @@ void Scene::processNode(string id) {
         
         
 		//next list
-		current_list_index++;
+		if(display_list) current_list_index++;
 		//----> END NEW
 
 
